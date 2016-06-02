@@ -1,10 +1,10 @@
-dataSource {
+dataSourGrailsTestAppce {
     pooled = true
     jmxExport = true
     driverClassName = "com.mysql.jdbc.Driver"
     username = "root"
     password = "Sumit@123"
-    url = "jdbc:mysql://localhost:3306/GrailsTestApp"
+    url = "jdbc:mysql://localhost:3306/LinkSharing"
     dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
 }
 hibernate {
@@ -23,8 +23,8 @@ environments {
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = "Sumit@123"
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/GrailsTestApp"
+            dbCreate = "update" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:mysql://localhost:3306/LinkSharing"
             //url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"            
 	    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
         }
