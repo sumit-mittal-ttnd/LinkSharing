@@ -3,3 +3,6 @@
 .classpath
 *.class
 target/
+.slcache/
+out/
+test/
