@@ -26,4 +26,37 @@ class Topic {
         visibility(nullable: false)
         createdBy(nullable: false)
     }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (!(o instanceof Topic)) return false
+
+        Topic topic = (Topic) o
+
+        if (createdBy != topic.createdBy) return false
+        if (dateCreated != topic.dateCreated) return false
+        if (id != topic.id) return false
+        if (lastUpdated != topic.lastUpdated) return false
+        if (name != topic.name) return false
+        if (resources != topic.resources) return false
+        if (subscriptions != topic.subscriptions) return false
+        if (version != topic.version) return false
+        if (visibility != topic.visibility) return false
+
+        return true
+    }
+
+    int hashCode() {
+        int result
+        result = name.hashCode()
+        result = 31 * result + createdBy.hashCode()
+        result = 31 * result + visibility.hashCode()
+        result = 31 * result + dateCreated.hashCode()
+        result = 31 * result + lastUpdated.hashCode()
+        result = 31 * result + (subscriptions != null ? subscriptions.hashCode() : 0)
+        result = 31 * result + (resources != null ? resources.hashCode() : 0)
+        result = 31 * result + id.hashCode()
+        result = 31 * result + version.hashCode()
+        return result
+    }
 }

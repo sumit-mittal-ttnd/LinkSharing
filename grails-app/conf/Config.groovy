@@ -99,9 +99,17 @@ environments {
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    /*appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    }*/
+
+    appenders {
+        file name:'file', file:'/home/ttnd/sumit/GrailsProject/myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
+    }
+    root {
+        error 'file'
+        info 'file'
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -114,4 +122,5 @@ log4j.main = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+    info   'grails.app'
 }

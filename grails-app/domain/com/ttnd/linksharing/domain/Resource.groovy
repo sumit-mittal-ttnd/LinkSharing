@@ -2,7 +2,7 @@ package com.ttnd.linksharing.domain
 
 abstract class Resource {
 
-    User createdBy;
+    User addedBy;
     Topic topic;
     String description;
     Date dateCreated;
@@ -14,11 +14,44 @@ abstract class Resource {
 
     static hasMany = [resourceRatings : ResourceRating, readingItems : ReadingItem]
 
-    static belongsTo = [createdBy : User, topic : Topic]
+    static belongsTo = [addedBy : User, topic : Topic]
 
     static constraints = {
-        createdBy(nullable: false)
+        addedBy(nullable: false)
         description(nullable: true, blank: true)
         topic(nullable: false)
+    }
+
+    boolean equals(o) {
+        if (this.is(o)) return true
+        if (!(o instanceof Resource)) return false
+
+        Resource resource = (Resource) o
+
+        if (addedBy != resource.addedBy) return false
+        if (dateCreated != resource.dateCreated) return false
+        if (description != resource.description) return false
+        if (id != resource.id) return false
+        if (lastUpdated != resource.lastUpdated) return false
+        if (readingItems != resource.readingItems) return false
+        if (resourceRatings != resource.resourceRatings) return false
+        if (topic != resource.topic) return false
+        if (version != resource.version) return false
+
+        return true
+    }
+
+    int hashCode() {
+        int result
+        result = addedBy.hashCode()
+        result = 31 * result + topic.hashCode()
+        result = 31 * result + (description != null ? description.hashCode() : 0)
+        result = 31 * result + dateCreated.hashCode()
+        result = 31 * result + lastUpdated.hashCode()
+        result = 31 * result + (resourceRatings != null ? resourceRatings.hashCode() : 0)
+        result = 31 * result + (readingItems != null ? readingItems.hashCode() : 0)
+        result = 31 * result + (id != null ? id.hashCode() : 0)
+        result = 31 * result + (version != null ? version.hashCode() : 0)
+        return result
     }
 }
