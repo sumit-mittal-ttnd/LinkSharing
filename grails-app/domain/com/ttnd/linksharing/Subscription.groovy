@@ -1,33 +1,39 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
-class ReadingItem {
+class Subscription {
 
-    Resource resource;
+    Topic topic;
     User user;
-    Boolean isRead;
+    Seriousness seriousness;
     Date dateCreated;
     Date lastUpdated;
 
 
-    static belongsTo = [resource : Resource, user : User]
+    enum Seriousness{
+        SERIOUS,
+        VERY_SERIOUS,
+        CASUAL
+    }
+
+    static belongsTo = [user : User, topic : Topic]
 
     static constraints = {
-        resource(nullable: false, unique: ['user'])
-        user(nullable: false)
-        isRead(nullable: false)
+        user(nullable: false, unique: ['topic'])  // user should not be able to subscribe to topic multiple times
+        topic(nullable: false)
+        seriousness(nullable: false)
     }
 
     boolean equals(o) {
         if (this.is(o)) return true
-        if (!(o instanceof ReadingItem)) return false
+        if (!(o instanceof Subscription)) return false
 
-        ReadingItem that = (ReadingItem) o
+        Subscription that = (Subscription) o
 
         if (dateCreated != that.dateCreated) return false
         if (id != that.id) return false
-        if (isRead != that.isRead) return false
         if (lastUpdated != that.lastUpdated) return false
-        if (resource != that.resource) return false
+        if (seriousness != that.seriousness) return false
+        if (topic != that.topic) return false
         if (user != that.user) return false
         if (version != that.version) return false
 
@@ -36,9 +42,9 @@ class ReadingItem {
 
     int hashCode() {
         int result
-        result = resource.hashCode()
+        result = topic.hashCode()
         result = 31 * result + user.hashCode()
-        result = 31 * result + isRead.hashCode()
+        result = 31 * result + seriousness.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
         result = 31 * result + id.hashCode()

@@ -1,23 +1,27 @@
-import com.ttnd.linksharing.domain.DocumentResource
-import com.ttnd.linksharing.domain.LinkResource
-import com.ttnd.linksharing.domain.ReadingItem
-import com.ttnd.linksharing.domain.Resource
-import com.ttnd.linksharing.domain.ResourceRating
-import com.ttnd.linksharing.domain.Subscription
-import com.ttnd.linksharing.domain.Subscription.Seriousness
-import com.ttnd.linksharing.domain.Topic
-import com.ttnd.linksharing.domain.User
+import com.ttnd.linksharing.DocumentResource
+import com.ttnd.linksharing.LinkResource
+import com.ttnd.linksharing.ReadingItem
+import com.ttnd.linksharing.Resource
+import com.ttnd.linksharing.ResourceRating
+import com.ttnd.linksharing.Subscription
+import com.ttnd.linksharing.Subscription.Seriousness
+import com.ttnd.linksharing.Topic
+import com.ttnd.linksharing.User
 
 class BootStrap {
 
     def init = { servletContext ->
 
+        //initCall();
+    }
+
+    void initCall(){
         // create User
-        User user = new User(firstName: "normal", lastName: "user", userName: "normalUser", email : "normalUser@gmail.com", password: "password", active: Boolean.TRUE, admin: Boolean.FALSE );
+        User user = new User(firstName: "normal", lastName: "user", userName: "normalUser", email : "normalUser@gmail.com", password: "password", confirmPassword: "password1", active: Boolean.TRUE, admin: Boolean.FALSE );
         createUser(user);
 
         // create admin user
-        User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminUser", email : "adminUser@gmail.com", password: "admin", active: Boolean.TRUE, admin: Boolean.TRUE );
+        User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminUser", email : "adminUser@gmail.com", password: "admin", confirmPassword: "admin1", active: Boolean.TRUE, admin: Boolean.TRUE );
         createUser(adminUser);
 
 
@@ -35,17 +39,8 @@ class BootStrap {
         addLinkResources(user, topic, url, description);
         addDocumentResources(user, topic, filePath, description);
 
-
-
-
-
-
-
-
         // subscribe topic 3-1
-        /*User user = User.findById(3L);
-        Topic topic = Topic.findById(1L);
-        subscribeTopic(user, topic, Subscription.Seriousness.CASUAL);*/
+        subscribeTopic(user, topic, Subscription.Seriousness.CASUAL);
     }
 
     void createUser(User user){

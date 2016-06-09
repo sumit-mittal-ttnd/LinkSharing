@@ -1,4 +1,4 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
 class DocumentResource extends Resource {
 

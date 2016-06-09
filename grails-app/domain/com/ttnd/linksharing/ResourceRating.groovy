@@ -1,39 +1,33 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
-class Subscription {
+class ResourceRating {
 
-    Topic topic;
+    Resource resource;
     User user;
-    Seriousness seriousness;
+    Integer score;
     Date dateCreated;
     Date lastUpdated;
 
 
-    enum Seriousness{
-        SERIOUS,
-        VERY_SERIOUS,
-        CASUAL
-    }
-
-    static belongsTo = [user : User, topic : Topic]
+    static belongsTo = [resource : Resource, user : User]
 
     static constraints = {
-        user(nullable: false, unique: ['topic'])  // user should not be able to subscribe to topic multiple times
-        topic(nullable: false)
-        seriousness(nullable: false)
+        user(nullable: false, unique: ['resource']) // Resourcerating can be given by a user only one time for a resource
+        score(nullable: false, range: 1..5)
+        resource(nullable: false)
     }
 
     boolean equals(o) {
         if (this.is(o)) return true
-        if (!(o instanceof Subscription)) return false
+        if (!(o instanceof ResourceRating)) return false
 
-        Subscription that = (Subscription) o
+        ResourceRating that = (ResourceRating) o
 
         if (dateCreated != that.dateCreated) return false
         if (id != that.id) return false
         if (lastUpdated != that.lastUpdated) return false
-        if (seriousness != that.seriousness) return false
-        if (topic != that.topic) return false
+        if (resource != that.resource) return false
+        if (score != that.score) return false
         if (user != that.user) return false
         if (version != that.version) return false
 
@@ -42,9 +36,9 @@ class Subscription {
 
     int hashCode() {
         int result
-        result = topic.hashCode()
+        result = resource.hashCode()
         result = 31 * result + user.hashCode()
-        result = 31 * result + seriousness.hashCode()
+        result = 31 * result + score.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
         result = 31 * result + id.hashCode()

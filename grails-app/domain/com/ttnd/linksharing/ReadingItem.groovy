@@ -1,10 +1,10 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
-class ResourceRating {
+class ReadingItem {
 
     Resource resource;
     User user;
-    Integer score;
+    Boolean isRead;
     Date dateCreated;
     Date lastUpdated;
 
@@ -12,22 +12,22 @@ class ResourceRating {
     static belongsTo = [resource : Resource, user : User]
 
     static constraints = {
-        user(nullable: false, unique: ['resource']) // Resourcerating can be given by a user only one time for a resource
-        score(nullable: false, range: 1..5)
-        resource(nullable: false)
+        resource(nullable: false, unique: ['user'])
+        user(nullable: false)
+        isRead(nullable: false)
     }
 
     boolean equals(o) {
         if (this.is(o)) return true
-        if (!(o instanceof ResourceRating)) return false
+        if (!(o instanceof ReadingItem)) return false
 
-        ResourceRating that = (ResourceRating) o
+        ReadingItem that = (ReadingItem) o
 
         if (dateCreated != that.dateCreated) return false
         if (id != that.id) return false
+        if (isRead != that.isRead) return false
         if (lastUpdated != that.lastUpdated) return false
         if (resource != that.resource) return false
-        if (score != that.score) return false
         if (user != that.user) return false
         if (version != that.version) return false
 
@@ -36,9 +36,7 @@ class ResourceRating {
 
     int hashCode() {
         int result
-        result = resource.hashCode()
-        result = 31 * result + user.hashCode()
-        result = 31 * result + score.hashCode()
+        result = 31 * result + isRead.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
         result = 31 * result + id.hashCode()

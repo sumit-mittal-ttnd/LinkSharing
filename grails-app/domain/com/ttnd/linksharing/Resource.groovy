@@ -1,4 +1,4 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
 abstract class Resource {
 
@@ -43,13 +43,9 @@ abstract class Resource {
 
     int hashCode() {
         int result
-        result = addedBy.hashCode()
-        result = 31 * result + topic.hashCode()
         result = 31 * result + (description != null ? description.hashCode() : 0)
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
-        result = 31 * result + (resourceRatings != null ? resourceRatings.hashCode() : 0)
-        result = 31 * result + (readingItems != null ? readingItems.hashCode() : 0)
         result = 31 * result + (id != null ? id.hashCode() : 0)
         result = 31 * result + (version != null ? version.hashCode() : 0)
         return result

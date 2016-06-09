@@ -1,10 +1,11 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
 class User {
 
     String email;
     String userName;
     String password;
+    String confirmPassword;
     String firstName;
     String lastName;
     Byte photo;
@@ -25,7 +26,13 @@ class User {
 
     static constraints = {
         email(unique: true, email: true, nullable: false, blank: false)
-        password(nullable: false, blank: false, minSize: 5)
+        password(nullable: false, blank: false, minSize: 5 /*, validator: {password, obj ->
+                                                                            def confirmPassword = obj.properties['confirmPassword'];
+                                                                            if(confirmPassword == null) return true;
+                                                                            password == confirmPassword ? true : "Password Mismatch";
+                                                                        }*/
+        )
+
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photo(nullable: true, blank: true)
@@ -37,7 +44,7 @@ class User {
     }
 
 
-    static transients = ['name']
+    static transients = ['name', 'confirmPassword']
 
     String getName(){
         return "${firstName} ${lastName}";
@@ -82,11 +89,6 @@ class User {
         result = 31 * result + (active != null ? active.hashCode() : 0)
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0)
         result = 31 * result + (lastUpdated != null ? lastUpdated.hashCode() : 0)
-        result = 31 * result + (topics != null ? topics.hashCode() : 0)
-        result = 31 * result + (subscriptions != null ? subscriptions.hashCode() : 0)
-        result = 31 * result + (resources != null ? resources.hashCode() : 0)
-        result = 31 * result + (resourceRatings != null ? resourceRatings.hashCode() : 0)
-        result = 31 * result + (readingItems != null ? readingItems.hashCode() : 0)
         result = 31 * result + id.hashCode()
         result = 31 * result + version.hashCode()
         return result

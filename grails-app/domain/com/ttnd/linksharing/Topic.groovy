@@ -1,4 +1,4 @@
-package com.ttnd.linksharing.domain
+package com.ttnd.linksharing
 
 class Topic {
 
@@ -53,8 +53,6 @@ class Topic {
         result = 31 * result + visibility.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
-        result = 31 * result + (subscriptions != null ? subscriptions.hashCode() : 0)
-        result = 31 * result + (resources != null ? resources.hashCode() : 0)
         result = 31 * result + id.hashCode()
         result = 31 * result + version.hashCode()
         return result
