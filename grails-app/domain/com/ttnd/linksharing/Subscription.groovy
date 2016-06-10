@@ -4,7 +4,7 @@ class Subscription {
 
     Topic topic;
     User user;
-    Seriousness seriousness;
+    Seriousness seriousness = Seriousness.SERIOUS;
     Date dateCreated;
     Date lastUpdated;
 
@@ -21,6 +21,11 @@ class Subscription {
         user(nullable: false, unique: ['topic'])  // user should not be able to subscribe to topic multiple times
         topic(nullable: false)
         seriousness(nullable: false)
+    }
+
+    static mapping = {
+        topic lazy:false
+        user lazy: false
     }
 
     boolean equals(o) {

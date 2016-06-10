@@ -26,13 +26,12 @@ class User {
 
     static constraints = {
         email(unique: true, email: true, nullable: false, blank: false)
-        password(nullable: false, blank: false, minSize: 5 /*, validator: {password, obj ->
-                                                                            def confirmPassword = obj.properties['confirmPassword'];
-                                                                            if(confirmPassword == null) return true;
-                                                                            password == confirmPassword ? true : "Password Mismatch";
-                                                                        }*/
-        )
-
+        password(nullable: false, blank: false, minSize: 5 , validator: {passwordVal, obj ->
+                                                                            if(obj.confirmPassword == null) return true;
+                                                                            else if(!passwordVal.equals(obj.confirmPassword)) return false;
+                                                                            else return true;
+                                                                        }
+                )
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photo(nullable: true, blank: true)
@@ -45,6 +44,12 @@ class User {
 
 
     static transients = ['name', 'confirmPassword']
+
+    static mapping = {
+        sort name: "asc"
+    }
+
+
 
     String getName(){
         return "${firstName} ${lastName}";

@@ -11,20 +11,23 @@ class Topic {
     Set<Subscription> subscriptions;
     Set<Resource> resources;
 
-
-    static hasMany = [subscriptions : Subscription, resources : Resource]
-
-    static belongsTo = [createdBy : User]
-
     enum Visibility{
         PUBLIC,
         PRIVATE
     }
 
+    static hasMany = [subscriptions : Subscription, resources : Resource]
+
+    static belongsTo = [createdBy : User]
+
     static constraints = {
         name(nullable: false, blank: false, unique: ['createdBy']) // Unique per user constraint
         visibility(nullable: false)
         createdBy(nullable: false)
+    }
+
+    static mapping = {
+        sort id: "desc"
     }
 
     boolean equals(o) {

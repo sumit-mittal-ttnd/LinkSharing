@@ -57,7 +57,7 @@ class LoginController {
 
         user.setAdmin(Boolean.FALSE);
         user.setActive(Boolean.FALSE)
-        user.save();
+        user.save(flush: true, failOnError: true);
         render(view:"login", model:[user:user, responseMsg: message(code: 'User.register.success.message')])
         return;
     }
