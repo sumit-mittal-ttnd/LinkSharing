@@ -7,36 +7,34 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title><g:layoutTitle default="Grails"/></title>
-	%{--<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="${assetPath(src: 'favicon.ico')}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="${assetPath(src: 'apple-touch-icon.png')}">
-    <link rel="apple-touch-icon" sizes="114x114" href="${assetPath(src: 'apple-touch-icon-retina.png')}">
-      <asset:stylesheet src="application.css"/>
-    <asset:javascript src="application.js"/>--}%
+		<title>
+			<g:layoutTitle default="LinkSharing App"/>
+		</title>
 
 
-		%{--Added Style Sheets--}%
-		<asset:stylesheet src="bootstrap-theme.min.css"/>
+		%{--Added Scripts and Style Sheets--}%
+		<asset:stylesheet src="bootstrap.min.css"/>
 		<asset:stylesheet src="font-awesome.min.css"/>
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-
-		%{--Added java Scripts--}%
-		<asset:javascript src="bootstrap.min.js"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
+		<asset:javascript src="jquery.validate.min.js"/>
+		<asset:javascript src="application.js"/>
+		<asset:javascript src="bootstrap.min.js"/>
 
 		<g:layoutHead/>
+
 	</head>
 	<body>
-		%{--<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>--}%
 
 
 		%{--Added for error messages--}%
-		<g:if test="${flash.error}">
-			<div class="errorDiv">${responseMsg}</div><br/>
-		</g:if>
+		<g:hasErrors bean="${user}">
+			<ul>
+				<g:eachError var="err" bean="${user}">
+					<g:message error="${err}"/>
+				</g:eachError>
+			</ul>
+		</g:hasErrors>
 
 
 		<div class="flashDiv">
@@ -49,15 +47,14 @@
 		</div>
 
 
+		<g:render template="/shared/createTopicTemplate"/>
+		<g:render template="/shared/sendInvitationTemplate"/>
+		<g:render template="/shared/shareLinkTemplate"/>
+		<g:render template="/shared/shareDocumentTemplate"/>
+
+
 		<g:layoutBody/>
 
 
-
-
-
-
-
-		%{--<div class="footer" role="contentinfo"></div>
-		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>--}%
 	</body>
 </html>

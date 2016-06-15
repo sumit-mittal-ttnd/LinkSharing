@@ -3,7 +3,10 @@ package com.ttnd.linksharing
 class UserController {
 
     def index() {
-        render "User Dashboard";
+        User user = session.getAttribute("user");
+        if(user != null && user.active){
+            render(view:"dashboard", model:[user:user])
+        }
     }
 
 

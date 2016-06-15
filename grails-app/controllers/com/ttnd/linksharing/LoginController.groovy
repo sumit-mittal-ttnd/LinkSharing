@@ -12,53 +12,57 @@ class LoginController {
         }
     }
 
-    def loginHandler(String userName, String password) {
+    def login() {
+        String userName = params.get("userName");
+        String password = params.get("password");
         User user = User.findByUserNameAndPassword(userName, password);
         if(user != null){
             if(user.active){
                 session.setAttribute("user", user);
-                redirect (controller: 'login', action: 'index')
+                redirect (controller: 'user', action: 'index')
             }else{
                 flash.message = "Your account is not active !!";
+                redirect (controller: 'login', action: 'index')
             }
         }else{
             flash.message = "User not found !!";
+            redirect (controller: 'login', action: 'index')
         }
     }
 
     def logout() {
         session.invalidate();
-        forward(controller: "login", action: "index");
+        flash.message = message(code: 'User.logout.success.message');
+        redirect (controller: 'login', action: 'index')
     }
 
     def register(){
-        def user = new User(params)
-        if(user == null){
-            render(view:"login", model:[user:user, responseMsg: message(code: 'User.null.message')])
-            return;
-        }
-
-        if(!user.validate()){
-            render(view:"login", model:[user:user, responseMsg: message(code: 'User.invalid.message')])
+        def user = new User(params);
+        if(user == null || !user.validate()){
+            flash.error = message(code: 'User.invalid.message');
+            render(view:"login", model:[user:user])
             return;
         }
 
         User userByEmail = User.findByEmail(user.getEmail());
         if(userByEmail != null){
-            render(view:"login", model:[user:user, responseMsg: message(code: 'User.email.duplicate.message')])
+            flash.error = message(code: 'User.email.duplicate.message');
+            render(view:"login", model:[user:user])
             return;
         }
 
         User userByUserName = User.findByUserName(user.getUserName());
         if(userByUserName != null){
-            render(view:"login", model:[user:user, responseMsg: message(code: 'User.userName.duplicate.message')])
+            flash.error = message(code: 'User.userName.duplicate.message');
+            render(view:"login", model:[user:user])
             return;
         }
 
         user.setAdmin(Boolean.FALSE);
         user.setActive(Boolean.FALSE)
         user.save(flush: true, failOnError: true);
-        render(view:"login", model:[user:user, responseMsg: message(code: 'User.register.success.message')])
+        flash.message = message(code: 'User.register.success.message');
+        render(view:"login", model:[user:user])
         return;
     }
 

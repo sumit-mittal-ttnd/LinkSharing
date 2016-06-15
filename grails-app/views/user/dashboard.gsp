@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta charset="UTF-8">
-    <title>Link Sharing App</title>
+    <title>Dashboard</title>
 
     <style>
     .tab-space {
@@ -21,13 +21,13 @@
 
     <div class="row">
 
-        <g:render template="/shared/RecentSharedTemplate"/>
+        <g:render template="/shared/profile"/>
 
-        <g:render template="/shared/LoginTemplate"/>
+        <g:render template="/shared/inbox"/>
 
-        <g:render template="/shared/RegisterTemplate"/>
+        <g:render template="/shared/subscription"/>
 
-        <g:render template="/shared/topPostTemplate"/>
+        <g:render template="/shared/trendingTopics"/>
 
     </div>
 </div>

@@ -29,12 +29,7 @@ class TopicController {
 
     def save() {
         def topic = new Topic(params)
-        if(topic == null){
-            render(view:"login", model:[topic:topic, responseMsg: message(code: 'Topic.null.message')])
-            return;
-        }
-
-        if(!topic.validate()){
+        if(topic == null || !topic.validate()){
             render(view:"login", model:[topic:topic, responseMsg: message(code: 'Topic.invalid.message')])
             return;
         }
@@ -47,7 +42,7 @@ class TopicController {
 
         User loggedInUser = session.getAttribute("user");
         if(loggedInUser == null){
-            render(view:"login", model:[topic:topic, responseMsg: message(code: 'User.null.message')])
+            render(view:"login", model:[topic:topic, responseMsg: message(code: 'User.invalid.message')])
             return;
         }
 
