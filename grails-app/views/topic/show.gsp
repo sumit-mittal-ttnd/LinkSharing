@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Topics List</title>
 
     <style>
     .tab-space {
@@ -20,15 +20,11 @@
 
 
     <div class="row">
-
-        <g:render template="/user/profileSummary"/>
-
-        <g:render template="/resource/inbox"/>
-
-        <g:render template="/subscription/subscription"/>
-
-        <g:render template="/shared/trendingTopics"/>
-
+        NAME : ${topic.name}<br/>
+        CREATEDBY : ${topic.createdBy.firstName} ${topic.createdBy.lastName}<br/>
+        VISIBILITY : ${topic.visibility}<br/>
+        DATE CREATED : ${topic.dateCreated}<br/>
+        LAST UPDATED : ${topic.lastUpdated}<br/>
     </div>
 </div>
 </body>

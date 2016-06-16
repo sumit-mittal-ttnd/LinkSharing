@@ -3,47 +3,56 @@ package com.ttnd.linksharing
 class SubscriptionController {
 
     ReadingItemController readingItemController;
+    SubscriptionService subscriptionService;
 
     def index() { }
 
     def save(){
-        User loggedInUser = session.getAttribute("user");
+        User loggedInUser = User.get(session.getAttribute("userId"));
         Topic topic = Topic.get(params.get("topicId"));
         Subscription.Seriousness seriousness = params.get("seriousness");
-        // calling method to subscribe
-        subscribeTopic(loggedInUser, topic, seriousness);
+        subscriptionService.subscribeTopic(loggedInUser, topic, seriousness);
     }
 
-    def update(){
+    def update() {
         Subscription subscription = new Subscription(params);
-        if(!subscription.validate()){
-            log.error "Errors Occurred While Updating Subscription: "+subscription.getErrors();
-        }else{
-            subscription.save(flush: true, failOnError: true);
-            log.info "Subscription updated in the DB with ID "+subscription.getId();
+        if (!subscription.validate()){
+            flash.error = "Not a valid request";
+        } else{
+            flash.message= "Successfully Updated";
+            subscriptionService.update(subscription);
         }
     }
 
-    def delete(){
-        def subscriptionId = params.get("id");
-        Subscription subscription = Subscription.load(subscriptionId);
-        if(subscription == null){
-            flash.message = "Subscription Not Found !!!!";
-            redirect(controller: 'login', action: 'index')
-        }else{
-            User loggedInUser = session.getAttribute("user");
-            User subscribedUser = subscription.getUser();
-            if(!loggedInUser.equals(subscribedUser)){
-                flash.message = "You were not subscribed to this topic !!!!";
-                redirect(controller: 'login', action: 'index')
-            }else{
-                subscription.delete(flush: true);
-                render "success";
-            }
-        }
+    def delete(Subscription subscription){
+        subscriptionService.delete(subscription);
+        flash.message = "Successfully Unsubscribed";
+        redirect(controller:'user', action:'index');
     }
 
-    def subscribeTopic(User user, Topic topic, Subscription.Seriousness seriousness){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*def subscribeTopic(User user, Topic topic, Subscription.Seriousness seriousness){
         Subscription subscription = new Subscription(topic: topic, user: user, seriousness: seriousness);
         if(!subscription.validate()){
             log.error "Errors Occurred While Saving Subscription: "+subscription.getErrors();
@@ -65,6 +74,6 @@ class SubscriptionController {
             }
             log.info "Subscription Persisted in the DB with ID "+subscription.getId();
         }
-    }
+    }*/
 
 }

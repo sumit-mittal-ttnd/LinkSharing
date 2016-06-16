@@ -1,6 +1,6 @@
 <div class="col-xs-7 pull-right" >
     <div class="panel panel-default">
-        <div class="panel-heading">Trending topics</a></div>
+        <div class="panel-heading"><a>Trending topics</a></div>
         <div class="panel-body">
             <div class="row">
                 <div class="row">

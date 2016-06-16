@@ -1,6 +1,6 @@
-<div class="col-xs-5" >
+<div class="col-xs-7 pull-right" >
     <div class="panel panel-default">
-        <div class="panel-heading">Subscriptions <a href="#" class="pull-right">View All</a></div>
+        <div class="panel-heading">Trending topics</a></div>
         <div class="panel-body">
             <div class="row">
                 <div class="row">
@@ -59,8 +59,19 @@
                     <div class="col-xs-9">
                         <div class="row">
                             <div class="col-xs-4">
-                                <a href="#">Grails</a>
-                                <br/> <small>@sumit</small>
+                                <input type="text" placeholder="Grails" class="form-control"/>
+                            </div>
+                            <div class="col-xs-4 pull-left">
+                                <button class="">Save</button>
+                            </div>
+                            <div class="col-xs-4 pull-left">
+                                <button class="">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+
+                                <small>@sumit</small>
                                 <br/> <a href="#" >Unsubscribe</a>
 
                             </div>

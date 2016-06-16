@@ -27,8 +27,6 @@ class ReadingItem {
         if (id != that.id) return false
         if (isRead != that.isRead) return false
         if (lastUpdated != that.lastUpdated) return false
-        if (resource != that.resource) return false
-        if (user != that.user) return false
         if (version != that.version) return false
 
         return true

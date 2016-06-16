@@ -9,7 +9,8 @@
             </div>
             <div class="modal-body panel-body">
 
-                <form class="form-horizontal">
+                <g:form controller="resource" action="save" method="POST" class="form-horizontal">
+                    <g:hiddenField name="resourceType" value="documentResource"/>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4">
                             <label class="control-label" for="photo">Document* :</label>
@@ -20,22 +21,23 @@
                     </div>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class=" control-label" for="fName">Description* :</label>
+                            <label class=" control-label" for="description">Description* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <textarea class="form-control" placeholder="Description" type="text" id="fName"></textarea>
+                            <g:textArea id="description" name="description" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class="control-label" for="lName">Topic* :</label>
+                            <label class="control-label" for="topicId">Topic* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <select id="lName" class="form-control">
-                                <option>Topic</option>
-                                <option>Topic</option>
-                                <option>Topic</option>
-                            </select>
+                            <g:select id="topicId"
+                                      name="topicId"
+                                      from="${topics}"
+                                      optionKey="id"
+                                      optionValue="name"
+                                      class="form-control"/>
                         </div>
                     </div>
 
@@ -44,7 +46,7 @@
                         <button class="col-xs-3 pull-right">Cancel</button>
                         <button class="col-xs-3 pull-right">Share</button>
                     </div>
-                </form>
+                </g:form>
 
 
             </div>

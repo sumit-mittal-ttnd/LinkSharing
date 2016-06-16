@@ -7,6 +7,7 @@ abstract class Resource {
     String description;
     Date dateCreated;
     Date lastUpdated;
+    Integer avgRating;
 
     Set<ResourceRating> resourceRatings;
     Set<ReadingItem> readingItems;
@@ -22,20 +23,17 @@ abstract class Resource {
         topic(nullable: false)
     }
 
+
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof Resource)) return false
 
         Resource resource = (Resource) o
 
-        if (addedBy != resource.addedBy) return false
         if (dateCreated != resource.dateCreated) return false
         if (description != resource.description) return false
         if (id != resource.id) return false
         if (lastUpdated != resource.lastUpdated) return false
-        if (readingItems != resource.readingItems) return false
-        if (resourceRatings != resource.resourceRatings) return false
-        if (topic != resource.topic) return false
         if (version != resource.version) return false
 
         return true
@@ -50,4 +48,6 @@ abstract class Resource {
         result = 31 * result + (version != null ? version.hashCode() : 0)
         return result
     }
+
+
 }

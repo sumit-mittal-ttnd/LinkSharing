@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Profile</title>
 
     <style>
     .tab-space {
@@ -21,13 +21,7 @@
 
     <div class="row">
 
-        <g:render template="/user/profileSummary"/>
-
-        <g:render template="/resource/inbox"/>
-
-        <g:render template="/subscription/subscription"/>
-
-        <g:render template="/shared/trendingTopics"/>
+        <g:render template="/user/profileEdit"/>
 
     </div>
 </div>

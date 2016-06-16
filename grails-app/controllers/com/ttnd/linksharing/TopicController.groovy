@@ -2,7 +2,8 @@ package com.ttnd.linksharing
 
 class TopicController {
 
-    SubscriptionController subscriptionController;
+    TopicService topicService;
+    SubscriptionService subscriptionService;
 
     def index() { }
 
@@ -13,50 +14,40 @@ class TopicController {
             flash.message = "Topic Not Found !!!!";
             redirect(controller: 'login', action: 'index')
         }else if(topic.visibility == Topic.Visibility.PUBLIC){
-            render "success";
-        }else{
-            User loggedInUser = session.getAttribute("user");
+            render(view:"show", model:[topic:topic])
+        }else if(topic.visibility == Topic.Visibility.PRIVATE){
+            // If topic is private then only subscribed users can see that topic
+            User loggedInUser = User.get(session.getAttribute("userId"));
             Subscription subscription = Subscription.findByUserAndTopic(loggedInUser, topic);
             if(subscription != null){
-                render "success";
+                render(view:"show", model:[topic:topic])
             }else{
                 flash.message = "Subscription Not Found !!!!";
-                redirect(controller: 'login', action: 'index')
+                redirect(controller: 'user', action: 'index')
             }
-
         }
     }
 
     def save() {
-        def topic = new Topic(params)
-        if(topic == null || !topic.validate()){
-            render(view:"login", model:[topic:topic, responseMsg: message(code: 'Topic.invalid.message')])
-            return;
+        Topic topic = topicService.init(params, User.get(session.getAttribute("userId")));
+        if(!topic.validate()){
+            flash.error = message(code: 'Topic.name.duplicate.message');
+        }else{
+            topicService.create(topic);
+            flash.message = message(code: 'Topic.save.success.message');
         }
-
-        Topic topicByNameAndUser = Topic.findByNameAndCreatedBy(topic.getName(), topic.getCreatedBy());
-        if(topicByNameAndUser != null){
-            render(view:"login", model:[topic:topic, responseMsg: message(code: 'Topic.name.duplicate.message')])
-            return;
-        }
-
-        User loggedInUser = session.getAttribute("user");
-        if(loggedInUser == null){
-            render(view:"login", model:[topic:topic, responseMsg: message(code: 'User.invalid.message')])
-            return;
-        }
-
-        topic.setCreatedBy(loggedInUser);
-        topic.save(flush: true, failOnError: true);
-
-        Subscription.Seriousness seriousness = params.get("seriousness");
-        Topic.withNewSession {session ->
-            subscriptionController.subscribeTopic(loggedInUser, topic, seriousness);
-        }
-
-        render(view:"login", model:[topic:topic, responseMsg: message(code: 'Topic.save.success.message')])
+        redirect(controller: 'user', action: 'index')
     }
 
+    def topicsSubscribed(){
+        List<Topic> topics = subscriptionService.findSubscribedTopics(User.get(session.getAttribute("userId")));
+        render(view:"list", model:[topicsListByUser:topics]);
+    }
+
+    def topicsCreated(){
+        User user = User.get(session.getAttribute("userId"));
+        render(view:"list", model:[topicsListByUser:user.topics]);
+    }
 
 
 

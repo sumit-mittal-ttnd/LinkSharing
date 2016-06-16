@@ -15,7 +15,7 @@ class BootStrap {
         //initCall();
     }
 
-    void initCall(){
+   /* void initCall(){
         // create User
         User user = new User(firstName: "normal", lastName: "user", userName: "normalUser", email : "normalUser@gmail.com", password: "password", confirmPassword: "password1", active: Boolean.TRUE, admin: Boolean.FALSE );
         createUser(user);
@@ -136,15 +136,6 @@ class BootStrap {
         }
     }
 
-
-
-
-
-
-
-
-
-
     void test(){
         User user = new User(firstName: "Sumit",lastName: "Mittal", email: "sumit.mittal@tothenew.com", userName: "sumit12", password: "password");
         println user.validate()
@@ -167,7 +158,7 @@ class BootStrap {
         user.setTopics([topic1, topic2, topic3, topic4, topic5] as Set);
         println "User validate : " + user.validate();
         println " user : " + user.save();
-    }
+    }*/
 
     def destroy = {
     }

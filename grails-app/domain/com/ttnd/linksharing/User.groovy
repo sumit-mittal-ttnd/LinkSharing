@@ -47,6 +47,8 @@ class User {
 
     static mapping = {
         sort name: "asc"
+        subscriptions lazy: false
+        topics lazy: false
     }
 
 
@@ -71,11 +73,6 @@ class User {
         if (lastUpdated != user.lastUpdated) return false
         if (password != user.password) return false
         if (photo != user.photo) return false
-        if (readingItems != user.readingItems) return false
-        if (resourceRatings != user.resourceRatings) return false
-        if (resources != user.resources) return false
-        if (subscriptions != user.subscriptions) return false
-        if (topics != user.topics) return false
         if (userName != user.userName) return false
         if (version != user.version) return false
 

@@ -16,18 +16,18 @@
 <div class="container">
 
 
-    <g:render template="/shared/headerTemplate"/>
+    <g:render template="/shared/header"/>
 
 
     <div class="row">
 
-        <g:render template="/shared/RecentSharedTemplate"/>
+        <g:render template="/resource/RecentShared"/>
 
-        <g:render template="/shared/LoginTemplate"/>
+        <g:render template="/login/Login"/>
 
-        <g:render template="/shared/RegisterTemplate"/>
+        <g:render template="/shared/Register"/>
 
-        <g:render template="/shared/topPostTemplate"/>
+        <g:render template="/resource/topPost"/>
 
     </div>
 </div>

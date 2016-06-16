@@ -17,6 +17,20 @@ class ResourceRating {
         resource(nullable: false)
     }
 
+    def afterInsert = {
+        ResourceRating.withNewSession {session ->
+            int count = ResourceRating.countByResource(this.resource);
+            int newAvgRating = 0;
+            List<ResourceRating> list = ResourceRating.findByResource(this.resource);
+            for(ResourceRating resRat : list){
+                newAvgRating += resRat.score;
+            }
+            this.resource.avgRating = newAvgRating/count;
+            this.resource.save(flush: true, failOnError: true);
+        }
+    }
+
+
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof ResourceRating)) return false
@@ -26,9 +40,7 @@ class ResourceRating {
         if (dateCreated != that.dateCreated) return false
         if (id != that.id) return false
         if (lastUpdated != that.lastUpdated) return false
-        if (resource != that.resource) return false
         if (score != that.score) return false
-        if (user != that.user) return false
         if (version != that.version) return false
 
         return true
@@ -37,7 +49,6 @@ class ResourceRating {
     int hashCode() {
         int result
         result = resource.hashCode()
-        result = 31 * result + user.hashCode()
         result = 31 * result + score.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()

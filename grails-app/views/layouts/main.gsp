@@ -29,28 +29,28 @@
 
 		%{--Added for error messages--}%
 		<g:hasErrors bean="${user}">
-			<ul>
+			<div class="alert alert-danger">
 				<g:eachError var="err" bean="${user}">
 					<g:message error="${err}"/>
 				</g:eachError>
-			</ul>
+			</div>
 		</g:hasErrors>
 
 
 		<div class="flashDiv">
 			<g:if test="${flash.error}">
-				<div class="alert alert-error" style="display: block">${flash.error}</div><br/>
+				<div class="alert alert-danger" style="display: block">${flash.error}</div><br/>
 			</g:if>
 			<g:if test="${flash.message}">
-				<div class="message" style="display: block">${flash.message}</div><br/>
+				<div class="alert alert-success" style="display: block">${flash.message}</div><br/>
 			</g:if>
 		</div>
 
 
-		<g:render template="/shared/createTopicTemplate"/>
-		<g:render template="/shared/sendInvitationTemplate"/>
-		<g:render template="/shared/shareLinkTemplate"/>
-		<g:render template="/shared/shareDocumentTemplate"/>
+		<g:render template="/topic/createTopic"/>
+		<g:render template="/shared/sendInvitation"/>
+		<g:render template="/resource/shareLink"/>
+		<g:render template="/resource/shareDocument"/>
 
 
 		<g:layoutBody/>

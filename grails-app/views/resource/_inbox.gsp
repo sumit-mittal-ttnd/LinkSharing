@@ -1,3 +1,4 @@
+%{--Unread Resources of my subscribed Topics--}%
 <div class="col-xs-7 pull-right" >
     <div class="panel panel-default">
         <div class="panel-heading">Inbox <a href="#" class="pull-right">View All</a></div>

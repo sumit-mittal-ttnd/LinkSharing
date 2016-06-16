@@ -9,34 +9,32 @@
             </div>
             <div class="modal-body panel-body">
 
-                <form class="form-horizontal">
+                <g:form controller="topic" action="save" method="POST" class="form-horizontal">
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
                             <label class=" control-label" for="fName">Name* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <input class="form-control" placeholder="Name" type="text" id="fName"/>
+                            <g:textField id="fName" name="name" class="form-control" placeholder="Name"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class="control-label" for="lName">Visibility* :</label>
+                            <label class="control-label" for="visibility">Visibility* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <select id="lName" class="form-control">
-                                <option>Public</option>
-                                <option>Friends</option>
-                                <option>Only Me</option>
+                            <select id="visibility" name="visibility" class="form-control">
+                                <option value="PUBLIC">Public</option>
+                                <option value="PRIVATE">Private</option>
                             </select>
                         </div>
 
                     </div>
 
                     <div>
-                        <button class="col-xs-3 pull-right">Cancel</button>
                         <button class="col-xs-3 pull-right">Save</button>
                     </div>
-                </form>
+                </g:form>
 
 
             </div>

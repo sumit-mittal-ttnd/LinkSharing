@@ -28,21 +28,26 @@ class Topic {
 
     static mapping = {
         sort id: "desc"
+        subscriptions lazy: false
+        resources lazy: false
     }
 
+    def afterInsert = {
+        Topic.withNewSession {session ->
+            Subscription subscription = new Subscription(topic: this, user: createdBy, seriousness: Subscription.Seriousness.VERY_SERIOUS);
+            subscription.save(flush: true, failOnError: true);
+        }
+    }
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof Topic)) return false
 
         Topic topic = (Topic) o
 
-        if (createdBy != topic.createdBy) return false
         if (dateCreated != topic.dateCreated) return false
         if (id != topic.id) return false
         if (lastUpdated != topic.lastUpdated) return false
         if (name != topic.name) return false
-        if (resources != topic.resources) return false
-        if (subscriptions != topic.subscriptions) return false
         if (version != topic.version) return false
         if (visibility != topic.visibility) return false
 
@@ -52,7 +57,6 @@ class Topic {
     int hashCode() {
         int result
         result = name.hashCode()
-        result = 31 * result + createdBy.hashCode()
         result = 31 * result + visibility.hashCode()
         result = 31 * result + dateCreated.hashCode()
         result = 31 * result + lastUpdated.hashCode()
