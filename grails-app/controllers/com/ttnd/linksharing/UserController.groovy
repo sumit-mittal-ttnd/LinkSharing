@@ -3,29 +3,19 @@ package com.ttnd.linksharing
 class UserController {
 
     UserService userService;
+    TopicService topicService;
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
-        render(view:"dashboard", model:[user:user])
-    }
-
-    def edit(){
-        User user = User.get(session.getAttribute("userId"));
-        render(view:"profile", model:[user:user]);
+        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics()])
     }
 
     def update(){
         User user = User.get(session.getAttribute("userId"));
-        user.setFirstName(params.get("firstName"));
-        user.setLastName(params.get("lastName"));
-        user.setUserName(params.get("userName"));
-        user.setPhoto(params.get("photo"));
-
-        user.merge(flush: true, failOnError: true);
+        userService.update(user, params);
         flash.message = message(code: 'User.updated.success.message');
         redirect (controller: 'user', action: 'index')
     }
-
 
     def list(){
         User user = User.get(session.getAttribute("userId"));

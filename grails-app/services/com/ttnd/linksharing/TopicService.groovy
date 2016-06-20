@@ -1,7 +1,10 @@
 package com.ttnd.linksharing
 
+import grails.plugin.mail.MailService
+
 class TopicService {
 
+    MailService mailService;
     SubscriptionService subscriptionService;
 
     Topic init(Map params, User user){
@@ -12,11 +15,51 @@ class TopicService {
         return topic;
     }
 
-    void create(Topic topic) {
+    void save(Topic topic) {
         topic.save(flush: true, failOnError: true);
-        /*Topic.withNewSession {session ->
-            subscriptionService.subscribeTopic(topic, topic.getCreatedBy(), Subscription.Seriousness.VERY_SERIOUS);
-        }*/
+    }
+
+
+    // Topic Visibility = PUBLIC    OR     Subscribed By Me
+    // Ordered by No Of Resources
+    List<Topic> findTrendingTopics(){
+        List<Topic> topics = Topic.createCriteria().listDistinct {
+            /*and{
+                order("avgRating", "desc")
+                maxResults 5
+                "topic"{
+                    eq("visibility", Topic.Visibility.PUBLIC)
+                }
+            }*/
+        };
+        return topics;
+    }
+
+    void sendInvite(Map params, Long loggedInUserId){
+        Topic topic = Topic.get(params.get("topicId"));
+        String email = params.get("email");
+        mailService.sendMail {
+            async true
+            to email
+            subject "Invitation For "+topic.getName()+" - LinkSharing"
+            html(view:'/mail/_invitation', model:[email:email,firstName:User.get(loggedInUserId).firstName, topicId : topic.id, topicName : topic.name])
+        }
+
+
+    }
+
+
+    // Public and private(if subscribed by me)
+    List<Topic> findTopics(User user){
+        List<Topic> topics = Topic.createCriteria().listDistinct {
+            or{
+                eq("visibility", Topic.Visibility.PUBLIC)
+                "subscriptions"{
+                    eq("user", user)
+                }
+            }
+        };
+        return topics;
     }
 
 

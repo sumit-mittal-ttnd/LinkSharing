@@ -24,13 +24,13 @@
 
                     <span class="dropdown">
                         <button class="dropdown-toggle" type="button" data-toggle="dropdown">
-                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;${userFirstName}<span class="caret"></span>
+                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;${session.userFirstName}<span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><g:link action="edit" controller="user">Profile</g:link></li>
+                            <li><g:link action="showUser" controller="login" params="[userId:session.userId]">Profile</g:link></li>
                             <g:if test="${session.userIsAdmin == 'TRUE'}">
                                 <li><g:link action="list" controller="user">Users</g:link></li>
-                                <li><a href="#">Topics</a></li>
+                                <li><g:link action="list" controller="topic">Topics</g:link></li>
                                 <li><a href="#">Posts</a></li>
                             </g:if>
                             <li><g:link action="logout" controller="login">Logout</g:link></li>

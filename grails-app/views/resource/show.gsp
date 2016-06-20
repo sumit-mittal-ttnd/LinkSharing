@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Link Sharing App</title>
 
     <style>
     .tab-space {
@@ -15,41 +15,32 @@
 <body>
 <div class="container">
 
-
     <g:render template="/shared/header"/>
 
 
     <div class="row">
 
-        <div class="col-xs-5" >
+        <div class="col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <g:render template="/shared/userGrid" model="[userObj:user]"/>
+                    <g:render template="/shared/resourceGrid" model="[resourceObj: resource]"/>
                 </div>
             </div>
         </div>
 
-        <g:if test="${session.userId}">
-            <g:render template="/user/profileEdit"/>
-        </g:if>
-        <g:else>
-            hiii
-        </g:else>
-
-        <div class="col-xs-5" >
+        <div class="col-xs-6 pull-right" >
             <div class="panel panel-default">
-                <div class="panel-heading"><a>Topics</a></div>
+                <div class="panel-heading"><a>Trending topics</a></div>
                 <div class="panel-body">
-                    <g:each var="topicObj" in="${topics}">
+                    <g:each var="topicObj" in="${trendingTopics}">
                         <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>
                     </g:each>
                 </div>
             </div>
         </div>
 
-        <g:render template="/user/changePassword"/>
-
     </div>
+
 </div>
 </body>
 </html>

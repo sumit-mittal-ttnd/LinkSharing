@@ -8,11 +8,13 @@ class User {
     String confirmPassword;
     String firstName;
     String lastName;
-    Byte photo;
+    String photoUrl="/home/ttnd/sumit/GrailsProject/LinkSharing/grails-app/assets/images/userIcon.png";
     Boolean admin;
+    String activateCode;
     Boolean active;
     Date dateCreated;
     Date lastUpdated;
+
 
     Set<Topic> topics;
     Set<Subscription> subscriptions;
@@ -34,12 +36,13 @@ class User {
                 )
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
-        photo(nullable: true, blank: true)
+        photoUrl(nullable: true, blank: true)
         admin(nullable: true, blank: true)
         active(nullable: true, blank: true)
 
-        userName(nullable: true, blank: true)
+        userName(unique: true, nullable: true, blank: true)
         topics(nullable: true, blank: true)
+        activateCode(nullable: true, blank: true)
     }
 
 
@@ -72,7 +75,7 @@ class User {
         if (lastName != user.lastName) return false
         if (lastUpdated != user.lastUpdated) return false
         if (password != user.password) return false
-        if (photo != user.photo) return false
+        if (photoUrl != user.photoUrl) return false
         if (userName != user.userName) return false
         if (version != user.version) return false
 
@@ -86,7 +89,7 @@ class User {
         result = 31 * result + password.hashCode()
         result = 31 * result + firstName.hashCode()
         result = 31 * result + lastName.hashCode()
-        result = 31 * result + (photo != null ? photo.hashCode() : 0)
+        result = 31 * result + (photoUrl != null ? photoUrl.hashCode() : 0)
         result = 31 * result + (admin != null ? admin.hashCode() : 0)
         result = 31 * result + (active != null ? active.hashCode() : 0)
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0)

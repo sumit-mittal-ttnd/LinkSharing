@@ -31,8 +31,9 @@
 
                     </div>
 
-                    <div>
+                    <div class="modal-footer">
                         <button class="col-xs-3 pull-right">Save</button>
+                        <button type="button" class="col-xs-3 pull-right" data-dismiss="modal">Close</button>
                     </div>
                 </g:form>
 

@@ -3,6 +3,7 @@ package com.ttnd.linksharing
 class ApplicationFilters {
 
     SubscriptionService subscriptionService;
+    TopicService topicService;
 
     def filters = {
 
@@ -15,12 +16,11 @@ class ApplicationFilters {
                 }
             }
 
-
             after = { Map model ->
                 if (model != null) {
                     User user = User.load(session.getAttribute("userId"));
-                    model.userFirstName = user.getFirstName();
                     model.subscribedTopics = subscriptionService.findSubscribedTopics(user);
+                    model.topicsList = topicService.findTopics(user);
                 }
             }
 
@@ -28,7 +28,6 @@ class ApplicationFilters {
             afterView = { Exception e ->
             }
         }
-
 
     }
 }

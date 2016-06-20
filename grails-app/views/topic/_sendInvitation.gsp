@@ -8,36 +8,35 @@
                 <h4 class="modal-title">Send Invitation</h4>
             </div>
             <div class="modal-body panel-body">
-
-                <form class="form-horizontal">
+            <g:form controller="topic" action="sendInvite" method="POST" class="form-horizontal">
 
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class=" control-label" for="fName">Email* :</label>
+                            <label class=" control-label" for="email">Email* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <textarea class="form-control" placeholder="Email" type="text" id="fName"></textarea>
+                            <g:textField id="email" name="email" class="form-control" placeholder="Email"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class="control-label" for="lName">Topic* :</label>
+                            <label class="control-label" for="topicId">Topic* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <select id="lName" class="form-control">
-                                <option>Topic</option>
-                                <option>Topic</option>
-                                <option>Topic</option>
-                            </select>
+                            <g:select id="topicId"
+                                      name="topicId"
+                                      from="${topicsList}"
+                                      optionKey="id"
+                                      optionValue="name"
+                                      class="form-control"/>
                         </div>
                     </div>
 
-                    <div class="">
-                        <button class="col-xs-3 pull-right">Cancel</button>
+                    <div class="modal-footer">
                         <button class="col-xs-3 pull-right">Invite</button>
+                        <button type="button" class="col-xs-3 pull-right" data-dismiss="modal">Close</button>
                     </div>
-                </form>
-
+            </g:form>
             </div>
 
         </div>

@@ -34,15 +34,16 @@
                         <div class="col-xs-8 ">
                             <g:select id="topicId"
                                       name="topicId"
-                                      from="${subscribedTopics}"
+                                      from="${topicsList}"
                                       optionKey="id"
                                       optionValue="name"
                                       class="form-control"/>
                         </div>
                     </div>
-                    <div class="">
-                        <button class="col-xs-3 pull-right">Cancel</button>
+
+                    <div class="modal-footer">
                         <button class="col-xs-3 pull-right">Share</button>
+                        <button type="button" class="col-xs-3 pull-right" data-dismiss="modal">Close</button>
                     </div>
                 </g:form>
 

@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="">
-                    <a class="col-xs-4" href="#">Forget Password</a>
+                    <a aria-hidden="true" title="Forget Password" data-toggle="modal" data-target="#forgotPasswordModal">Forget Password</a>
                     <g:submitButton name="Login"  value="Login" class="pull-right col-xs-4"/>
                 </div>
             </g:form>

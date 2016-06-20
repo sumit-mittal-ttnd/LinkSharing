@@ -3,7 +3,7 @@
 <head>
     <meta name="layout" content="main"/>
     <meta charset="UTF-8">
-    <title>Topics List</title>
+    <title>Topic</title>
 
     <style>
     .tab-space {
@@ -20,11 +20,41 @@
 
 
     <div class="row">
-        NAME : ${topic.name}<br/>
-        CREATEDBY : ${topic.createdBy.firstName} ${topic.createdBy.lastName}<br/>
-        VISIBILITY : ${topic.visibility}<br/>
-        DATE CREATED : ${topic.dateCreated}<br/>
-        LAST UPDATED : ${topic.lastUpdated}<br/>
+
+        <div class="col-xs-5" >
+            <div class="panel panel-default">
+                <div class="panel-heading">Topic : "${topic.name}"</div>
+                <div class="panel-body">
+                    <g:render template="/shared/topicGrid" model="[topicObj:topic]"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-7 pull-right" >
+            <div class="panel panel-default">
+                <div class="panel-heading">Post : "${topic.name}"</div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <g:each var="resourceObj" in="${topic.resources}" status="i">
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                        </g:each>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-5" >
+            <div class="panel panel-default">
+                <div class="panel-heading">Users : "${topic.name}"</div>
+                <div class="panel-body">
+                    <g:each var="subscriptionObj" in="${topic.subscriptions}" status="i">
+                        <g:render template="/shared/userGrid" model="[userObj:subscriptionObj.user]"/>
+                    </g:each>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </body>

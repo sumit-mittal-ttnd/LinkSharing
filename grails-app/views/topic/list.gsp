@@ -21,7 +21,7 @@
 
     <div class="row">
         <g:each var="topic" in="${topicsListByUser}">
-            <g:link action="show" controller="topic" params="[id:topic.id]">${topic.name}</g:link> - ${topic.visibility} - ${topic.dateCreated} - ${topic.lastUpdated} - ${topic.createdBy.firstName} ${topic.createdBy.lastName}
+            <g:link action="showTopic" controller="login" params="[id:topic.id]">${topic.name}</g:link> - ${topic.visibility} - ${topic.dateCreated} - ${topic.lastUpdated} - ${topic.createdBy.firstName} ${topic.createdBy.lastName}
             <br/>
         </g:each>
     </div>

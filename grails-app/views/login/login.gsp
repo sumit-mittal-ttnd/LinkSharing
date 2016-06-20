@@ -13,23 +13,55 @@
 </head>
 
 <body>
-<div class="container">
+    <div class="container">
+
+        <g:render template="/shared/header"/>
 
 
-    <g:render template="/shared/header"/>
+        <div class="row">
 
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Recent Shares</div>
+                    <div class="panel-body">
+                        <g:each var="resourceObj" in="${recentResources}">
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                            <br/>
+                        </g:each>
+                    </div>
+                </div>
+            </div>
 
-    <div class="row">
+            <g:render template="/login/Login"/>
 
-        <g:render template="/resource/RecentShared"/>
+            <g:render template="/login/Register"/>
 
-        <g:render template="/login/Login"/>
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-9"><span>Top posts</span></div>
+                            <div class="col-xs-3 pull-right">
+                                <select class="dropdown">
+                                    <option>Today</option>
+                                    <option>1 Week</option>
+                                    <option>1 Month</option>
+                                    <option>1 Year</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <g:each var="resourceObj" in="${topResources}">
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                            <br/>
+                        </g:each>
+                    </div>
+                </div>
+            </div>
 
-        <g:render template="/shared/Register"/>
-
-        <g:render template="/resource/topPost"/>
+        </div>
 
     </div>
-</div>
 </body>
 </html>

@@ -11,6 +11,17 @@
 			<g:layoutTitle default="LinkSharing App"/>
 		</title>
 
+		<style>
+		.msg{
+			border: 1px solid transparent;
+			border-radius: 4px;
+			padding: 15px;
+		}
+		.clear {
+			clear: both;
+		}
+		</style>
+
 
 		%{--Added Scripts and Style Sheets--}%
 		<asset:stylesheet src="bootstrap.min.css"/>
@@ -29,7 +40,7 @@
 
 		%{--Added for error messages--}%
 		<g:hasErrors bean="${user}">
-			<div class="alert alert-danger">
+			<div id="alert1" class="msg alert-danger">
 				<g:eachError var="err" bean="${user}">
 					<g:message error="${err}"/>
 				</g:eachError>
@@ -39,18 +50,19 @@
 
 		<div class="flashDiv">
 			<g:if test="${flash.error}">
-				<div class="alert alert-danger" style="display: block">${flash.error}</div><br/>
+				<span id="alert2" class="msg alert-danger" style="display: block">${flash.error}</span>
 			</g:if>
 			<g:if test="${flash.message}">
-				<div class="alert alert-success" style="display: block">${flash.message}</div><br/>
+				<span id="success1" class="msg alert-success" style="display: block">${flash.message}</span>
 			</g:if>
 		</div>
 
 
 		<g:render template="/topic/createTopic"/>
-		<g:render template="/shared/sendInvitation"/>
+		<g:render template="/topic/sendInvitation"/>
 		<g:render template="/resource/shareLink"/>
 		<g:render template="/resource/shareDocument"/>
+		<g:render template="/user/forgotPassword"/>
 
 
 		<g:layoutBody/>
@@ -58,3 +70,11 @@
 
 	</body>
 </html>
+
+<script type="text/javascript">
+	setInterval(function () {
+		$('#alert1').fadeOut(600);
+		$('#alert2').fadeOut(600);
+		$('#success1').fadeOut(400);
+	}, 2000);
+</script>

@@ -1,8 +1,0 @@
-.idea
-.project
-.classpath
-*.class
-target/
-.slcache/
-out/
-test/
