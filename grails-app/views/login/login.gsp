@@ -40,7 +40,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-xs-9"><span>Top posts</span></div>
+                            <div class="col-xs-9"><span>Top Posts</span></div>
                             <div class="col-xs-3 pull-right">
                                 <select class="dropdown">
                                     <option>Today</option>

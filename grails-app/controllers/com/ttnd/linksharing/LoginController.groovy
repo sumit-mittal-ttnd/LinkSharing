@@ -121,8 +121,9 @@ class LoginController {
 
 
     def showResource(){
-        Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
-        render(view:"/resource/show", model:[resource:resource, trendingTopics:topicService.findTrendingTopics()]);
+            Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
+            User user = User.get(session.getAttribute("userId"));
+            render(view:"/resource/show", model:[resource:resource, user:user, trendingTopics:topicService.findTrendingTopics()]);
     }
 
 }

@@ -9,7 +9,9 @@
             <div class="col-xs-4">
                 <g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link>
                 <br/> <small>@${userObj.firstName}</small>
-                %{--<br/> <g:link action="delete" controller="subscription" params="['subscription.id':subscribeObj.id]">Unsubscribe</g:link>--}%
+                <g:if test="${session.userId != userObj.id}">
+                    %{--<br/> <g:link action="delete" controller="subscription" params="['subscription.id':subscribeObj.id]">Unsubscribe</g:link>--}%
+                </g:if>
             </div>
             <div class="col-xs-4">
                 <br/><small>Subscription</small> <br/>
@@ -26,7 +28,7 @@
         <br/>
         <div class="col-xs-2"></div>
         <div class="col-xs-4">
-            <g:if test="${session.userId == userObj.id}">
+            <g:if test="${session.userId != userObj.id}">
                 %{--<g:select name="seriousness" from="${['SERIOUS','VERY_SERIOUS','CASUAL']}" value="${subscribeObj.seriousness}"/>--}%
             </g:if>
         </div>

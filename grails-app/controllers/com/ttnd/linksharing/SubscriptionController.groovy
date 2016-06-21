@@ -30,7 +30,9 @@ class SubscriptionController {
         redirect(controller:'user', action:'index');
     }
 
-
+    def findSubscriptionsByUser(){
+        render(view:"list", model:[subscriptions:subscriptionService.findSubscriptionsByUser(User.get(params.get("userId")))])
+    }
 
 
 

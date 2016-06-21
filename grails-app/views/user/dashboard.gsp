@@ -21,7 +21,6 @@
 
     <div class="row">
 
-
         <div class="col-xs-5" >
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -33,7 +32,9 @@
         %{--Unread Resources of my subscribed Topics--}%
         <div class="col-xs-7 pull-right" >
             <div class="panel panel-default">
-                <div class="panel-heading">Inbox <a href="#" class="pull-right">View All</a></div>
+                <div class="panel-heading">Inbox
+                <g:link action="showAllInbox" controller="resource" params="[userId:user.id]" class="pull-right">View All</g:link>
+                </div>
                 <div class="panel-body">
                     <div class="panel-body">
                         <g:each var="resourceObj" in="${user.resources}" status="i">
@@ -43,14 +44,16 @@
                 </div>
             </div>
         </div>
-        <div class="clear"></div>
 
         <div class="col-xs-5" >
             <div class="panel panel-default">
-                <div class="panel-heading">Subscriptions <a href="#" class="pull-right">View All</a></div>
+
+                <div class="panel-heading">Subscriptions
+                <g:link action="findSubscriptionsByUser" controller="subscription" params="[userId:user.id]" class="pull-right">View All</g:link>
+                </div>
                 <div class="panel-body">
                     %{--TOPICS i am subscribed too--}%
-                    <g:each var="subscribeObj" in="${user.subscriptions}" status="i">
+                    <g:each var="subscribeObj" in="${subscriptionsByUser}" status="i">
                         <g:render template="/shared/subscriptionGrid" model="[subscribeObj: subscribeObj]"/>
                     </g:each>
 
@@ -71,6 +74,7 @@
 
 
     </div>
+
 </div>
 </body>
 </html>

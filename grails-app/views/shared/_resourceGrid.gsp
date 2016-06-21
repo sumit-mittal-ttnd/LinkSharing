@@ -10,9 +10,9 @@
 
     <div class="col-xs-9">
         <div>
-            <p style="font-size: 12px">${topicCreatedBy.firstName} ${topicCreatedBy.lastName}
-                <span class="small text-center">@${topicCreatedBy.firstName} <g:formatDate format="dd-MMM-yyyy" date="${resourceObj.lastUpdated}"/></span>
-                <a href="#" class="pull-right">${resourceObj.topic.name}</a><br/>
+            <p style="font-size: 12px">${resourceAddedBy.firstName} ${resourceAddedBy.lastName}
+                <span class="small text-center">@${resourceAddedBy.firstName} <g:formatDate format="dd-MMM-yyyy" date="${resourceObj.lastUpdated}"/></span>
+                <g:link action="showTopic" controller="login" params="[id:resourceObj.topic.id]" class="pull-right">${resourceObj.topic.name}</g:link><br/>
                 ${resourceObj.description}
             </p>
         </div>
@@ -22,12 +22,23 @@
             <a href="#"><i class="fa fa-twitter"></i></a>
             <a href="#"><i class="fa fa-google-plus"></i></a>
             <div class="pull-right">
-                <a href="#" class="tab-space"><small>Download</small></a>
-                <a href="#" class="tab-space"><small>View full site</small></a>
-                <a href="#" class="tab-space"><small>Mark as read</small></a>
-                <g:link action="showResource" controller="login" params="['resourceId':resourceObj.id]">View Post</g:link>
+            <g:if test="${session.userId}">
+                <g:if test="${resourceObj.instanceOf(com.ttnd.linksharing.LinkResource)}">
+                    <g:link url="${resourceObj.url}" target="_blank" class="small">View full site</g:link>
+                </g:if>
+                <g:else>
+                    <g:link action="showResource" controller="login" params="['resourceId':resourceObj.id]" class="small">Download</g:link>
+                </g:else>
+                <g:if test="${session.userIsAdmin=='TRUE' || session.userId == resourceAddedBy.id}">
+                    <g:link action="markAsRead" controller="resource" params="['resourceId':resourceObj.id]" class="small">Mark as read</g:link>
+                </g:if>
+            </g:if>
+                <g:link action="showResource" controller="login" params="['resourceId':resourceObj.id]" class="small">View Post</g:link>
             </div>
         </div>
     </div>
 </div>
 <hr>
+
+
+

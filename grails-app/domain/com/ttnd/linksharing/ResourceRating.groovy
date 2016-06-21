@@ -19,14 +19,19 @@ class ResourceRating {
 
     def afterInsert = {
         ResourceRating.withNewSession {session ->
-            int count = ResourceRating.countByResource(this.resource);
-            int newAvgRating = 0;
-            List<ResourceRating> list = ResourceRating.findByResource(this.resource);
-            for(ResourceRating resRat : list){
-                newAvgRating += resRat.score;
+            try{
+                int count = ResourceRating.countByResource(this.resource);
+                int newAvgRating = 0;
+                List<ResourceRating> list = ResourceRating.findAllByResource(this.resource);
+                for(ResourceRating resRat : list){
+                    newAvgRating += resRat.score;
+                }
+                this.resource.avgRating = newAvgRating/count;
+                this.resource.save(flush: true, failOnError: true);
+            } catch(Exception e){
+                e.printStackTrace()
             }
-            this.resource.avgRating = newAvgRating/count;
-            this.resource.save(flush: true, failOnError: true);
+
         }
     }
 

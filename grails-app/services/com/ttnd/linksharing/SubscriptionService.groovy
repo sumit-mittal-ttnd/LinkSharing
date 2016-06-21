@@ -45,5 +45,20 @@ class SubscriptionService {
         return topics;
     }
 
+    List<Subscription> findSubscriptionsByUser(User user){
+        List<Subscription> subscriptions;
+
+        subscriptions = Subscription.createCriteria().listDistinct {
+            and {
+                "topic"{
+                    order("name", "asc")
+                }
+                if(!user.admin){
+                    eq("user", user)
+                }
+            }
+        };
+        return subscriptions;
+    }
 
 }

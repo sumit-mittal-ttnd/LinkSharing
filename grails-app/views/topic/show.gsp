@@ -18,7 +18,6 @@
 
     <g:render template="/shared/header"/>
 
-
     <div class="row">
 
         <div class="col-xs-5" >

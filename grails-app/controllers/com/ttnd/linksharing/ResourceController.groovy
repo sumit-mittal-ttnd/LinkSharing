@@ -65,6 +65,13 @@ class ResourceController {
         redirect(controller: 'user', action: 'index')
     }
 
+    def markAsRead(){
+        Resource resource = Resource.get(params.get("resourceId"));
+        // TODO
+        flash.message = message(code: 'Resource.mark.as.read.success.message');
+        redirect(controller: 'user', action: 'index')
+    }
+
 
 
 }

@@ -15,7 +15,6 @@ class ApplicationFilters {
                     return false;
                 }
             }
-
             after = { Map model ->
                 if (model != null) {
                     User user = User.load(session.getAttribute("userId"));
@@ -23,11 +22,24 @@ class ApplicationFilters {
                     model.topicsList = topicService.findTopics(user);
                 }
             }
-
-
             afterView = { Exception e ->
             }
         }
+
+        preLogin(controller: 'login', action: '*') {
+            after = { Map model ->
+                if (model != null) {
+                    User user = User.get(session.getAttribute("userId"));
+                    if(user != null){
+                        model.subscribedTopics = subscriptionService.findSubscribedTopics(user);
+                        model.topicsList = topicService.findTopics(user);
+                    }
+                }
+            }
+            afterView = { Exception e ->
+            }
+        }
+
 
     }
 }

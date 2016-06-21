@@ -14,15 +14,13 @@
             </div>
 
             <div class="col-xs-3">
-                %{--<a href="javascript:showDialog('createTopicDiv');"><i class="fa fa-weixin" aria-hidden="true" title="Create Topic"></i></a>--}%&nbsp;
-
                 <g:if test="${session.userId}">
-                    <a class="fa fa-weixin" aria-hidden="true" title="Create Topic" data-toggle="modal" data-target="#topicModal"></a>
-                    <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" data-toggle="modal" data-target="#sendInviModal"></a>
-                    <a class="fa fa-link" aria-hidden="true" title="Share Link" data-toggle="modal" data-target="#shareLinkModal"></a>
-                    <a class="fa fa-file-o" aria-hidden="true" title="Share Document" data-toggle="modal" data-target="#shareDocumentModal"></a>
+                    <a class="fa fa-weixin" aria-hidden="true" title="Create Topic" style="font-size:30px;" data-toggle="modal" data-target="#topicModal"></a>&nbsp;
+                    <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" style="font-size:30px;" data-toggle="modal" data-target="#sendInviModal"></a>&nbsp;
+                    <a class="fa fa-link" aria-hidden="true" title="Share Link" style="font-size:30px;" data-toggle="modal" data-target="#shareLinkModal"></a>&nbsp;
+                    <a class="fa fa-file-o" aria-hidden="true" title="Share Document" style="font-size:25px;" data-toggle="modal" data-target="#shareDocumentModal"></a>&nbsp;
 
-                    <span class="dropdown">
+                    <span class="dropdown pull-right">
                         <button class="dropdown-toggle" type="button" data-toggle="dropdown">
                             <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;${session.userFirstName}<span class="caret"></span>
                         </button>
