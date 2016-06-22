@@ -3,7 +3,7 @@
         <div class="panel-heading">Register</div>
 
         <div class="panel-body">
-            <g:form controller="login" action="register" method="POST" class="form-horizontal">
+            <g:form controller="login" action="register" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
                         <label class=" control-label" for="fName">First Name *</label>
@@ -70,12 +70,7 @@
                     </div>
 
                     <div class="col-xs-8">
-                        <input class="col-xs-4" type="text"/>
-                        %{--<input class="col-xs-8" type="file" id="photo"/>
-                        <g:uploadForm name="myUpload" action="actionName" controller="controllerName">
-                            <input type="file" id="photo" name="photo" class="col-xs-8" />
-                        </g:uploadForm>--}%
-
+                        <input type="file" class="col-xs-8" id="photo" name="photo">
                     </div>
                 </div>
 

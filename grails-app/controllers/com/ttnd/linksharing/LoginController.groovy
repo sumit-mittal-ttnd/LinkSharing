@@ -6,6 +6,8 @@ class LoginController {
     LoginService loginService;
     ResourceService resourceService;
     TopicService topicService;
+    SubscriptionService subscriptionService;
+
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
@@ -42,11 +44,11 @@ class LoginController {
     }
 
     def register(){
-        User user = loginService.preRegister(new User(params));
+        User user = loginService.preRegister(params);
         if(!user.validate()){
             flash.error = message(code: 'User.invalid.message');
         }else{
-            loginService.register(user);
+            loginService.register(user, params);
             flash.message = message(code: 'User.register.success.message');
         }
         redirect (controller: 'login', action: 'index')
@@ -125,5 +127,51 @@ class LoginController {
             User user = User.get(session.getAttribute("userId"));
             render(view:"/resource/show", model:[resource:resource, user:user, trendingTopics:topicService.findTrendingTopics()]);
     }
+
+    def image(final Long id) {
+        FileInputStream fileInputStream;
+        File file;
+        byte[] photo = null;
+        try {
+            User user = User.load(id);
+
+            if (user && user.photoUrl) {
+                file = new File(user.photoUrl);
+                photo = new byte[(int)file.length()];
+                fileInputStream = new FileInputStream(file);
+                fileInputStream.read(photo);
+            }
+
+            response.contentLength = photo?.length;
+            response.contentType = 'image/png';
+            response.outputStream << photo;
+            response.outputStream.flush();
+
+        } catch (Exception ex) {
+            log.error("Exception in image():UserController : ", ex);
+        }
+        finally {
+            try {
+                if (fileInputStream) {
+                    fileInputStream.close();
+                }
+            } catch (Exception ex) {
+                log.error("Exception while closing FileInputStream : ", ex);
+            }
+        }
+    }
+
+    def findSubscriptionsByUser(){
+        render(view:"subscription/list", model:[subscriptions:subscriptionService.findSubscriptionsByUser(User.get(params.get("userId")))])
+    }
+
+    def downloadResource(){
+        DocumentResource docResource = (DocumentResource)Resource.get(params.get("resourceId"));
+        def file = new File(docResource.getFilePath())
+        response.setContentType("application/octet-stream")
+        response.setHeader("Content-disposition", "filename=${file.getName()}")
+        response.outputStream << file.newInputStream()
+    }
+
 
 }

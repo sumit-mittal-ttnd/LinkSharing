@@ -9,14 +9,14 @@
             </div>
             <div class="modal-body panel-body">
 
-                <g:form controller="resource" action="save" method="POST" class="form-horizontal">
+                <g:form controller="resource" action="save" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <g:hiddenField name="resourceType" value="documentResource"/>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4">
                             <label class="control-label" for="photo">Document* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <input class="" type="file" id="photo">
+                            <input type="file" name="document" id="photo" class="col-xs-8"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
@@ -40,7 +40,6 @@
                                       class="form-control"/>
                         </div>
                     </div>
-
 
                     <div class="modal-footer">
                         <button class="col-xs-3 pull-right">Share</button>

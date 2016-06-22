@@ -2,7 +2,7 @@
 <g:set var="userObj" value="${subscribeObj.user}"/>
     <div class="row">
         <div class="col-xs-3 ">
-            <g:img dir="images" file="${userObj.photoUrl}" width="80" height="80"/>
+            <tg:userImage userId="${userObj.id}" alt="user" class="img-circle" width="100" height="100"/>
         </div>
         <div class="col-xs-9">
             <div class="row">

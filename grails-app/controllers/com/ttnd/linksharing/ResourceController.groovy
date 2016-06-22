@@ -2,7 +2,7 @@ package com.ttnd.linksharing
 
 class ResourceController {
 
-    def index() { }
+    ResourceService resourceService;
 
     def delete(){
         def resourceId = params.get("id");
@@ -32,6 +32,9 @@ class ResourceController {
 
         resource.setAddedBy(User.get(session.getAttribute("userId")));
         resource.setTopic(Topic.get(params.get("topicId")));
+        if(params.document.size>0){
+            resourceService.uploadDocumentResource(resource, params);
+        }
 
         if(!resource.validate()){
             flash.error = message(code: 'Resource.uploaded.invalid.message');

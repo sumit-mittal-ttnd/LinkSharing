@@ -1,5 +1,8 @@
 package com.ttnd.linksharing
 
+import org.apache.commons.lang.RandomStringUtils
+import org.springframework.web.multipart.MultipartFile
+
 class ResourceService {
 
     // order by lastUpdated desc
@@ -44,7 +47,21 @@ class ResourceService {
         return resources;
     }
 
+    def uploadDocumentResource(DocumentResource documentResource, Map params){
+        String folderUrl = "/home/ttnd/sumit/document_resources/";
+        File file = new File(folderUrl);
+        if(!file.exists()){
+            file.mkdir();
+        }
 
+        MultipartFile document = params.document;
+        String originalFN = document.getOriginalFilename();
+        String extension = originalFN.substring(originalFN.lastIndexOf(".")+1,originalFN.length());
+
+        String docUrl = folderUrl + RandomStringUtils.randomAlphanumeric(10) + "." + extension;
+        documentResource.setFilePath(docUrl);
+        document.transferTo(new File(docUrl));
+    }
 
 
 }

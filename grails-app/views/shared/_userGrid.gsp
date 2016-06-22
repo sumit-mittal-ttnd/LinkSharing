@@ -1,5 +1,7 @@
 <div class="col-xs-4 ">
-    <g:img dir="images" file="${userObj.photoUrl}" width="80" height="80" class="img-rounded"/>
+    <g:link action="showUser" controller="login" params="['userId':userObj.id]">
+        <tg:userImage userId="${userObj.id}" alt="user" class="img-circle" width="100" height="100"/>
+    </g:link>
 </div>
 <div class="col-xs-8">
     <div class="row">

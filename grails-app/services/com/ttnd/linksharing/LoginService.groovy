@@ -2,26 +2,31 @@ package com.ttnd.linksharing
 
 import grails.plugin.mail.MailService
 import org.apache.commons.lang.RandomStringUtils
+import org.apache.commons.lang.StringUtils
 
 class LoginService {
 
     MailService mailService;
+    UserService userService;
 
-
-    User preRegister(User user){
+    User preRegister(Map params){
+        User user = new User(params);
         user.setActivateCode(RandomStringUtils.randomAlphanumeric(10));
         user.setAdmin(Boolean.FALSE);
-        user.setActive(Boolean.FALSE)
+        user.setActive(Boolean.FALSE);
         return user;
     }
 
-    def register(User user){
+    def register(User user, Map params){
         user.save(flush: true, failOnError: true);
         mailService.sendMail {
             async true
             to user.getEmail()
             subject "Welcome to LinkSharing App"
             html(view:'/mail/_registration', model:[firstName:user.firstName, activateCode:user.activateCode, userId:user.id])
+        }
+        if(params.photo.size>0){
+            userService.uploadUserPic(user, params);
         }
     }
 

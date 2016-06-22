@@ -1,8 +1,7 @@
 <div class="row">
     <div class=" panel panel-default">
         <div class="panel-body">
-
-            <div class="col-xs-6">
+            <div class="${session.userId ? 'col-xs-6' : 'col-xs-9'}">
                 <h3><g:link action="index" controller="login">Link Sharing</g:link></h3>
             </div>
 
@@ -13,8 +12,8 @@
                 </div>
             </div>
 
-            <div class="col-xs-3">
-                <g:if test="${session.userId}">
+            <g:if test="${session.userId}">
+                <div class="col-xs-3">
                     <a class="fa fa-weixin" aria-hidden="true" title="Create Topic" style="font-size:30px;" data-toggle="modal" data-target="#topicModal"></a>&nbsp;
                     <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" style="font-size:30px;" data-toggle="modal" data-target="#sendInviModal"></a>&nbsp;
                     <a class="fa fa-link" aria-hidden="true" title="Share Link" style="font-size:30px;" data-toggle="modal" data-target="#shareLinkModal"></a>&nbsp;
@@ -34,9 +33,8 @@
                             <li><g:link action="logout" controller="login">Logout</g:link></li>
                         </ul>
                     </span>
-                </g:if>
-            </div>
-
+                </div>
+            </g:if>
         </div>
     </div>
 

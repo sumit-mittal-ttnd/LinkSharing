@@ -16,8 +16,9 @@ class UserService {
         user.setFirstName(params.get("firstName"));
         user.setLastName(params.get("lastName"));
         user.setUserName(params.get("userName"));
-
-        uploadUserPic(user, params);
+        if(params.photo.size>0){
+            uploadUserPic(user, params);
+        }
         user.merge(flush: true, failOnError: true);
     }
 

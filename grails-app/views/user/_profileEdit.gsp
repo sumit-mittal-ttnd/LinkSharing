@@ -40,7 +40,7 @@
                     </div>
 
                     <div class="col-xs-8">
-                        <input type="file" class="col-xs-4" id="photo" name="photo"/>
+                        <input type="file" class="col-xs-8" id="photo" name="photo"/>
                     </div>
                 </div>
                 <g:submitButton name="update"  value="Update" class="pull-right col-xs-4"/>

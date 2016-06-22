@@ -49,7 +49,7 @@
             <div class="panel panel-default">
 
                 <div class="panel-heading">Subscriptions
-                <g:link action="findSubscriptionsByUser" controller="subscription" params="[userId:user.id]" class="pull-right">View All</g:link>
+                <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
                 </div>
                 <div class="panel-body">
                     %{--TOPICS i am subscribed too--}%

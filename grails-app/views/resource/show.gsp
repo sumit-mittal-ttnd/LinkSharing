@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-xs-3 ">
                                 <g:link action="showUser" controller="login" params="['userId':resourceAddedBy.id]">
-                                    <g:img dir="images" file="${resourceAddedBy.photoUrl}" width="100" height="100"/>
+                                    <tg:userImage userId="${resourceAddedBy.id}" alt="user" class="img-circle" width="100" height="100"/>
                                 </g:link>
                             </div>
 
@@ -98,21 +98,28 @@
         $(function () {
             $("#rateYo").rateYo({
                 rating: ${resource.avgRating},
-                starSize: 25,
+                starSize: 20,
                 fullStar: true,
                 onSet: function (rating, rateYoInstance) {
-                    $.ajax({
-                        url: "/resourceRating/rate",
-                        type:"post",
-                        dataType: 'json',
-                        data:'rating='+rating+"&resourceId="+${resource.id},
-                        success: function(data) {
-                            if(data.response == "success")
-                                alert("Rating has been saved successfully !!!");
-                            else
-                                alert("Some error has been occurred !!!");
-                        }
-                    });
+
+                    var sessionUserId = '${session.userId}';
+                    if(sessionUserId == '')
+                        alert("Please Login to give rating !!!");
+                    else{
+                        $.ajax({
+                            url: "/resourceRating/rate",
+                            type:"post",
+                            dataType: 'json',
+                            data:'rating='+rating+"&resourceId="+${resource.id},
+                            success: function(data) {
+                                if(data.response == "success")
+                                    alert("Rating has been saved successfully !!!");
+                                else
+                                    alert("Some error has been occurred !!!");
+                                location.reload();
+                            }
+                        });
+                    }
                 }
             });
         });
