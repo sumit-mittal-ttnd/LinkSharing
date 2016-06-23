@@ -27,24 +27,7 @@
                     <g:render template="/shared/userGrid" model="[userObj:user]"/>
                 </div>
             </div>
-        </div>
 
-        <div class="col-xs-7 pull-right" >
-            <div class="panel panel-default">
-                <div class="panel-heading">Inbox
-                <g:link action="showAllInbox" controller="resource" params="[userId:user.id]" class="pull-right">View All</g:link>
-                </div>
-                <div class="panel-body">
-                    <div class="panel-body">
-                        <g:each var="resourceObj" in="${unreadResources}" status="i">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
-                        </g:each>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-5" >
             <div class="panel panel-default">
                 <div class="panel-heading">Subscriptions
                 <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
@@ -59,6 +42,19 @@
 
         <div class="col-xs-7 pull-right" >
             <div class="panel panel-default">
+                <div class="panel-heading">Inbox
+                    <g:link controller="resource" action="findUnreadResourcesByUser" params="[userId:user.id]" class="pull-right">View All</g:link>
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        <g:each var="resourceObj" in="${unreadResources}" status="i">
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
+                        </g:each>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
                 <div class="panel-heading">Trending topics</div>
                 <div class="panel-body">
                     <g:each var="topicObj" in="${trendingTopics}">
@@ -67,7 +63,6 @@
                 </div>
             </div>
         </div>
-
 
     </div>
 

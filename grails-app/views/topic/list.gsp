@@ -36,7 +36,7 @@
                     <g:set var="classInfo" value="${ (i % 2) == 0 ? 'success' : 'info'}"/>
                     <tr class="${classInfo}">
                         <td>${topicObj.id}</td>
-                        <td>${topicObj.name}</td>
+                        <td><g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link></td>
                         <td>${topicObj.createdBy.firstName} ${topicObj.createdBy.lastName}</td>
                         <td>${topicObj.visibility}</td>
                         <td>${topicObj.subscriptions.size()}</td>

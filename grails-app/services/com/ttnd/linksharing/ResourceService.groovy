@@ -51,8 +51,16 @@ class ResourceService {
     }
 
     void markAsRead(Resource resource, User loggedInUser){
-        ReadingItem readingItem = new ReadingItem(resource: resource, user: loggedInUser, isRead: Boolean.TRUE);
-        readingItem.save(flush: true, failOnError: true);
+        boolean alreadyRead = Boolean.FALSE;
+        loggedInUser.readingItems.each {it ->
+            if(it.resource.id == resource.id)
+                alreadyRead = Boolean.TRUE;
+        }
+
+        if(!alreadyRead){
+            ReadingItem readingItem = new ReadingItem(resource: resource, user: loggedInUser, isRead: Boolean.TRUE);
+            readingItem.save(flush: true, failOnError: true);
+        }
     }
 
 
@@ -79,7 +87,7 @@ class ResourceService {
     }
 
     def uploadDocumentResource(DocumentResource documentResource, Map params){
-        String folderUrl = "/home/ttnd/sumit/document_resources/";
+        String folderUrl = "/home/ttnd/sumit/GrailsProject/document_resources/";
         File file = new File(folderUrl);
         if(!file.exists()){
             file.mkdir();

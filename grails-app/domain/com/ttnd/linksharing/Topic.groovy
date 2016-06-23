@@ -28,7 +28,6 @@ class Topic {
 
     static mapping = {
         sort id: "desc"
-        subscriptions lazy: false
         resources lazy: false
     }
 

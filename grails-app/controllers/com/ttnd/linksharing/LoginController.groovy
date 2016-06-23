@@ -99,12 +99,19 @@ class LoginController {
     def showTopic(){
         Topic topic = Topic.read(params.get("id"));
         User loggedInUser = User.get(session.getAttribute("userId"));
-        if(topic.visibility == Topic.Visibility.PUBLIC || (topic.visibility == Topic.Visibility.PRIVATE && Subscription.findByUserAndTopic(loggedInUser,topic) != null)){
+        /*if(topic.visibility == Topic.Visibility.PUBLIC || (topic.visibility == Topic.Visibility.PRIVATE && Subscription.findByUserAndTopic(loggedInUser,topic) != null)){
             render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)])
         }else{
             flash.message = message(code: 'Subscription.not.found.message');
             redirect(controller: 'user', action: 'index')
-        }
+        }*/
+        render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)])
+    }
+
+
+    def topicsCreated(){
+        User user = User.get(params.get("userId"));
+        render(view:"/topic/list", model:[topicsListByUser:user.topics]);
     }
 
     def showUser(){
@@ -113,8 +120,11 @@ class LoginController {
     }
 
     def showResource(){
-            User user = User.get(session.getAttribute("userId"));
-            render(view:"/resource/show", model:[resource:Resource.get(Integer.parseInt(params.get("resourceId"))), user:user, trendingTopics:topicService.findTrendingTopics(user)]);
+        User loggedInUser = User.get(session.getAttribute("userId"));
+        Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
+        if(loggedInUser != null)
+            resourceService.markAsRead(resource, loggedInUser);
+        render(view:"/resource/show", model:[resource: resource, trendingTopics:topicService.findTrendingTopics(loggedInUser), unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)]);
     }
 
     def image(final Long id) {

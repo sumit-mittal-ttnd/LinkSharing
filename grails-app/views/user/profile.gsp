@@ -46,7 +46,7 @@
 
             <div class="col-xs-5" >
                 <div class="panel panel-default">
-                    <div class="panel-heading"><a>Topics</div>
+                    <div class="panel-heading">Topics</div>
                     <div class="panel-body">
                         <g:each var="topicObj" in="${user.topics}">
                             <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>

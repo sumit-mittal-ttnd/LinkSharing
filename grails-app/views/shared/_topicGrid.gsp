@@ -1,8 +1,19 @@
-<g:set var="userObj" value="${topicObj.createdBy}"/>
+<g:set var="topicCreatedBy" value="${topicObj.createdBy}"/>
 
+<g:set var="subIdObj" value="0"></g:set>
+<g:set var="seriousnessObj" value="NO"></g:set>
+<g:each var="subObj" in="${topicObj.subscriptions}">
+    <g:if test="${subObj.user.id == session.userId}">
+        <g:set var="subIdObj" value="${subObj.id}"></g:set>
+        <g:set var="seriousnessObj" value="${subObj.seriousness}"></g:set>
+    </g:if>
+</g:each>
+
+
+<div class="row">
     <div class="col-xs-3 ">
-        <g:link action="showUser" controller="login" params="['userId':userObj.id]">
-            <tg:userImage userId="${userObj.id}" alt="user" class="img-circle" width="100" height="100"/>
+        <g:link action="showUser" controller="login" params="['userId':topicCreatedBy.id]">
+            <tg:userImage userId="${topicCreatedBy.id}" alt="user" class="img-circle" width="100" height="100"/>
         </g:link>
     </div>
 
@@ -10,9 +21,14 @@
         <div class="row">
             <div class="col-xs-4">
                 <g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link>
-                <br/> <small>@${userObj.firstName}</small>
-                <g:if test="${session.userId != userObj.id}">
-                    %{--<br/> <g:link action="delete" controller="subscription" params="['subscription.id':subscribeObj.id]">Unsubscribe</g:link>--}%
+                <br/> <small>@${topicCreatedBy.firstName}</small>
+                <g:if test="${topicCreatedBy.id != session.userId}">
+                    <g:if test="${subIdObj=='0'}">
+                        <a href="javascript:subscribe('${session.userId}', '${topicObj.id}')">Subscribe</a>
+                    </g:if>
+                    <g:else>
+                        <a href="javascript:unsubscribe(${subIdObj})">Unsubscribe</a>
+                    </g:else>
                 </g:if>
             </div>
             <div class="col-xs-4">
@@ -25,24 +41,25 @@
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <br/>
-        <div class="col-xs-2"></div>
-        <div class="col-xs-4">
-            <g:if test="${session.userId != userObj.id}">
-                %{--<g:select name="seriousness" from="${['SERIOUS','VERY_SERIOUS','CASUAL']}" value="${subscribeObj.seriousness}"/>--}%
-            </g:if>
-        </div>
-        <div class="col-xs-3">
-            <g:if test="${session.userId == userObj.id}">
-                <g:select name="visibility" from="${['PUBLIC','PRIVATE']}" value="${topicObj.visibility}"/>
-            </g:if>
-        </div>
-        <div class="col-xs-3">
-            <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-        </div>
+
+<div class="row">
+    <div class="col-xs-2"></div>
+    <div class="col-xs-4">
+        <g:if test="${subIdObj!='0'}">
+            <g:select name="seriousness" from="${['SERIOUS','VERY_SERIOUS','CASUAL']}" value="${seriousnessObj}"/>
+        </g:if>
     </div>
+    <div class="col-xs-3">
+        <g:if test="${session.userIsAdmin || session.userId == topicCreatedBy.id}">
+            <g:select name="visibility" from="${['PUBLIC','PRIVATE']}" value="${topicObj.visibility}"/>
+        </g:if>
+    </div>
+    <div class="col-xs-3">
+        <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" data-toggle="modal" data-target="#sendInviModal"></a>
+        <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+        <a href="javascript:deleteTopic('${topicObj.id}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+    </div>
+</div>
 <hr/>

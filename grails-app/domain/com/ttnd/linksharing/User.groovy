@@ -50,8 +50,6 @@ class User {
 
     static mapping = {
         sort name: "asc"
-        subscriptions lazy: false
-        topics lazy: false
     }
 
 

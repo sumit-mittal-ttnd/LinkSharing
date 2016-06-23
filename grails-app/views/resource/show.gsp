@@ -57,9 +57,9 @@
 
                         <div class="row">
                             <div class="col-xs-12 p-a-3">
-                                %{--<a href="#"><i class="fa fa-facebook-official"></i></a>
+                                <a href="#"><i class="fa fa-facebook-official"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-google-plus"></i></a>--}%
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
                                 <div class="pull-right">
                                     <g:if test="${resource.instanceOf(com.ttnd.linksharing.LinkResource)}">
                                         <g:link url="${resource.url}" target="_blank" class="small">View full site</g:link>
@@ -67,7 +67,8 @@
                                     <g:else>
                                         <g:link action="downloadResource" controller="login" params="['resourceId':resource.id]" class="small">Download</g:link>
                                     </g:else>
-                                    <g:if test="${session.userIsAdmin=='TRUE' || session.userId == resourceAddedBy.id}">
+
+                                    <g:if test="${session.userId && unreadResources.contains(resource)}">
                                         <a href="javascript:markAsRead(${resource.id})" class="small">Mark as read</a>
                                     </g:if>
                                 </div>

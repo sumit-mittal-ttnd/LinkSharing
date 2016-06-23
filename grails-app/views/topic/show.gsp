@@ -27,6 +27,16 @@
                     <g:render template="/shared/topicGrid" model="[topicObj:topic]"/>
                 </div>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Users : "${topic.name}"</div>
+                <div class="panel-body">
+                    <g:each var="subscriptionObj" in="${topic.subscriptions}" status="i">
+                        <g:render template="/shared/userGrid" model="[userObj:subscriptionObj.user]"/>
+                    </g:each>
+
+                </div>
+            </div>
         </div>
 
         <div class="col-xs-7 pull-right" >
@@ -38,18 +48,6 @@
                             <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                         </g:each>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xs-5" >
-            <div class="panel panel-default">
-                <div class="panel-heading">Users : "${topic.name}"</div>
-                <div class="panel-body">
-                    <g:each var="subscriptionObj" in="${topic.subscriptions}" status="i">
-                        <g:render template="/shared/userGrid" model="[userObj:subscriptionObj.user]"/>
-                    </g:each>
-
                 </div>
             </div>
         </div>

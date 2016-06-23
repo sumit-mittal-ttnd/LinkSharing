@@ -2,7 +2,7 @@ package com.ttnd.linksharing
 
 class ReadingItemService {
 
-    void create(Topic topic, User user, Boolean isRead){
+    /*void create(Topic topic, User user, Boolean isRead){
         Set<Resource> resources = topic.getResources();
         for(Resource resource : resources){
             // Because if user has added that resource then There shouldn't be entry in reading item
@@ -20,7 +20,7 @@ class ReadingItemService {
                 }
             }
         }
-    }
+    }*/
 
 
 

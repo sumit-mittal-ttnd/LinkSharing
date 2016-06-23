@@ -32,6 +32,12 @@
 		<asset:javascript src="application.js"/>
 		<asset:javascript src="bootstrap.min.js"/>
 
+
+		<script>
+			var USER_DASHBOARD_URL = "${g.createLink(controller:'user', action: 'index')}";
+		</script>
+
+
 		<g:layoutHead/>
 
 	</head>

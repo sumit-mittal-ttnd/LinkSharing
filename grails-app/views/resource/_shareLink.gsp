@@ -34,7 +34,7 @@
                         <div class="col-xs-8 ">
                             <g:select id="topicId"
                                       name="topicId"
-                                      from="${topicsList}"
+                                      from="${subscribedTopics}"
                                       optionKey="id"
                                       optionValue="name"
                                       class="form-control"/>

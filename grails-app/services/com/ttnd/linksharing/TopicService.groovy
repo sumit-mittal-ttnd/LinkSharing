@@ -6,7 +6,6 @@ class TopicService {
 
     MailService mailService;
 
-
 // ============================ CHECKED =============================
 
     // Topic Visibility = PUBLIC   OR   Subscribed By Me    +    Ordered by No Of Resources
@@ -23,8 +22,23 @@ class TopicService {
         return topics;
     }
 
+    void delete(Map params){
+        try {
+            Topic topic = Topic.get(params.get("topicId"))
+            topic.delete(flush: true);
+        } catch(Exception e){
+            e.printStackTrace()
+        }
+    }
 
-
+    List<Topic> findSubscribedTopicsByUser(User user){
+        List<Topic> topics = Topic.createCriteria().listDistinct {
+            "subscriptions"{
+                eq("user", user)
+            }
+        };
+        return topics;
+    }
 
 
 
@@ -44,8 +58,6 @@ class TopicService {
         topic.save(flush: true, failOnError: true);
     }
 
-
-
     void sendInvite(Map params, Long loggedInUserId){
         Topic topic = Topic.get(params.get("topicId"));
         String email = params.get("email");
@@ -58,36 +70,5 @@ class TopicService {
     }
 
 
-    // Public and private(if subscribed by me)
-    List<Topic> findTopics(User user){
-        List<Topic> topics = Topic.createCriteria().listDistinct {
-            or{
-                eq("visibility", Topic.Visibility.PUBLIC)
-                "subscriptions"{
-                    eq("user", user)
-                }
-            }
-        };
-        return topics;
-    }
 
-
-
-    /*List<Topic> findTrendingTopics(User loggedInUser){
-        List<Topic> topics = Subscription.createCriteria().listDistinct {
-            and{
-                projections{
-                    property("topic")
-                }
-                order("topic.resources.size", "desc")
-                or{
-                    "topic"{
-                        eq("visibility", Topic.Visibility.PUBLIC)
-                    }
-                    eq("user", loggedInUser)
-                }
-            }
-        };
-        return topics;
-    }*/
 }

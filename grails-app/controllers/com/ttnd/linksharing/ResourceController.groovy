@@ -6,6 +6,11 @@ class ResourceController {
 
     ResourceService resourceService;
 
+    def findUnreadResourcesByUser(){
+        render(view:"list", model:[resources:resourceService.findUnreadResourcesByUser(User.get(session.getAttribute("userId")))])
+    }
+
+
     def delete(){
         def resourceId = params.get("id");
         Resource resource = Resource.load(resourceId);

@@ -1,11 +1,10 @@
 package com.ttnd.linksharing
 
+import grails.converters.JSON
+
 class TopicController {
 
     TopicService topicService;
-    SubscriptionService subscriptionService;
-
-    def index() { }
 
     def save() {
         Topic topic = topicService.init(params, User.get(session.getAttribute("userId")));
@@ -19,13 +18,8 @@ class TopicController {
     }
 
     def topicsSubscribed(){
-        List<Topic> topics = subscriptionService.findSubscribedTopics(User.get(session.getAttribute("userId")));
+        List<Topic> topics = topicService.findSubscribedTopicsByUser(User.get(params.get("userId")));
         render(view:"list", model:[topicsListByUser:topics]);
-    }
-
-    def topicsCreated(){
-        User user = User.get(session.getAttribute("userId"));
-        render(view:"list", model:[topicsListByUser:user.topics]);
     }
 
     def list(){
@@ -44,7 +38,12 @@ class TopicController {
         redirect (controller: 'user', action: 'index');
     }
 
-
+    def delete(){
+        topicService.delete(params);
+        Map map = new HashMap<String, String>();
+        map.put("response", "success")
+        render map as JSON;
+    }
 
 
 
