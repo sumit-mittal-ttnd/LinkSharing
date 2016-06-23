@@ -11,7 +11,7 @@ class UserController {
         User user = User.get(session.getAttribute("userId"));
         List<Subscription> subscriptionsByUser = subscriptionService.findSubscriptionsByUser(user);
         if(subscriptionsByUser != null && subscriptionsByUser.size()>5) subscriptionsByUser.subList(0,5);
-        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), subscriptionsByUser:subscriptionsByUser , inboxResources:resourceService.findInboxResourcesByUser(user)])
+        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), subscriptionsByUser:subscriptionsByUser, unreadResources:resourceService.findUnreadResourcesByUser(user)])
     }
 
     def update(){

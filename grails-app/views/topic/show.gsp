@@ -35,7 +35,7 @@
                 <div class="panel-body">
                     <div class="panel-body">
                         <g:each var="resourceObj" in="${topic.resources}" status="i">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                         </g:each>
                     </div>
                 </div>

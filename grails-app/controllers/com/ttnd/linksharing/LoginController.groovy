@@ -12,7 +12,7 @@ class LoginController {
     def index() {
         User user = User.get(session.getAttribute("userId"));
         if(user == null)
-            render(view:"login", model: ["recentResources":resourceService.findRecentResources(), "topResources":resourceService.findTopResources() ]);
+            render(view:"login", model: [recentResources:resourceService.findRecentResources(), topResources:resourceService.findTopResources(), unreadResources:null]);
         else
             redirect(controller: 'user', action: 'index')
     }
@@ -98,33 +98,23 @@ class LoginController {
 
     def showTopic(){
         Topic topic = Topic.read(params.get("id"));
-        if(topic == null){
-            flash.message = "Topic Not Found !!!!";
-            redirect(controller: 'login', action: 'index')
-        }else if(topic.visibility == Topic.Visibility.PUBLIC){
-            render(view:"/topic/show", model:[topic:topic])
-        }else if(topic.visibility == Topic.Visibility.PRIVATE){
-            // If topic is private then only subscribed users can see that topic
-            User loggedInUser = User.get(session.getAttribute("userId"));
-            Subscription subscription = Subscription.findByUserAndTopic(loggedInUser, topic);
-            if(subscription != null){
-                render(view:"/topic/show", model:[topic:topic])
-            }else{
-                flash.message = "Subscription Not Found !!!!";
-                redirect(controller: 'user', action: 'index')
-            }
+        User loggedInUser = User.get(session.getAttribute("userId"));
+        if(topic.visibility == Topic.Visibility.PUBLIC || (topic.visibility == Topic.Visibility.PRIVATE && Subscription.findByUserAndTopic(loggedInUser,topic) != null)){
+            render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)])
+        }else{
+            flash.message = message(code: 'Subscription.not.found.message');
+            redirect(controller: 'user', action: 'index')
         }
     }
 
     def showUser(){
         User user = User.get(Integer.parseInt(params.get("userId")));
-        render(view:"/user/profile", model:[user:user]);
+        render(view:"/user/profile", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user)]);
     }
 
     def showResource(){
-            Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
             User user = User.get(session.getAttribute("userId"));
-            render(view:"/resource/show", model:[resource:resource, user:user, trendingTopics:topicService.findTrendingTopics(user)]);
+            render(view:"/resource/show", model:[resource:Resource.get(Integer.parseInt(params.get("resourceId"))), user:user, trendingTopics:topicService.findTrendingTopics(user)]);
     }
 
     def image(final Long id) {

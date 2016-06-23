@@ -25,7 +25,7 @@
                     <div class="panel-heading">Recent Shares</div>
                     <div class="panel-body">
                         <g:each var="resourceObj" in="${recentResources}">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                             <br/>
                         </g:each>
                     </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="panel-body">
                         <g:each var="resourceObj" in="${topResources}">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                             <br/>
                         </g:each>
                     </div>

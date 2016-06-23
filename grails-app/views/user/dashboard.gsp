@@ -29,7 +29,6 @@
             </div>
         </div>
 
-        %{--Unread Resources of my subscribed Topics--}%
         <div class="col-xs-7 pull-right" >
             <div class="panel panel-default">
                 <div class="panel-heading">Inbox
@@ -37,8 +36,8 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
-                        <g:each var="resourceObj" in="${inboxResources}" status="i">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
+                        <g:each var="resourceObj" in="${unreadResources}" status="i">
+                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                         </g:each>
                     </div>
                 </div>

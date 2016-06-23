@@ -73,8 +73,8 @@
 
 <script type="text/javascript">
 	setInterval(function () {
-		$('#alert1').fadeOut(600);
-		$('#alert2').fadeOut(600);
-		$('#success1').fadeOut(400);
-	}, 2000);
+		$('#alert1').fadeOut(800);
+		$('#alert2').fadeOut(800);
+		$('#success1').fadeOut(800);
+	}, 1000);
 </script>

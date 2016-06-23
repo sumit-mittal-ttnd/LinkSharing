@@ -36,7 +36,7 @@ class ResourceService {
     }
 
     // unread resources
-    List<Resource> findInboxResourcesByUser(User loggedInUser){
+    List<Resource> findUnreadResourcesByUser(User loggedInUser){
         List<Resource> resources = Resource.createCriteria().listDistinct {
             and{
                 "topic"{
