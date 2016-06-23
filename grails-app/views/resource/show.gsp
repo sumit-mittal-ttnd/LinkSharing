@@ -61,16 +61,14 @@
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-google-plus"></i></a>--}%
                                 <div class="pull-right">
-                                    <g:if test="${session.userId}">
-                                        <g:if test="${resource.instanceOf(com.ttnd.linksharing.LinkResource)}">
-                                            <g:link url="${resource.url}" target="_blank" class="small">View full site</g:link>
-                                        </g:if>
-                                        <g:else>
-                                            <g:link action="showResource" controller="login" params="['resourceId':resource.id]" class="small">Download</g:link>
-                                        </g:else>
-                                        <g:if test="${session.userIsAdmin=='TRUE' || session.userId == resourceAddedBy.id}">
-                                            <g:link action="markAsRead" controller="resource" params="['resourceId':resource.id]" class="small">Mark as read</g:link>
-                                        </g:if>
+                                    <g:if test="${resource.instanceOf(com.ttnd.linksharing.LinkResource)}">
+                                        <g:link url="${resource.url}" target="_blank" class="small">View full site</g:link>
+                                    </g:if>
+                                    <g:else>
+                                        <g:link action="downloadResource" controller="login" params="['resourceId':resource.id]" class="small">Download</g:link>
+                                    </g:else>
+                                    <g:if test="${session.userIsAdmin=='TRUE' || session.userId == resourceAddedBy.id}">
+                                        <a href="javascript:markAsRead(${resource.id})" class="small">Mark as read</a>
                                     </g:if>
                                 </div>
                             </div>
@@ -98,10 +96,9 @@
         $(function () {
             $("#rateYo").rateYo({
                 rating: ${resource.avgRating},
-                starSize: 20,
+                starSize: 10,
                 fullStar: true,
                 onSet: function (rating, rateYoInstance) {
-
                     var sessionUserId = '${session.userId}';
                     if(sessionUserId == '')
                         alert("Please Login to give rating !!!");

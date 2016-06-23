@@ -18,3 +18,19 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
+
+function markAsRead(resId){
+	$.ajax({
+		url: "/resource/markAsRead",
+		type:"post",
+		data:"resourceId="+resId,
+		dataType: 'json',
+		success: function(data) {
+			if(data.response == "success")
+				alert("Resource Has been marked as read !!!");
+			else
+				alert("Some error has been occurred !!!");
+			location.reload();
+		}
+	});
+}

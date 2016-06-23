@@ -37,7 +37,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="panel-body">
-                        <g:each var="resourceObj" in="${user.resources}" status="i">
+                        <g:each var="resourceObj" in="${inboxResources}" status="i">
                             <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj]"/>
                         </g:each>
                     </div>
@@ -47,23 +47,20 @@
 
         <div class="col-xs-5" >
             <div class="panel panel-default">
-
                 <div class="panel-heading">Subscriptions
                 <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
                 </div>
                 <div class="panel-body">
-                    %{--TOPICS i am subscribed too--}%
                     <g:each var="subscribeObj" in="${subscriptionsByUser}" status="i">
                         <g:render template="/shared/subscriptionGrid" model="[subscribeObj: subscribeObj]"/>
                     </g:each>
-
                 </div>
             </div>
         </div>
 
         <div class="col-xs-7 pull-right" >
             <div class="panel panel-default">
-                <div class="panel-heading"><a>Trending topics</a></div>
+                <div class="panel-heading">Trending topics</div>
                 <div class="panel-body">
                     <g:each var="topicObj" in="${trendingTopics}">
                         <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>

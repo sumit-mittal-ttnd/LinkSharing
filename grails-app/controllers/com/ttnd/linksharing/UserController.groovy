@@ -5,12 +5,13 @@ class UserController {
     UserService userService;
     TopicService topicService;
     SubscriptionService subscriptionService;
+    ResourceService resourceService;
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
         List<Subscription> subscriptionsByUser = subscriptionService.findSubscriptionsByUser(user);
         if(subscriptionsByUser != null && subscriptionsByUser.size()>5) subscriptionsByUser.subList(0,5);
-        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(), subscriptionsByUser:subscriptionsByUser])
+        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), subscriptionsByUser:subscriptionsByUser , inboxResources:resourceService.findInboxResourcesByUser(user)])
     }
 
     def update(){

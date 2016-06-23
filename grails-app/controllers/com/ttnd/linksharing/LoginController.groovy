@@ -121,11 +121,10 @@ class LoginController {
         render(view:"/user/profile", model:[user:user]);
     }
 
-
     def showResource(){
             Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
             User user = User.get(session.getAttribute("userId"));
-            render(view:"/resource/show", model:[resource:resource, user:user, trendingTopics:topicService.findTrendingTopics()]);
+            render(view:"/resource/show", model:[resource:resource, user:user, trendingTopics:topicService.findTrendingTopics(user)]);
     }
 
     def image(final Long id) {
@@ -162,7 +161,7 @@ class LoginController {
     }
 
     def findSubscriptionsByUser(){
-        render(view:"subscription/list", model:[subscriptions:subscriptionService.findSubscriptionsByUser(User.get(params.get("userId")))])
+        render(view:"/subscription/list", model:[subscriptions:subscriptionService.findSubscriptionsByUser(User.get(params.get("userId")))])
     }
 
     def downloadResource(){

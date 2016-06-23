@@ -1,5 +1,7 @@
 package com.ttnd.linksharing
 
+import grails.converters.JSON
+
 class ResourceController {
 
     ResourceService resourceService;
@@ -27,14 +29,15 @@ class ResourceController {
         Resource resource;
         if(params.get("resourceType") == "linkResource")
             resource = new LinkResource(params);
-        else
+        else{
             resource = new DocumentResource(params);
+            if(params.document.size>0){
+                resourceService.uploadDocumentResource(resource, params);
+            }
+        }
 
         resource.setAddedBy(User.get(session.getAttribute("userId")));
         resource.setTopic(Topic.get(params.get("topicId")));
-        if(params.document.size>0){
-            resourceService.uploadDocumentResource(resource, params);
-        }
 
         if(!resource.validate()){
             flash.error = message(code: 'Resource.uploaded.invalid.message');
@@ -70,9 +73,10 @@ class ResourceController {
 
     def markAsRead(){
         Resource resource = Resource.get(params.get("resourceId"));
-        // TODO
-        flash.message = message(code: 'Resource.mark.as.read.success.message');
-        redirect(controller: 'user', action: 'index')
+        resourceService.markAsRead(resource, User.get(session.getAttribute("userId")));
+        Map map = new HashMap<String, String>();
+        map.put("response", "success")
+        render map as JSON;
     }
 
 

@@ -28,15 +28,33 @@
                 <g:else>
                     <g:link action="downloadResource" controller="login" params="['resourceId':resourceObj.id]" class="small">Download</g:link>
                 </g:else>
-                <g:if test="${session.userIsAdmin=='TRUE' || session.userId == resourceAddedBy.id}">
-                    <g:link action="markAsRead" controller="resource" params="['resourceId':resourceObj.id]" class="small">Mark as read</g:link>
+
+                <g:if test="${session.userId}">
+
+                    %{-- to check that i have suisbscribed that topic--}%
+                    <g:set var="isSubscribed" value="FALSE" />
+                    <g:each var="subObj" in="${resourceObj.topic.subscriptions}">
+                        <g:if test="${subObj.user.id == session.userId}">
+                            <g:set var="isSubscribed" value="TRUE" />
+                        </g:if>
+                    </g:each>
+
+                    %{-- to check that i havn't read that object earlier--}%
+                    <g:set var="isResourceUnRead" value="TRUE" />
+                    <g:each var="resReadingObj" in="${resourceObj.readingItems}">
+                        <g:if test="${resReadingObj.user.id == session.userId}">
+                            <g:set var="isResourceUnRead" value="FALSE" />
+                        </g:if>
+                    </g:each>
+
+                    <g:if test="${isSubscribed == 'TRUE' && isResourceUnRead == 'TRUE'}">
+                        <a href="javascript:markAsRead(${resourceObj.id})" class="small">Mark as read</a>
+                    </g:if>
                 </g:if>
+
                 <g:link action="showResource" controller="login" params="['resourceId':resourceObj.id]" class="small">View Post</g:link>
             </div>
         </div>
     </div>
 </div>
 <hr>
-
-
-

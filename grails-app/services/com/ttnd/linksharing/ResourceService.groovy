@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile
 
 class ResourceService {
 
+// ============================ CHECKED =============================
+
     // order by lastUpdated desc
     List<Resource> findRecentResources(){
         List<Resource> resources = Resource.createCriteria().listDistinct {
@@ -32,6 +34,35 @@ class ResourceService {
         };
         return resources;
     }
+
+    // unread resources
+    List<Resource> findInboxResourcesByUser(User loggedInUser){
+        List<Resource> resources = Resource.createCriteria().listDistinct {
+            and{
+                "topic"{
+                    "subscriptions"{
+                        eq("user", loggedInUser)
+                    }
+                }
+                isEmpty("readingItems")
+            }
+        };
+        return resources;
+    }
+
+    void markAsRead(Resource resource, User loggedInUser){
+        ReadingItem readingItem = new ReadingItem(resource: resource, user: loggedInUser, isRead: Boolean.TRUE);
+        readingItem.save(flush: true, failOnError: true);
+    }
+
+
+
+
+
+
+
+
+
 
     // unread resources by user
     List<Resource> findUnreadResources(){

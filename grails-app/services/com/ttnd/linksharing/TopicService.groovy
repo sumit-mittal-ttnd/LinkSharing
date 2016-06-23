@@ -5,7 +5,32 @@ import grails.plugin.mail.MailService
 class TopicService {
 
     MailService mailService;
-    SubscriptionService subscriptionService;
+
+
+// ============================ CHECKED =============================
+
+    // Topic Visibility = PUBLIC   OR   Subscribed By Me    +    Ordered by No Of Resources
+    List<Topic> findTrendingTopics(User user){
+        List<Topic> topics = Topic.createCriteria().listDistinct {
+            or{
+                eq("visibility", Topic.Visibility.PUBLIC)
+                "subscriptions"{
+                    eq("user", user)
+                }
+            }
+        };
+        topics.sort { -it.resources.size() }
+        return topics;
+    }
+
+
+
+
+
+
+
+
+
 
     Topic init(Map params, User user){
         Topic topic = new Topic(params);
@@ -20,20 +45,6 @@ class TopicService {
     }
 
 
-    // Topic Visibility = PUBLIC    OR     Subscribed By Me
-    // Ordered by No Of Resources
-    List<Topic> findTrendingTopics(){
-        List<Topic> topics = Topic.createCriteria().listDistinct {
-            /*and{
-                order("avgRating", "desc")
-                maxResults 5
-                "topic"{
-                    eq("visibility", Topic.Visibility.PUBLIC)
-                }
-            }*/
-        };
-        return topics;
-    }
 
     void sendInvite(Map params, Long loggedInUserId){
         Topic topic = Topic.get(params.get("topicId"));
@@ -44,8 +55,6 @@ class TopicService {
             subject "Invitation For "+topic.getName()+" - LinkSharing"
             html(view:'/mail/_invitation', model:[email:email,firstName:User.get(loggedInUserId).firstName, topicId : topic.id, topicName : topic.name])
         }
-
-
     }
 
 
@@ -64,5 +73,21 @@ class TopicService {
 
 
 
-
+    /*List<Topic> findTrendingTopics(User loggedInUser){
+        List<Topic> topics = Subscription.createCriteria().listDistinct {
+            and{
+                projections{
+                    property("topic")
+                }
+                order("topic.resources.size", "desc")
+                or{
+                    "topic"{
+                        eq("visibility", Topic.Visibility.PUBLIC)
+                    }
+                    eq("user", loggedInUser)
+                }
+            }
+        };
+        return topics;
+    }*/
 }
