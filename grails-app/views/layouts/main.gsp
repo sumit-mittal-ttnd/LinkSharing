@@ -43,7 +43,6 @@
 	</head>
 	<body>
 
-
 		%{--Added for error messages--}%
 		<g:hasErrors bean="${user}">
 			<div id="alert1" class="msg alert-danger">

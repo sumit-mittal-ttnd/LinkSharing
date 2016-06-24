@@ -1,13 +1,10 @@
 package com.ttnd.linksharing
 
-
 class LoginController {
 
     LoginService loginService;
     ResourceService resourceService;
     TopicService topicService;
-    SubscriptionService subscriptionService;
-
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
@@ -94,18 +91,10 @@ class LoginController {
                 redirect (controller: 'user', action: 'index')
             }
         }
-      }
+    }
 
     def showTopic(){
-        Topic topic = Topic.read(params.get("id"));
-        User loggedInUser = User.get(session.getAttribute("userId"));
-        /*if(topic.visibility == Topic.Visibility.PUBLIC || (topic.visibility == Topic.Visibility.PRIVATE && Subscription.findByUserAndTopic(loggedInUser,topic) != null)){
-            render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)])
-        }else{
-            flash.message = message(code: 'Subscription.not.found.message');
-            redirect(controller: 'user', action: 'index')
-        }*/
-        render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)])
+        render(view:"/topic/show", model:[topic:Topic.read(params.get("id")), unreadResources:resourceService.findUnreadResourcesByUser(User.get(session.getAttribute("userId")))])
     }
 
 
@@ -127,41 +116,22 @@ class LoginController {
         render(view:"/resource/show", model:[resource: resource, trendingTopics:topicService.findTrendingTopics(loggedInUser), unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)]);
     }
 
-    def image(final Long id) {
-        FileInputStream fileInputStream;
-        File file;
-        byte[] photo = null;
-        try {
-            User user = User.load(id);
-
-            if (user && user.photoUrl) {
-                file = new File(user.photoUrl);
-                photo = new byte[(int)file.length()];
-                fileInputStream = new FileInputStream(file);
-                fileInputStream.read(photo);
-            }
-
-            response.contentLength = photo?.length;
-            response.contentType = 'image/png';
-            response.outputStream << photo;
-            response.outputStream.flush();
-
-        } catch (Exception ex) {
-            log.error("Exception in image():UserController : ", ex);
-        }
-        finally {
-            try {
-                if (fileInputStream) {
-                    fileInputStream.close();
-                }
-            } catch (Exception ex) {
-                log.error("Exception while closing FileInputStream : ", ex);
-            }
-        }
+    def findSubscriptionsByUser(){
+        User user = User.get(params.get("userId"));
+        render(view:"/subscription/list", model:[subscriptions:user.subscriptions])
     }
 
-    def findSubscriptionsByUser(){
-        render(view:"/subscription/list", model:[subscriptions:subscriptionService.findSubscriptionsByUser(User.get(params.get("userId")))])
+    def showUserImage(final Long id) {
+        User user = User.load(id);
+        File file = new File(user.photoUrl);
+        byte[] photo = new byte[(int)file.length()];
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+        fileInputStream.read(photo);
+        response.contentLength = photo?.length;
+        response.contentType = 'image/png';
+        response.outputStream << photo;
+        response.outputStream.flush();
     }
 
     def downloadResource(){

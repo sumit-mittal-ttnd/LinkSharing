@@ -34,8 +34,8 @@
                     <g:set var="classInfo" value="${ (i % 2) == 0 ? 'success' : 'info'}"/>
                     <tr class="${classInfo}">
                         <td>${subscribeObj.id}</td>
-                        <td>${subscribeObj.topic.name}</td>
-                        <td>${subscribeObj.user.firstName} ${subscribeObj.user.lastName}</td>
+                        <td><g:link action="showTopic" controller="login" params="[id:subscribeObj.topic.id]">${subscribeObj.topic.name}</g:link></td>
+                        <td><g:link action="showUser" controller="login" params="[userId:subscribeObj.user.id]">${subscribeObj.user.firstName} ${subscribeObj.user.lastName}</g:link></td>
                         <td>${subscribeObj.seriousness}</td>
                         <td><g:formatDate format="dd-MMM-yyyy" date="${subscribeObj.dateCreated}"/></td>
                         <td><g:formatDate format="dd-MMM-yyyy" date="${subscribeObj.lastUpdated}"/></td>

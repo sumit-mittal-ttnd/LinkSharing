@@ -4,14 +4,11 @@ class UserController {
 
     UserService userService;
     TopicService topicService;
-    SubscriptionService subscriptionService;
     ResourceService resourceService;
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
-        List<Subscription> subscriptionsByUser = subscriptionService.findSubscriptionsByUser(user);
-        if(subscriptionsByUser != null && subscriptionsByUser.size()>5) subscriptionsByUser.subList(0,5);
-        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), subscriptionsByUser:subscriptionsByUser, unreadResources:resourceService.findUnreadResourcesByUser(user)])
+        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), unreadResources:resourceService.findUnreadResourcesByUser(user)])
     }
 
     def update(){
@@ -34,11 +31,7 @@ class UserController {
     def activate(){
         User user = User.get(session.getAttribute("userId"));
         if(user.getAdmin()){
-            User actionUser = User.load(params.get("userId"));
-            if(params.get("activateUser").equals("true"))
-                actionUser.setActive(Boolean.TRUE);
-            else
-                actionUser.setActive(Boolean.FALSE);
+            userService.activate(params);
             flash.message = message(code: 'User.updated.success.message');
             render(view:"list", model:[usersList:userService.findUsersList()]);
         }else{

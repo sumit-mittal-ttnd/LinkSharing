@@ -17,9 +17,11 @@ class TopicController {
         redirect(controller: 'user', action: 'index')
     }
 
-    def topicsSubscribed(){
-        List<Topic> topics = topicService.findSubscribedTopicsByUser(User.get(params.get("userId")));
-        render(view:"list", model:[topicsListByUser:topics]);
+    def delete(){
+        topicService.delete(params);
+        Map map = new HashMap<String, String>();
+        map.put("response", "success")
+        render map as JSON;
     }
 
     def list(){
@@ -32,21 +34,23 @@ class TopicController {
         }
     }
 
+    def topicsSubscribed(){
+        List<Topic> topics = topicService.findSubscribedTopicsByUser(User.get(params.get("userId")));
+        render(view:"list", model:[topicsListByUser:topics]);
+    }
+
     def sendInvite(){
         topicService.sendInvite(params,session.getAttribute("userId"));
         flash.message = message(code: 'Topic.invitation.success.message');
         redirect (controller: 'user', action: 'index');
     }
 
-    def delete(){
-        topicService.delete(params);
+    def updateVisibility(){
+        topicService.updateVisibility(params);
         Map map = new HashMap<String, String>();
         map.put("response", "success")
         render map as JSON;
     }
-
-
-
 
 
 }

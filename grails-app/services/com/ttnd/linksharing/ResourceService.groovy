@@ -5,8 +5,6 @@ import org.springframework.web.multipart.MultipartFile
 
 class ResourceService {
 
-// ============================ CHECKED =============================
-
     // order by lastUpdated desc
     List<Resource> findRecentResources(){
         List<Resource> resources = Resource.createCriteria().listDistinct {
@@ -63,30 +61,7 @@ class ResourceService {
         }
     }
 
-
-
-
-
-
-
-
-
-
-    // unread resources by user
-    List<Resource> findUnreadResources(){
-        List<Resource> resources = Resource.createCriteria().listDistinct {
-            and{
-                order("avgRating", "desc")
-                maxResults 5
-                "topic"{
-                    eq("visibility", Topic.Visibility.PUBLIC)
-                }
-            }
-        };
-        return resources;
-    }
-
-    def uploadDocumentResource(DocumentResource documentResource, Map params){
+    void uploadDocumentResource(DocumentResource documentResource, Map params){
         String folderUrl = "/home/ttnd/sumit/GrailsProject/document_resources/";
         File file = new File(folderUrl);
         if(!file.exists()){
@@ -101,6 +76,5 @@ class ResourceService {
         documentResource.setFilePath(docUrl);
         document.transferTo(new File(docUrl));
     }
-
 
 }

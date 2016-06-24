@@ -38,7 +38,7 @@
                     <g:set var="classInfo" value="${ (i % 2) == 0 ? 'success' : 'info'}"/>
                     <tr class="${classInfo}">
                         <td>${user.id}</td>
-                        <td>${user.userName}</td>
+                        <td><g:link action="showUser" controller="login" params="[userId:user.id]">${user.userName}</g:link></td>
                         <td>${user.email}</td>
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>

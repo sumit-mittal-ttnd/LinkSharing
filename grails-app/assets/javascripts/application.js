@@ -82,3 +82,35 @@ function deleteTopic(topicId){
 		}
 	});
 }
+
+function updateSeriousness(subscriptionId, seriousness){
+	$.ajax({
+		url: "/subscription/updateSeriousness",
+		type:"post",
+		data:"subscriptionId="+subscriptionId+"&seriousness="+seriousness,
+		dataType: 'json',
+		success: function(data) {
+			if(data.response == "success"){
+				alert("Seriousness has been changed to "+seriousness+" !!!");
+				location.reload();
+			}else
+				alert("Some error has been occurred !!!");
+		}
+	});
+}
+
+function updateVisibility(topicId, visibility){
+	$.ajax({
+		url: "/topic/updateVisibility",
+		type:"post",
+		data:"topicId="+topicId+"&visibility="+visibility,
+		dataType: 'json',
+		success: function(data) {
+			if(data.response == "success"){
+				alert("Visibility has been changed to "+visibility+" !!!");
+				location.reload();
+			}else
+				alert("Some error has been occurred !!!");
+		}
+	});
+}

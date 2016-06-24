@@ -81,7 +81,7 @@
 
             <div class="col-xs-6 pull-right" >
                 <div class="panel panel-default">
-                    <div class="panel-heading"><a>Trending topics</a></div>
+                    <div class="panel-heading">Trending topics</div>
                     <div class="panel-body">
                         <g:each var="topicObj" in="${trendingTopics}">
                             <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>
@@ -112,6 +112,8 @@
                             success: function(data) {
                                 if(data.response == "success")
                                     alert("Rating has been saved successfully !!!");
+                                else if(data.response == "subscribeFirst")
+                                    alert("Please subscribe first to rate it!!!");
                                 else
                                     alert("Some error has been occurred !!!");
                                 location.reload();

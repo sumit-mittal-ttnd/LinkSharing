@@ -33,7 +33,7 @@
                 <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
                 </div>
                 <div class="panel-body">
-                    <g:each var="subscribeObj" in="${subscriptionsByUser}" status="i">
+                    <g:each var="subscribeObj" in="${user.subscriptions}" status="i">
                         <g:render template="/shared/subscriptionGrid" model="[subscribeObj: subscribeObj]"/>
                     </g:each>
                 </div>

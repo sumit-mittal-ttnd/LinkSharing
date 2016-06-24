@@ -26,9 +26,9 @@
                         <ul class="dropdown-menu">
                             <li><g:link action="showUser" controller="login" params="[userId:session.userId]">Profile</g:link></li>
                             <g:if test="${session.userIsAdmin == 'TRUE'}">
-                                <li><g:link action="list" controller="user">Users</g:link></li>
-                                <li><g:link action="list" controller="topic">Topics</g:link></li>
-                                <li><a href="#">Posts</a></li>
+                                <li><g:link controller="user" action="list">Users</g:link></li>
+                                <li><g:link controller="topic" action="list">Topics</g:link></li>
+                                <li><g:link controller="resource" action="list">Posts</g:link></li>
                             </g:if>
                             <li><g:link action="logout" controller="login">Logout</g:link></li>
                         </ul>

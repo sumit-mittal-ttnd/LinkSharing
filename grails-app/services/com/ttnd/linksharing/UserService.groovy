@@ -4,7 +4,6 @@ import org.springframework.web.multipart.MultipartFile
 
 class UserService {
 
-
     List<User> findUsersList(){
         List<User> users = User.createCriteria().listDistinct {
             eq("admin",Boolean.FALSE)
@@ -12,7 +11,7 @@ class UserService {
         return users;
     }
 
-    def update(User user, Map params){
+    void update(User user, Map params){
         user.setFirstName(params.get("firstName"));
         user.setLastName(params.get("lastName"));
         user.setUserName(params.get("userName"));
@@ -22,20 +21,26 @@ class UserService {
         user.merge(flush: true, failOnError: true);
     }
 
-
-
-    def uploadUserPic(User user, Map params){
+    void uploadUserPic(User user, Map params){
         String folderUrl = "/home/ttnd/sumit/GrailsProject/users_photo/";
         File file = new File(folderUrl);
         if(!file.exists()){
             file.mkdir();
         }
-
         String photoUrl = folderUrl +  user.getId()+".jpg";
         user.setPhotoUrl(photoUrl);
-
         MultipartFile document = params.photo;
         document.transferTo(new File(photoUrl));
     }
+
+    void activate(Map params){
+        User actionUser = User.load(params.get("userId"));
+        if(params.get("activateUser").equals("true"))
+            actionUser.setActive(Boolean.TRUE);
+        else
+            actionUser.setActive(Boolean.FALSE);
+        actionUser.merge(flush: true, failOnError: true);
+    }
+
 
 }
