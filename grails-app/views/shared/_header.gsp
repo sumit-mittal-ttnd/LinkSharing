@@ -20,9 +20,9 @@
                     <a class="fa fa-file-o" aria-hidden="true" title="Share Document" style="font-size:25px;" data-toggle="modal" data-target="#shareDocumentModal"></a>&nbsp;
 
                     <span class="dropdown pull-right">
-                        <button class="dropdown-toggle" type="button" data-toggle="dropdown">
-                            <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;${session.userFirstName}<span class="caret"></span>
-                        </button>
+                        <span class="dropdown-toggle" type="button" data-toggle="dropdown">
+                            <tg:userImage userId="${session.userId}" alt="user" class="img-circle" width="50" height="50"/>
+                        </span>
                         <ul class="dropdown-menu">
                             <li><g:link action="showUser" controller="login" params="[userId:session.userId]">Profile</g:link></li>
                             <g:if test="${session.userIsAdmin == 'TRUE'}">

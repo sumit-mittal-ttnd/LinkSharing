@@ -42,8 +42,8 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="col-xs-3 pull-right">Share</button>
-                        <button type="button" class="col-xs-3 pull-right" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary">Share</button>
+                        <button class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </g:form>
 
