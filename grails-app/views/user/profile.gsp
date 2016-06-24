@@ -24,27 +24,7 @@
                         <g:render template="/shared/userGrid" model="[userObj:user]"/>
                     </div>
                 </div>
-            </div>
 
-            <g:if test="${session.userId}">
-                <g:render template="/user/profileEdit"/>
-            </g:if>
-            <g:else>
-                <div class="col-xs-7 pull-right" >
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Posts</div>
-                        <div class="panel-body">
-                            <div class="panel-body">
-                                <g:each var="resourceObj" in="${user.resources}" status="i">
-                                    <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
-                                </g:each>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </g:else>
-
-            <div class="col-xs-5" >
                 <div class="panel panel-default">
                     <div class="panel-heading">Topics</div>
                     <div class="panel-body">
@@ -53,13 +33,7 @@
                         </g:each>
                     </div>
                 </div>
-            </div>
 
-            <g:if test="${session.userId}">
-                <g:render template="/user/changePassword"/>
-            </g:if><br/>
-
-            <div class="col-xs-5 pull-left" >
                 <div class="panel panel-default">
                     <div class="panel-heading">Subscriptions
                     <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
@@ -73,8 +47,26 @@
                 </div>
             </div>
 
-        </div>
 
+            <div class="col-xs-7 pull-left" >
+                <g:if test="${session.userId}">
+                    <g:render template="/user/profileEdit"/>
+                    <g:render template="/user/changePassword"/>
+                </g:if>
+                <g:else>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Posts</div>
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <g:each var="resourceObj" in="${user.resources}" status="i">
+                                    <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
+                                </g:each>
+                            </div>
+                        </div>
+                    </div>
+                </g:else>
+            </div>
+        </div>
 
     </div>
 </body>

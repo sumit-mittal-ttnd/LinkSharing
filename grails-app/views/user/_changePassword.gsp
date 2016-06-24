@@ -1,31 +1,29 @@
-<div class="col-xs-7 pull-right">
-    <div class="panel panel-default ">
-        <div class="panel-heading">Change Password</div>
+<div class="panel panel-default ">
+    <div class="panel-heading">Change Password</div>
 
-        <div class="panel-body">
-            <g:form controller="login" action="changePassword" method="POST" class="form-horizontal">
-                <div class="form-group form-group-sm">
-                    <div class="col-xs-4 ">
-                        <label class=" control-label" for="pwd">Password *</label>
-                    </div>
-
-                    <div class="col-xs-8">
-                        <g:textField id="pwd" name="password" class="form-control" value="${pwd}"/>
-                    </div>
+    <div class="panel-body">
+        <g:form controller="login" action="changePassword" method="POST" class="form-horizontal">
+            <div class="form-group form-group-sm">
+                <div class="col-xs-4 ">
+                    <label class=" control-label" for="pwd">Password *</label>
                 </div>
 
-                <div class="form-group form-group-sm">
-                    <div class="col-xs-4 ">
-                        <label class="control-label" for="cPwd">Confirm Password *</label>
-                    </div>
+                <div class="col-xs-8">
+                    <g:textField id="pwd" name="password" class="form-control" value="${pwd}"/>
+                </div>
+            </div>
 
-                    <div class="col-xs-8">
-                        <g:textField id="cPwd" name="confirmPassword" class="form-control" value="${cPwd}"/>
-                    </div>
+            <div class="form-group form-group-sm">
+                <div class="col-xs-4 ">
+                    <label class="control-label" for="cPwd">Confirm Password *</label>
                 </div>
 
-                <g:submitButton name="update"  value="Update" class="pull-right col-xs-4"/>
-            </g:form>
-        </div>
+                <div class="col-xs-8">
+                    <g:textField id="cPwd" name="confirmPassword" class="form-control" value="${cPwd}"/>
+                </div>
+            </div>
+
+            <g:submitButton name="update"  value="Update" class="pull-right col-xs-4"/>
+        </g:form>
     </div>
 </div>

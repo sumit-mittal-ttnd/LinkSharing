@@ -46,11 +46,9 @@
                     <g:link controller="resource" action="findUnreadResourcesByUser" params="[userId:user.id]" class="pull-right">View All</g:link>
                 </div>
                 <div class="panel-body">
-                    <div class="panel-body">
-                        <g:each var="resourceObj" in="${unreadResources}" status="i">
-                            <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
-                        </g:each>
-                    </div>
+                    <g:each var="resourceObj" in="${unreadResources}" status="i">
+                        <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
+                    </g:each>
                 </div>
             </div>
 
