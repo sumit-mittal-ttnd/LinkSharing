@@ -15,7 +15,7 @@
                             <label class=" control-label" for="fName">Name* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <g:textField id="fName" name="name" class="form-control" placeholder="Name"/>
+                            <g:textField id="fName" name="name" class="form-control" placeholder="Name" required="required"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">

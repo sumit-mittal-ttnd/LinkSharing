@@ -2,13 +2,17 @@
     <div class=" panel panel-default">
         <div class="panel-body">
             <div class="${session.userId ? 'col-xs-6' : 'col-xs-9'}">
-                <h3><g:link action="index" controller="login">Link Sharing</g:link></h3>
+                <g:link action="index" controller="login">
+                    <asset:image src="logo.png" width="105"/>
+                </g:link>
             </div>
 
             <div class="col-xs-3 ">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
-                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <g:form controller="login" action="search" method="POST" class="form-horizontal">
+                        <input type="text" class="form-control" placeholder="Search" name="searchValue">
+                    </g:form>
                 </div>
             </div>
 

@@ -10,14 +10,13 @@
         padding-left: 10px
     }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.1.1/jquery.rateyo.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.1.1/jquery.rateyo.min.js"></script>
+    <asset:stylesheet src="jquery.rateyo.min.css"/>
+    <asset:javascript src="jquery.rateyo.min.js"/>
 </head>
-
 <body>
 
+    <div class="container bodyMinHeight">
 
-    <div class="container">
         <g:render template="/shared/header"/>
 
         <div class="row">

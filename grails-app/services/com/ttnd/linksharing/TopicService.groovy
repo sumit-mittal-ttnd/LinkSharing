@@ -43,13 +43,31 @@ class TopicService {
         }
     }
 
-    // Topic Visibility = PUBLIC   OR   Subscribed By Me    +    Ordered by No Of Resources
+    // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
     List<Topic> findTrendingTopics(User user){
         List<Topic> topics = Topic.createCriteria().listDistinct {
             or{
                 eq("visibility", Topic.Visibility.PUBLIC)
+                eq("createdBy",user)
                 "subscriptions"{
                     eq("user", user)
+                }
+            }
+        };
+        topics.sort { -it.resources.size() }
+        return topics;
+    }
+
+
+    // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
+    List<Topic> findTopicsByUser(User viewUser, User loggedInUser){
+        List<Topic> topics = Topic.createCriteria().listDistinct {
+            if(viewUser == loggedInUser){
+                eq("createdBy",viewUser)
+            }else{
+                and{
+                    eq("createdBy",viewUser)
+                    eq("visibility", Topic.Visibility.PUBLIC)
                 }
             }
         };
@@ -62,7 +80,19 @@ class TopicService {
         String visibility = params.get("visibility");
         if(visibility.equals("PUBLIC")) topic.setVisibility(Topic.Visibility.PUBLIC)
         else topic.setVisibility(Topic.Visibility.PRIVATE)
-        topic.merge(flush: true, failOnError: true);
+        topic.merge(flush: true);
     }
+
+    void update(Map params){
+        try{
+            Topic topic = Topic.get(params.get("topicId"));
+            topic.setName(params.get("topicName"));
+            topic.merge();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

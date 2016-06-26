@@ -12,38 +12,42 @@
 		</title>
 
 		<style>
-		.msg{
-			border: 1px solid transparent;
-			border-radius: 4px;
-			padding: 15px;
-		}
-		.clear {
-			clear: both;
-		}
+			.msg{
+				border: 1px solid transparent;
+				border-radius: 4px;
+				padding: 15px;
+			}
+			.bodyClass {
+				background-image: url(${assetPath(src: 'background.png')});
+				background-repeat: no-repeat;
+				background-attachment: fixed;
+				background-position: center;
+			}
+			.footerClass{
+				border-radius: 4px;
+				background: white;
+			}
+			.bodyMinHeight{
+				min-height: 590px;
+			}
 		</style>
-
-
-		%{--Added Scripts and Style Sheets--}%
 		<asset:stylesheet src="bootstrap.min.css"/>
 		<asset:stylesheet src="font-awesome.min.css"/>
-
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<asset:stylesheet src="jquery.dataTables.css"/>
+		<asset:javascript src="jquery.min.js"/>
 		<asset:javascript src="jquery.validate.min.js"/>
 		<asset:javascript src="application.js"/>
 		<asset:javascript src="bootstrap.min.js"/>
-
-
+		<asset:javascript src="jquery.dataTables.js"/>
 		<script>
 			var USER_DASHBOARD_URL = "${g.createLink(controller:'user', action: 'index')}";
 		</script>
 
-
 		<g:layoutHead/>
 
 	</head>
-	<body>
+	<body class="bodyClass">
 
-		%{--Added for error messages--}%
 		<g:hasErrors bean="${user}">
 			<div id="alert1" class="msg alert-danger">
 				<g:eachError var="err" bean="${user}">
@@ -51,7 +55,6 @@
 				</g:eachError>
 			</div>
 		</g:hasErrors>
-
 
 		<div class="flashDiv">
 			<g:if test="${flash.error}">
@@ -62,18 +65,19 @@
 			</g:if>
 		</div>
 
-
 		<g:render template="/topic/createTopic"/>
 		<g:render template="/topic/sendInvitation"/>
 		<g:render template="/resource/shareLink"/>
 		<g:render template="/resource/shareDocument"/>
 		<g:render template="/user/forgotPassword"/>
-
+		<g:render template="/shared/topicEditGrid"/>
 
 		<g:layoutBody/>
 
-
 	</body>
+
+	<g:render template="/shared/footer"/>
+
 </html>
 
 <script type="text/javascript">

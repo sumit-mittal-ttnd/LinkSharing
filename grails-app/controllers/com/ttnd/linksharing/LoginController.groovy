@@ -97,15 +97,13 @@ class LoginController {
         render(view:"/topic/show", model:[topic:Topic.read(params.get("id")), unreadResources:resourceService.findUnreadResourcesByUser(User.get(session.getAttribute("userId")))])
     }
 
-
     def topicsCreated(){
-        User user = User.get(params.get("userId"));
-        render(view:"/topic/list", model:[topicsListByUser:user.topics]);
+        render(view:"/topic/list", model:[topicsByUser:topicService.findTopicsByUser(User.get(params.get("userId")), User.get(session.getAttribute("userId")))]);
     }
 
     def showUser(){
         User user = User.get(Integer.parseInt(params.get("userId")));
-        render(view:"/user/profile", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user)]);
+        render(view:"/user/profile", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user), topicsByUser:topicService.findTopicsByUser(user, User.get(session.getAttribute("userId")))]);
     }
 
     def showResource(){
@@ -140,6 +138,12 @@ class LoginController {
         response.setContentType("application/octet-stream")
         response.setHeader("Content-disposition", "filename=${file.getName()}")
         response.outputStream << file.newInputStream()
+    }
+
+    def search(){
+        User user = User.get(session.getAttribute("userId"));
+        String searchValue = params.get("searchValue");
+        render(view:"/login/search", model:[searchValue:searchValue, trendingTopics:topicService.findTrendingTopics(user), topResources:resourceService.findTopResources(), searchedResources:resourceService.findSearchedResources(searchValue), unreadResources:resourceService.findUnreadResourcesByUser(user)]);
     }
 
 

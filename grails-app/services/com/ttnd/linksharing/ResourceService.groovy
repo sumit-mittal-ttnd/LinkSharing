@@ -48,6 +48,18 @@ class ResourceService {
         return resources;
     }
 
+    List<Resource> findSearchedResources(String searchValue){
+        List<Resource> resources = Resource.createCriteria().listDistinct {
+            or{
+                "topic"{
+                    ilike("name", "%"+searchValue+"%")
+                }
+                ilike("description", "%"+searchValue+"%")
+            }
+        };
+        return resources;
+    }
+
     void markAsRead(Resource resource, User loggedInUser){
         boolean alreadyRead = Boolean.FALSE;
         loggedInUser.readingItems.each {it ->

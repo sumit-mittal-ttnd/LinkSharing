@@ -114,3 +114,36 @@ function updateVisibility(topicId, visibility){
 		}
 	});
 }
+
+
+
+function editTopicGet(topicId, topicName){
+	console.log(topicId+"--"+topicName)
+	$("#editTopicId").val(topicId);
+	$("#editTopicName").val(topicName);
+}
+
+function editTopicPost(){
+	var topicId = $("#editTopicId").val();
+	var topicName = $("#editTopicName").val();
+	$.ajax({
+		async:false,
+		url: "/topic/update",
+		type:"post",
+		data:"topicId="+topicId+"&topicName="+topicName,
+		dataType: 'json',
+		success: function(data) {
+			if(data.response == "success"){
+				$('#topicEdit').modal('toggle');
+				alert("Topic name has been changed successfully !!!");
+				location.reload();
+			}else
+				alert("Some error has been occurred !!!");
+		}
+	});
+	return false;
+}
+
+
+
+

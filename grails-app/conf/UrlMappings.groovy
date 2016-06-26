@@ -4,6 +4,8 @@ class UrlMappings {
 
 
         "/"(controller: "login", action: "index")
+        "500"(view:'/error-500')
+        "404"(view:'/error-404')
 
 
         "/$controller/$action?/$id?(.$format)?"{
@@ -13,7 +15,6 @@ class UrlMappings {
         }
 
 
-        "500"(view:'/error')
         /*"/"(view:"/index")*/
 
 	}

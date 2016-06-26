@@ -44,7 +44,7 @@
     <div class="col-xs-3">
         <g:if test="${session.userId == topicCreatedBy.id}">
             <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" data-toggle="modal" data-target="#sendInviModal"></a>
-            <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+            <a class="fa fa-pencil-square-o" aria-hidden="true" title="Edit Topic" data-toggle="modal" data-target="#topicEdit" onclick="editTopicGet('${topicObj.id}','${topicObj.name}');"></a>
             <a href="javascript:deleteTopic('${topicObj.id}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
         </g:if>
     </div>

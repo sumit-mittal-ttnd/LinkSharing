@@ -27,7 +27,7 @@ class TopicController {
     def list(){
         User user = User.get(session.getAttribute("userId"));
         if(user.getAdmin()){
-            render(view:"list", model:[topicsListByUser:Topic.findAll()]);
+            render(view:"list", model:[topicsByUser:Topic.findAll()]);
         } else{
             flash.error = message(code: 'User.no.rights.message');
             redirect (controller: 'user', action: 'index')
@@ -36,7 +36,7 @@ class TopicController {
 
     def topicsSubscribed(){
         List<Topic> topics = topicService.findSubscribedTopicsByUser(User.get(params.get("userId")));
-        render(view:"list", model:[topicsListByUser:topics]);
+        render(view:"list", model:[topicsByUser:topics]);
     }
 
     def sendInvite(){
@@ -47,6 +47,13 @@ class TopicController {
 
     def updateVisibility(){
         topicService.updateVisibility(params);
+        Map map = new HashMap<String, String>();
+        map.put("response", "success")
+        render map as JSON;
+    }
+
+    def update(){
+        topicService.update(params);
         Map map = new HashMap<String, String>();
         map.put("response", "success")
         render map as JSON;

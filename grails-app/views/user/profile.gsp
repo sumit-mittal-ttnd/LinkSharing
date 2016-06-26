@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container bodyMinHeight">
 
         <g:render template="/shared/header"/>
 
@@ -28,7 +28,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Topics</div>
                     <div class="panel-body">
-                        <g:each var="topicObj" in="${user.topics}">
+                        <g:each var="topicObj" in="${topicsByUser}">
                             <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>
                         </g:each>
                     </div>
@@ -49,7 +49,8 @@
 
 
             <div class="col-xs-7 pull-left" >
-                <g:if test="${session.userId}">
+
+                <g:if test="${session.userId == user.id}">
                     <g:render template="/user/profileEdit"/>
                     <g:render template="/user/changePassword"/>
                 </g:if>

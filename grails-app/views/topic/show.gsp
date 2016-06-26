@@ -13,8 +13,7 @@
 </head>
 
 <body>
-<div class="container">
-
+<div class="container bodyMinHeight">
 
     <g:render template="/shared/header"/>
 
