@@ -71,6 +71,7 @@
 		<g:render template="/resource/shareDocument"/>
 		<g:render template="/user/forgotPassword"/>
 		<g:render template="/shared/topicEditGrid"/>
+		<g:render template="/shared/resourceEditGrid"/>
 
 		<g:layoutBody/>
 
@@ -85,5 +86,5 @@
 		$('#alert1').fadeOut(800);
 		$('#alert2').fadeOut(800);
 		$('#success1').fadeOut(800);
-	}, 1000);
+	}, 2000);
 </script>

@@ -37,7 +37,7 @@
 
                             <div class="col-xs-3">
                                 <p style="font-size: 12px">${resourceAddedBy.firstName} ${resourceAddedBy.lastName}
-                                    <br/><span class="small text-center">@${resourceAddedBy.firstName}</span>
+                                    <br/><span class="small text-center">@${resourceAddedBy.userName}</span>
                                 </p>
                             </div>
 
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="panel-body row">
                             <div class="col-xs-12">
                                 ${resource.description}
                             </div>
@@ -60,6 +60,10 @@
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-google-plus"></i></a>
                                 <div class="pull-right">
+                                    <g:if test="${session.userId == resourceAddedBy.id}">
+                                        <a class="fa fa-pencil-square-o" aria-hidden="true" title="Edit Resource" data-toggle="modal" data-target="#resourceEdit" onclick="editResourceGet('${resource.id}','${resource.description}');"></a>
+                                        <a href="javascript:deleteResource('${resource.id}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                    </g:if>
                                     <g:if test="${resource.instanceOf(com.ttnd.linksharing.LinkResource)}">
                                         <g:link url="${resource.url}" target="_blank" class="small">View full site</g:link>
                                     </g:if>

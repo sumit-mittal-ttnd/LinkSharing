@@ -60,6 +60,17 @@ class ResourceService {
         return resources;
     }
 
+    void update(Map params){
+        Resource resource = Resource.get(params.get("resourceId"));
+        resource.setDescription(params.get("resourceDesc"));
+        resource.merge(flush: true);
+    }
+
+    void delete(Map params){
+        Resource resource = Resource.get(params.get("resourceId"))
+        resource.delete(flush: true);
+    }
+
     void markAsRead(Resource resource, User loggedInUser){
         boolean alreadyRead = Boolean.FALSE;
         loggedInUser.readingItems.each {it ->

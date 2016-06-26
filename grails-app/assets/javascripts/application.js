@@ -68,19 +68,23 @@ function subscribe(userId, topicId){
 }
 
 function deleteTopic(topicId){
-	$.ajax({
-		url: "/topic/delete",
-		type:"post",
-		data:"topicId="+topicId,
-		dataType: 'json',
-		success: function(data) {
-			if(data.response == "success"){
-				alert("Topic has been deleted successfully !!!");
-				window.location.href = USER_DASHBOARD_URL;
-			}else
-				alert("Some error has been occurred !!!");
-		}
-	});
+	var r = confirm("Are you sure you want to delete!");
+	if (r == true) {
+		$.ajax({
+			url: "/topic/delete",
+			type:"post",
+			data:"topicId="+topicId,
+			dataType: 'json',
+			success: function(data) {
+				if(data.response == "success"){
+					alert("Topic has been deleted successfully !!!");
+					window.location.href = USER_DASHBOARD_URL;
+				}else
+					alert("Some error has been occurred !!!");
+			}
+		});
+	}
+
 }
 
 function updateSeriousness(subscriptionId, seriousness){
@@ -115,10 +119,7 @@ function updateVisibility(topicId, visibility){
 	});
 }
 
-
-
 function editTopicGet(topicId, topicName){
-	console.log(topicId+"--"+topicName)
 	$("#editTopicId").val(topicId);
 	$("#editTopicName").val(topicName);
 }
@@ -144,6 +145,49 @@ function editTopicPost(){
 	return false;
 }
 
+function editResourceGet(resourceId, resourceDesc){
+	$("#editResourceId").val(resourceId);
+	$("#editResourceDesc").val(resourceDesc);
+}
+
+function editResourcePost(){
+	var resourceId = $("#editResourceId").val();
+	var resourceDesc = $("#editResourceDesc").val();
+	$.ajax({
+		async:false,
+		url: "/resource/update",
+		type:"post",
+		data:"resourceId="+resourceId+"&resourceDesc="+resourceDesc,
+		dataType: 'json',
+		success: function(data) {
+			if(data.response == "success"){
+				$('#resourceEdit').modal('toggle');
+				alert("Description has been changed successfully !!!");
+				location.reload();
+			}else
+				alert("Some error has been occurred !!!");
+		}
+	});
+	return false;
+}
+
+function deleteResource(resourceId){
+	var r = confirm("Are you sure you want to delete!");
+	if (r == true) {
+		$.ajax({
+			url: "/resource/delete",
+			type:"post",
+			data:"resourceId="+resourceId,
+			dataType: 'json',
+			success: function(data) {
+				if(data.response == "success"){
+					alert("Resource has been deleted successfully !!!");
+					window.location.href = USER_DASHBOARD_URL;
+				}else
+					alert("Some error has been occurred !!!");
+			}
+		});
+	}
 
 
-
+}

@@ -28,7 +28,9 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">Subscriptions
-                    <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
+                    <g:if test="${user.subscriptions.size()>0}">
+                        <g:link action="findSubscriptionsByUser" controller="login" params="[userId:user.id]" class="pull-right">View All</g:link>
+                    </g:if>
                     </div>
                     <div class="panel-body">
                         <g:each var="subscribeObj" in="${user.subscriptions}" status="i">
@@ -41,7 +43,9 @@
             <div class="col-xs-7 pull-right" >
                 <div class="panel panel-default">
                     <div class="panel-heading">Inbox
-                        <g:link controller="resource" action="findUnreadResourcesByUser" params="[userId:user.id]" class="pull-right">View All</g:link>
+                        <g:if test="${unreadResources.size()>0}">
+                            <g:link controller="resource" action="findUnreadResourcesByUser" params="[userId:user.id]" class="pull-right">View All</g:link>
+                        </g:if>
                     </div>
                     <div class="panel-body">
                         <g:each var="resourceObj" in="${unreadResources}" status="i">

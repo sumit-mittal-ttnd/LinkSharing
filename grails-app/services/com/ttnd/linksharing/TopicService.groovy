@@ -84,14 +84,9 @@ class TopicService {
     }
 
     void update(Map params){
-        try{
-            Topic topic = Topic.get(params.get("topicId"));
-            topic.setName(params.get("topicName"));
-            topic.merge();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
+        Topic topic = Topic.get(params.get("topicId"));
+        topic.setName(params.get("topicName"));
+        topic.merge();
     }
 
 
