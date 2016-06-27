@@ -2,7 +2,7 @@
     <div class="panel-heading">Profile</div>
 
     <div class="panel-body">
-        <g:form controller="user" action="update" method="POST" class="form-horizontal" enctype="multipart/form-data">
+        <g:form id="profileEditForm" name="profileEditForm" controller="user" action="update" method="POST" class="form-horizontal" enctype="multipart/form-data">
             <div class="form-group form-group-sm">
                 <div class="col-xs-4 ">
                     <label class=" control-label" for="fName">First Name *</label>

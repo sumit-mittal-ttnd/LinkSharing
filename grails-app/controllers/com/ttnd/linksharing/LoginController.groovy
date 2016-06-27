@@ -103,7 +103,7 @@ class LoginController {
 
     def showUser(){
         User user = User.get(Integer.parseInt(params.get("userId")));
-        render(view:"/user/profile", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user), topicsByUser:topicService.findTopicsByUser(user, User.get(session.getAttribute("userId")))]);
+        render(view:"/user/show", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user), topicsByUser:topicService.findTopicsByUser(user, User.get(session.getAttribute("userId")))]);
     }
 
     def showResource(){
@@ -141,9 +141,17 @@ class LoginController {
     }
 
     def search(){
-        User user = User.get(session.getAttribute("userId"));
-        String searchValue = params.get("searchValue");
-        render(view:"/login/search", model:[searchValue:searchValue, trendingTopics:topicService.findTrendingTopics(user), topResources:resourceService.findTopResources(), searchedResources:resourceService.findSearchedResources(searchValue), unreadResources:resourceService.findUnreadResourcesByUser(user)]);
+        try{
+            User user = User.get(session.getAttribute("userId"));
+            String searchValue = params.get("searchValue");
+            def trendingTopics = topicService.findTrendingTopics(user);
+            def topResources = resourceService.findTopResources();
+            def searchedResources = resourceService.findSearchedResources(searchValue, user);
+            def unreadResources = resourceService.findUnreadResourcesByUser(user);
+            render(view:"/login/search", model:[searchValue:searchValue, trendingTopics:trendingTopics, topResources:topResources, searchedResources:searchedResources, unreadResources:unreadResources]);
+        } catch (Exception e){
+            e.printStackTrace()
+        }
     }
 
 

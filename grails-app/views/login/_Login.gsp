@@ -3,24 +3,24 @@
         <div class="panel-heading">Login</div>
 
         <div class="panel-body">
-            <g:form controller="login" action="login" method="POST" class="form-horizontal">
+            <g:form id="loginForm" name="loginForm" controller="login" action="login" method="POST" class="form-horizontal">
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
                         <label class=" control-label" for="signInUserName">Email/Username *</label>
                     </div>
 
                     <div class="col-xs-8 ">
-                        <g:textField id="signInUserName" name="userName" class="form-control"/>
+                        <g:textField id="signInUserName" name="userName" class="form-control" required="required"/>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
-                        <label class="control-label" for="signinPassword">Password *</label>
+                        <label class="control-label" for="signInPassword">Password *</label>
                     </div>
 
                     <div class="col-xs-8 ">
-                        <g:textField id="signinPassword" name="password" class="form-control"/>
+                        <g:passwordField id="signInPassword" name="password" class="form-control" required="required"/>
                     </div>
                 </div>
 

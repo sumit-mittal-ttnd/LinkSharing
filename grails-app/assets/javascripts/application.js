@@ -188,6 +188,178 @@ function deleteResource(resourceId){
 			}
 		});
 	}
-
-
 }
+
+
+$().ready(function(){
+
+	$("#registerForm").validate({
+		rules: {
+			firstName: "required",
+			lastName: "required",
+			userName: "required",
+			email: {
+				required: true,
+				email: true
+			},
+			password: {
+				required: true,
+				minlength: 5
+			},
+			confirmPassword: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			}
+		},
+		messages: {
+			firstName: "Please enter your first name",
+			lastName: "Please enter your last name",
+			userName: "Please enter your user name",
+			email: {
+				required: "Please provide your email address",
+				email: "Please enter a valid email address"
+			},
+			password: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 5 characters long"
+			},
+			confirmPassword: {
+				required: "Please provide a confirm password",
+				minlength: "Your confirm password must be at least 5 characters long",
+				equalTo :  "Password and confirm password mismatch"
+			}
+		}
+	});
+
+	$("#loginForm").validate({
+		rules: {
+			userName: "required",
+			password: "required"
+		},
+		messages: {
+			userName: "Please specify Email/UserName",
+			password: "Please enter your password"
+		}
+	});
+
+	$("#forgotPasswordForm").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			}
+		},
+		messages: {
+			email: {
+				required: "Please provide your email address",
+				email: "Please enter a valid email address"
+			}
+		}
+	});
+
+	$("#createTopicForm").validate({
+		rules: {
+			name: "required",
+			visibility: "required"
+		},
+		messages: {
+			name: "Please specify topic name",
+			visibility: "Please select the visibility"
+		}
+	});
+
+	$("#sendInvitationForm").validate({
+		rules: {
+			email: {
+				required: true,
+				email: true
+			},
+			topicId: "required"
+		},
+		messages: {
+			email: {
+				required: "Please provide your email address",
+				email: "Please enter a valid email address"
+			},
+			topicId: "Please select any topic"
+		}
+	});
+
+	$("#shareLinkForm").validate({
+		rules: {
+			url: "required",
+			description: "required",
+			topicId: "required"
+		},
+		messages: {
+			url: "Please specify link",
+			description: "Please fill the description",
+			topicId: "Please select any topic"
+		}
+	});
+
+	$("#shareDocumentForm").validate({
+		rules: {
+			document: "required",
+			description: "required",
+			topicId: "required"
+		},
+		messages: {
+			document: "Please upload any document",
+			description: "Please fill the description",
+			topicId: "Please select any topic"
+		}
+	});
+
+	$("#resourceEditForm").validate({
+		rules: {
+			editResourceDesc: "required"
+		},
+		messages: {
+			editResourceDesc: "Please Fill Resource Description"
+		},
+		submitHandler: function(form) {
+			editResourcePost();
+		}
+	});
+
+	$("#profileEditForm").validate({
+		rules: {
+			firstName: "required",
+			lastName: "required",
+			userName: "required"
+		},
+		messages: {
+			firstName: "Please enter your first name",
+			lastName: "Please enter your last name",
+			userName: "Please enter your user name"
+		}
+	});
+
+	$("#changePwdForm").validate({
+		rules: {
+			password: {
+				required: true,
+				minlength: 5
+			},
+			confirmPassword: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			}
+		},
+		messages: {
+			password: {
+				required: "Please provide a password",
+				minlength: "Your password must be at least 5 characters long"
+			},
+			confirmPassword: {
+				required: "Please provide a confirm password",
+				minlength: "Your confirm password must be at least 5 characters long",
+				equalTo :  "Password and confirm password mismatch"
+			}
+		}
+	});
+	
+});

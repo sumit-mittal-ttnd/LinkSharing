@@ -11,21 +11,28 @@ import com.ttnd.linksharing.User
 class BootStrap {
 
     def init = { servletContext ->
-
-        //initCall();
+        initCall();
     }
 
-   /* void initCall(){
-        // create User
-        User user = new User(firstName: "normal", lastName: "user", userName: "normalUser", email : "normalUser@gmail.com", password: "password", confirmPassword: "password1", active: Boolean.TRUE, admin: Boolean.FALSE );
-        createUser(user);
 
-        // create admin user
-        User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminUser", email : "adminUser@gmail.com", password: "admin", confirmPassword: "admin1", active: Boolean.TRUE, admin: Boolean.TRUE );
-        createUser(adminUser);
+    // Create 1 admin users
+    // Create 3 normal Users
 
+   void initCall(){
 
-        // createTopic
+       // create admin user
+       User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminuser", email : "sumit.ttnd+999@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.TRUE);
+       createUser(adminUser);
+
+       // create User
+       User user1 = new User(firstName: "sumit1", lastName: "mittal1", userName: "sumitmittal1", email : "sumit.ttnd+1@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
+       User user2 = new User(firstName: "sumit2", lastName: "mittal2", userName: "sumitmittal2", email : "sumit.ttnd+2@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
+       User user3 = new User(firstName: "sumit3", lastName: "mittal3", userName: "sumitmittal3", email : "sumit.ttnd+3@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
+       createUser(user1);
+       createUser(user2);
+       createUser(user3);
+
+        /*// createTopic
         //User user = User.findById(2L);
         Topic topic = new Topic(name: "Java", createdBy: user, visibility: Topic.Visibility.PRIVATE);
         createTopic(user, topic, Subscription.Seriousness.VERY_SERIOUS);
@@ -40,7 +47,7 @@ class BootStrap {
         addDocumentResources(user, topic, filePath, description);
 
         // subscribe topic 3-1
-        subscribeTopic(user, topic, Subscription.Seriousness.CASUAL);
+        subscribeTopic(user, topic, Subscription.Seriousness.CASUAL);*/
     }
 
     void createUser(User user){
@@ -52,7 +59,7 @@ class BootStrap {
         }
     }
 
-    void createTopic(User user, Topic topic, Subscription.Seriousness seriousness){
+    /*void createTopic(User user, Topic topic, Subscription.Seriousness seriousness){
         if(!topic.validate()){
             log.error "Errors Occurred While Saving Topic: "+topic.getErrors()
         }else{
@@ -160,6 +167,4 @@ class BootStrap {
         println " user : " + user.save();
     }*/
 
-    def destroy = {
-    }
 }

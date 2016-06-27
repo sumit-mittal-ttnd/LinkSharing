@@ -2,24 +2,24 @@
     <div class="panel-heading">Change Password</div>
 
     <div class="panel-body">
-        <g:form controller="login" action="changePassword" method="POST" class="form-horizontal">
+        <g:form id="changePwdForm" name="changePwdForm" controller="login" action="changePassword" method="POST" class="form-horizontal">
             <div class="form-group form-group-sm">
                 <div class="col-xs-4 ">
-                    <label class=" control-label" for="pwd">Password *</label>
+                    <label class=" control-label" for="password">Password *</label>
                 </div>
 
                 <div class="col-xs-8">
-                    <g:textField id="pwd" name="password" class="form-control" value="${pwd}"/>
+                    <g:textField id="password" name="password" class="form-control" value="${pwd}"/>
                 </div>
             </div>
 
             <div class="form-group form-group-sm">
                 <div class="col-xs-4 ">
-                    <label class="control-label" for="cPwd">Confirm Password *</label>
+                    <label class="control-label" for="confirmPassword">Confirm Password *</label>
                 </div>
 
                 <div class="col-xs-8">
-                    <g:textField id="cPwd" name="confirmPassword" class="form-control" value="${cPwd}"/>
+                    <g:textField id="confirmPassword" name="confirmPassword" class="form-control" value="${cPwd}"/>
                 </div>
             </div>
 

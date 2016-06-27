@@ -28,12 +28,12 @@ class User {
 
     static constraints = {
         email(unique: true, email: true, nullable: false, blank: false)
-        password(nullable: false, blank: false, minSize: 5 , validator: {passwordVal, obj ->
-                                                                            if(obj.confirmPassword == null) return true;
-                                                                            else if(!passwordVal.equals(obj.confirmPassword)) return false;
-                                                                            else return true;
-                                                                        }
-                )
+        password(nullable: false, blank: false, minSize: 5)
+        confirmPassword(bindable: true, blank: true, nullable: true, validator: {cPwdVal,obj->
+            if(cPwdVal == null || cPwdVal==obj.password) return true
+            else return false
+        })
+
         firstName(nullable: false, blank: false)
         lastName(nullable: false, blank: false)
         photoUrl(nullable: true, blank: true)
@@ -51,8 +51,6 @@ class User {
     static mapping = {
         sort name: "asc"
     }
-
-
 
     String getName(){
         return "${firstName} ${lastName}";

@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body panel-body">
 
-                <g:form controller="resource" action="save" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <g:form id="shareDocumentForm" name="shareDocumentForm" controller="resource" action="save" method="POST" class="form-horizontal" enctype="multipart/form-data">
                     <g:hiddenField name="resourceType" value="documentResource"/>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4">

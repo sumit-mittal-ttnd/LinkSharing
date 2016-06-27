@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body panel-body">
 
-                <g:form controller="resource" action="save" method="POST" class="form-horizontal">
+                <g:form id="shareLinkForm" name="shareLinkForm" controller="resource" action="save" method="POST" class="form-horizontal">
                     <g:hiddenField name="resourceType" value="linkResource"/>
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">

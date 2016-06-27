@@ -8,14 +8,14 @@
                 <h4 class="modal-title">Send Invitation</h4>
             </div>
             <div class="modal-body panel-body">
-            <g:form controller="topic" action="sendInvite" method="POST" class="form-horizontal">
+            <g:form id="sendInvitationForm" name="sendInvitationForm" controller="topic" action="sendInvite" method="POST" class="form-horizontal">
 
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
                             <label class=" control-label" for="email">Email* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <g:textField id="email" name="email" class="form-control" placeholder="Email"/>
+                            <g:textField id="email" name="email" class="form-control" placeholder="Email" required="required"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">

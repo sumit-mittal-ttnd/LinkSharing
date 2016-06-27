@@ -4,7 +4,7 @@
             <div class="panel-heading">Forgot Password</div>
 
             <div class="panel-body">
-                <g:form controller="login" action="forgotPassword" method="POST" class="form-horizontal">
+                <g:form id="forgotPasswordForm" name="forgotPasswordForm" controller="login" action="forgotPassword" method="POST" class="form-horizontal">
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4">
                             <label class="control-label" for="email">Email *</label>

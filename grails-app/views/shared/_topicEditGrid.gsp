@@ -14,7 +14,7 @@
                         </div>
                         <div class="col-xs-8">
                             <g:hiddenField id="editTopicId" name="editTopicId" class="form-control" value=""/>
-                            <g:textField id="editTopicName" name="editTopicName" class="form-control" placeholder="Topic Name" value=""/>
+                            <g:textField id="editTopicName" name="editTopicName" class="form-control" placeholder="Topic Name" required="required"/>
                         </div>
                     </div>
                     <div class="modal-footer">

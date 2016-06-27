@@ -1,6 +1,7 @@
 package com.ttnd.linksharing
 
 import org.apache.commons.lang.RandomStringUtils
+import org.apache.commons.lang.StringUtils
 import org.springframework.web.multipart.MultipartFile
 
 class ResourceService {
@@ -24,7 +25,6 @@ class ResourceService {
         List<Resource> resources = Resource.createCriteria().listDistinct {
             and{
                 order("avgRating", "desc")
-                maxResults 5
                 "topic"{
                     eq("visibility", Topic.Visibility.PUBLIC)
                 }
@@ -48,15 +48,48 @@ class ResourceService {
         return resources;
     }
 
-    List<Resource> findSearchedResources(String searchValue){
-        List<Resource> resources = Resource.createCriteria().listDistinct {
-            or{
-                "topic"{
-                    ilike("name", "%"+searchValue+"%")
+    List<Resource> findSearchedResources(String searchValue, User user){
+        List<Resource> resources = new ArrayList<Resource>();
+        if(user == null){
+            resources = findTopResources();
+        }else{
+            if(user.admin){
+                if(StringUtils.isBlank(searchValue)){
+                    return Resource.findAll();
+                } else{
+                    resources = Resource.createCriteria().listDistinct {
+                        or{
+                            "topic"{
+                                ilike("name", "%"+searchValue+"%")
+                            }
+                            ilike("description", "%"+searchValue+"%")
+                        }
+                    };
                 }
-                ilike("description", "%"+searchValue+"%")
+            } else {
+                if(!StringUtils.isBlank(searchValue)) {
+                    resources = Resource.createCriteria().listDistinct {
+                        and{
+                            or {
+                                "topic" {
+                                    ilike("name", "%" + searchValue + "%")
+                                }
+                                ilike("description", "%" + searchValue + "%")
+                            }
+                            or{
+                                "topic" {
+                                    eq("visibility", Topic.Visibility.PUBLIC)
+                                }
+                                "topic" {
+                                    eq("createdBy",user)
+                                }
+                            }
+                        }
+                    };
+                }
+
             }
-        };
+        }
         return resources;
     }
 
@@ -85,7 +118,7 @@ class ResourceService {
     }
 
     void uploadDocumentResource(DocumentResource documentResource, Map params){
-        String folderUrl = "/home/ttnd/sumit/GrailsProject/document_resources/";
+        String folderUrl = Constants.DOCUMENT_URL;
         File file = new File(folderUrl);
         if(!file.exists()){
             file.mkdir();

@@ -3,24 +3,24 @@
         <div class="panel-heading">Register</div>
 
         <div class="panel-body">
-            <g:form controller="login" action="register" method="POST" class="form-horizontal" enctype="multipart/form-data">
+            <g:form id="registerForm" name="registerForm" controller="login" action="register" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
-                        <label class=" control-label" for="fName">First Name *</label>
+                        <label class=" control-label" for="firstName">First Name *</label>
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="fName" name="firstName" class="form-control"/>
+                        <g:textField id="firstName" name="firstName" class="form-control" required="required"/>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
-                        <label class="control-label" for="lName">Last Name *</label>
+                        <label class="control-label" for="lastName">Last Name *</label>
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="lName" name="lastName" class="form-control"/>
+                        <g:textField id="lastName" name="lastName" class="form-control" required="required"/>
                     </div>
                 </div>
 
@@ -30,37 +30,37 @@
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="email" name="email" class="form-control"/>
+                        <g:textField id="email" name="email" class="form-control" required="required"/>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
-                        <label class="control-label" for="rUsername">Username *</label>
+                        <label class="control-label" for="userName">Username *</label>
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="rUsername" name="userName" class="form-control"/>
+                        <g:textField id="userName" name="userName" class="form-control" required="required"/>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4">
-                        <label class=" control-label" for="rPassword">Password *</label>
+                        <label class=" control-label" for="password">Password *</label>
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="rPassword" name="password" class="form-control"/>
+                        <g:passwordField id="password" name="password" class="form-control" required="required"/>
                     </div>
                 </div>
 
                 <div class="form-group form-group-sm">
                     <div class="col-xs-4 ">
-                        <label class="  control-label" for="cPassword">Confirm Password *</label>
+                        <label class="  control-label" for="confirmPassword">Confirm Password *</label>
                     </div>
 
                     <div class="col-xs-8">
-                        <g:textField id="cPassword" name="confirmPassword" class="form-control"/>
+                        <g:passwordField id="confirmPassword" name="confirmPassword" class="form-control" required="required"/>
                     </div>
                 </div>
 

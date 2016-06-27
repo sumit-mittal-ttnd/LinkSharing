@@ -22,7 +22,7 @@ class UserService {
     }
 
     void uploadUserPic(User user, Map params){
-        String folderUrl = "/home/ttnd/sumit/GrailsProject/users_photo/";
+        String folderUrl = Constants.USER_PHOTO_URL;
         File file = new File(folderUrl);
         if(!file.exists()){
             file.mkdir();

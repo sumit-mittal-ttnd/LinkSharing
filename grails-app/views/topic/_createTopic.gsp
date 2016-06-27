@@ -9,13 +9,13 @@
             </div>
             <div class="modal-body panel-body">
 
-                <g:form controller="topic" action="save" method="POST" class="form-horizontal">
+                <g:form id="createTopicForm" name="createTopicForm" controller="topic" action="save" method="POST" class="form-horizontal">
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
-                            <label class=" control-label" for="fName">Name* :</label>
+                            <label class=" control-label" for="name">Name* :</label>
                         </div>
                         <div class="col-xs-8">
-                            <g:textField id="fName" name="name" class="form-control" placeholder="Name" required="required"/>
+                            <g:textField id="name" name="name" class="form-control" placeholder="Name" required="required"/>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">

@@ -33,7 +33,7 @@ class ResourceController {
         resource.setAddedBy(User.get(session.getAttribute("userId")));
         resource.setTopic(Topic.get(params.get("topicId")));
         if(!resource.validate()){
-            flash.error = message(code: 'Resource.uploaded.invalid.message');
+            flash.error = message(code: 'Resource.link.invalid.message');
             redirect(controller: 'user', action: 'index')
             return;
         }

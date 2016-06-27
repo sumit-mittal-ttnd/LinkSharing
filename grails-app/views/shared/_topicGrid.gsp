@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-xs-4">
                 <g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link>
-                <br/> <small>@${topicCreatedBy.firstName}</small>
+                <br/> <small>@${topicCreatedBy.userName}</small>
                 <g:if test="${session.userId && topicCreatedBy.id != session.userId}">
                     <br/>
                     <g:if test="${subIdObj=='0'}">

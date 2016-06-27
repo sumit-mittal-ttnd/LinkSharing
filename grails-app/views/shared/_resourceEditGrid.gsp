@@ -7,14 +7,14 @@
             </div>
             <div class="modal-body panel-body">
 
-                <g:form method="POST" class="form-horizontal" onsubmit="return editResourcePost();">
+                <g:form id="resourceEditForm" name="resourceEditForm" method="POST" class="form-horizontal" onsubmit="return false">
                     <div class="form-group form-group-sm">
                         <div class="col-xs-4 ">
                             <label class=" control-label" for="editResourceDesc">Description* :</label>
                         </div>
                         <div class="col-xs-8">
                             <g:hiddenField id="editResourceId" name="editResourceId" class="form-control" value=""/>
-                            <g:textArea id="editResourceDesc" name="editResourceDesc" class="form-control" placeholder="Description" value=""/>
+                            <g:textArea id="editResourceDesc" name="editResourceDesc" class="form-control" placeholder="Description" value="" required="required"/>
                         </div>
                     </div>
                     <div class="modal-footer">

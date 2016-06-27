@@ -7,6 +7,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
+
 		<title>
 			<g:layoutTitle default="LinkSharing App"/>
 		</title>
@@ -18,7 +20,7 @@
 				padding: 15px;
 			}
 			.bodyClass {
-				background-image: url(${assetPath(src: 'background.png')});
+				background-image: url(${assetPath(src: 'background.jpg')});
 				background-repeat: no-repeat;
 				background-attachment: fixed;
 				background-position: center;

@@ -6,7 +6,7 @@
     </div>
     <div class="col-xs-8">
         <div class="row">
-            <h4>${userObj.firstName} ${userObj.lastName} <br/> <small>@${userObj.firstName}</small></h4>
+            <h4>${userObj.firstName} ${userObj.lastName} <br/> <small>@${userObj.userName}</small></h4>
         </div>
         <div class="row">
             <div class="col-xs-6">
