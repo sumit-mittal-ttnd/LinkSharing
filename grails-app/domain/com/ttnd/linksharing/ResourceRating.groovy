@@ -31,20 +31,6 @@ class ResourceRating {
         }
     }
 
-    def afterUpdate = {
-        ResourceRating.withNewSession {session ->
-            int count = ResourceRating.countByResource(this.resource);
-            int totalRating = 0;
-            List<ResourceRating> list = ResourceRating.findAllByResource(this.resource);
-            for(ResourceRating resRat : list){
-                totalRating += resRat.score;
-            }
-            int avgRating = totalRating/count;
-            this.resource.avgRating = avgRating;
-            this.resource.merge();
-        }
-    }
-
     boolean equals(o) {
         if (this.is(o)) return true
         if (!(o instanceof ResourceRating)) return false

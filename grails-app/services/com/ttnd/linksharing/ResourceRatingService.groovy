@@ -9,8 +9,22 @@ class ResourceRatingService {
             resourceRating.save();
         }else{
             resourceRating.setScore(score);
-            resourceRating.merge();
+            mergeResourceRating(resourceRating);
         }
+    }
+
+    void mergeResourceRating(ResourceRating resourceRating){
+        Resource resource = resourceRating.getResource();
+        int count = ResourceRating.countByResource(resource);
+        int totalRating = 0;
+        List<ResourceRating> list = ResourceRating.findAllByResource(resource);
+        for(ResourceRating resRat : list){
+            totalRating += resRat.score;
+        }
+        int avgRating = totalRating/count;
+        resource.avgRating = avgRating;
+        resourceRating.setResource(resource);
+        resourceRating.merge(flush:true);
     }
 
 

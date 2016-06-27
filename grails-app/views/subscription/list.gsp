@@ -34,7 +34,7 @@
                         <tr>
                             <td>${subscribeObj.id}</td>
                             <td><g:link action="showTopic" controller="login" params="[id:subscribeObj.topic.id]">${subscribeObj.topic.name}</g:link></td>
-                            <td><g:link action="showUser" controller="login" params="[userId:subscribeObj.user.id]">${subscribeObj.user.firstName} ${subscribeObj.user.lastName}</g:link></td>
+                            <td><g:link action="showUser" controller="login" params="[userId:subscribeObj.user.id]">${subscribeObj.user.name}</g:link></td>
                             <td>${subscribeObj.seriousness}</td>
                             <td><g:formatDate format="dd-MMM-yyyy" date="${subscribeObj.dateCreated}"/></td>
                             <td><g:formatDate format="dd-MMM-yyyy" date="${subscribeObj.lastUpdated}"/></td>

@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="col-xs-3">
-                                <p style="font-size: 12px">${resourceAddedBy.firstName} ${resourceAddedBy.lastName}
+                                <p style="font-size: 12px">${resourceAddedBy.name}
                                     <br/><span class="small text-center">@${resourceAddedBy.userName}</span>
                                 </p>
                             </div>

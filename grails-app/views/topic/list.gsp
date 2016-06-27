@@ -37,7 +37,7 @@
                         <tr>
                             <td>${topicObj.id}</td>
                             <td><g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link></td>
-                            <td>${topicObj.createdBy.firstName} ${topicObj.createdBy.lastName}</td>
+                            <td>${topicObj.createdBy.name}</td>
                             <td>${topicObj.visibility}</td>
                             <td>${topicObj.subscriptions.size()}</td>
                             <td>${topicObj.resources.size()}</td>

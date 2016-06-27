@@ -10,7 +10,7 @@
 
     <div class="col-xs-9">
         <div>
-            <p style="font-size: 12px">${resourceAddedBy.firstName} ${resourceAddedBy.lastName}
+            <p style="font-size: 12px">${resourceAddedBy.name}
                 <span class="small text-center">@${resourceAddedBy.userName} <g:formatDate format="dd-MMM-yyyy" date="${resourceObj.lastUpdated}"/></span>
                 <g:link action="showTopic" controller="login" params="[id:resourceObj.topic.id]" class="pull-right">${resourceObj.topic.name}</g:link><br/>
                 ${resourceObj.description}

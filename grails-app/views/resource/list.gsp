@@ -33,7 +33,7 @@
                     <tr>
                         <td>${resourceObj.id}</td>
                         <td><g:link action="showTopic" controller="login" params="[id:resourceObj.topic.id]">${resourceObj.topic.name}</g:link></td>
-                        <td><g:link action="showUser" controller="login" params="[userId:resourceObj.addedBy.id]">${resourceObj.addedBy.firstName} ${resourceObj.addedBy.lastName}</g:link></td>
+                        <td><g:link action="showUser" controller="login" params="[userId:resourceObj.addedBy.id]">${resourceObj.addedBy.name}</g:link></td>
                         <td>${resourceObj.avgRating}</td>
                         <td><g:formatDate format="dd-MMM-yyyy" date="${resourceObj.dateCreated}"/></td>
                         <td><g:formatDate format="dd-MMM-yyyy" date="${resourceObj.lastUpdated}"/></td>
