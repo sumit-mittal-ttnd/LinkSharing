@@ -145,9 +145,10 @@ function editTopicPost(){
 	return false;
 }
 
-function editResourceGet(resourceId, resourceDesc){
+function editResourceGet(resourceId){
+	var resDescDiv = $("#resDescDiv").html();
 	$("#editResourceId").val(resourceId);
-	$("#editResourceDesc").val(resourceDesc);
+	$("#editResourceDesc").val(resDescDiv);
 }
 
 function editResourcePost(){

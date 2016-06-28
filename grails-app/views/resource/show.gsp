@@ -49,9 +49,7 @@
                         </div>
 
                         <div class="panel-body row">
-                            <div class="col-xs-12">
-                                ${resource.description}
-                            </div>
+                            <div class="col-xs-12" id="resDescDiv">${resource.description}</div>
                         </div>
 
                         <div class="row">
@@ -60,8 +58,8 @@
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-google-plus"></i></a>
                                 <div class="pull-right">
-                                    <g:if test="${session.userId == resourceAddedBy.id}">
-                                        <a class="fa fa-pencil-square-o" aria-hidden="true" title="Edit Resource" data-toggle="modal" data-target="#resourceEdit" onclick="editResourceGet('${resource.id}','${resource.description}');"></a>
+                                    <g:if test="${(session.userId == resourceAddedBy.id) || (session.userIsAdmin=='TRUE')}">
+                                        <a class="fa fa-pencil-square-o" aria-hidden="true" title="Edit Resource" data-toggle="modal" data-target="#resourceEdit" onclick="editResourceGet('${resource.id}');"></a>
                                         <a href="javascript:deleteResource('${resource.id}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                     </g:if>
                                     <g:if test="${resource.instanceOf(com.ttnd.linksharing.LinkResource)}">
@@ -71,7 +69,7 @@
                                         <g:link action="downloadResource" controller="login" params="['resourceId':resource.id]" class="small">Download</g:link>
                                     </g:else>
 
-                                    <g:if test="${session.userId && unreadResources.contains(resource)}">
+                                    <g:if test="${(session.userId && unreadResources.contains(resource)) || (session.userIsAdmin=='TRUE')}">
                                         <a href="javascript:markAsRead(${resource.id})" class="small">Mark as read</a>
                                     </g:if>
                                 </div>
@@ -82,16 +80,32 @@
                 </div>
             </div>
 
-            <div class="col-xs-6 pull-right" >
-                <div class="panel panel-default">
-                    <div class="panel-heading">Trending topics</div>
-                    <div class="panel-body">
-                        <g:each var="topicObj" in="${trendingTopics}">
-                            <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>
-                        </g:each>
+
+            <g:if test="${session.userId}">
+                <div class="col-xs-6 pull-right" >
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Trending topics
+                        <g:if test="${trendingTopics.size()>0}">
+                            <g:link action="findTrendingTopicsByUser" controller="login" class="pull-right">View All</g:link>
+                        </g:if>
+                        </div>
+                        <div class="panel-body">
+                            <g:each var="topicObj" in="${trendingTopics}">
+                                <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>
+                            </g:each>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </g:if>
+            <g:else>
+                <g:render template="/login/Login"/>
+                <g:render template="/login/Register"/>
+            </g:else>
+
+
+
+
+
 
         </div>
     </div>

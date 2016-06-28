@@ -10,7 +10,7 @@
 
         <div class="col-lg-12">
             <center>
-                <asset:image src="500.jpeg" height="550px" width="1133px" ></asset:image>
+                <asset:image src="500.png" height="550px" width="1133px" ></asset:image>
             </center>
             <br/>
             <br/>

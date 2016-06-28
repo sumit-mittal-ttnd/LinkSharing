@@ -19,10 +19,16 @@
         <g:render template="/shared/header"/>
 
         <div class="row">
+            <div class="col-xs-12" style="font-size: 24px;">
+                    <center>  <strong>Topics List</strong> </center>
+            </div>
+        </div><br/>
+
+        <div class="row">
             <table id="topicListTable" class="display">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Topic Id</th>
                         <th>Name</th>
                         <th>CreatedBy</th>
                         <th>visibility</th>
@@ -51,7 +57,9 @@
     </div>
     <script>
         $(document).ready( function () {
-            $('#topicListTable').DataTable();
+            $('#topicListTable').DataTable({
+                "order": [[ 5, "desc" ]]
+            });
         } );
     </script>
 </body>

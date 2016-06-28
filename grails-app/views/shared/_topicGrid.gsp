@@ -21,7 +21,7 @@
             <div class="col-xs-4">
                 <g:link action="showTopic" controller="login" params="[id:topicObj.id]">${topicObj.name}</g:link>
                 <br/> <small>@${topicCreatedBy.userName}</small>
-                <g:if test="${session.userId && topicCreatedBy.id != session.userId}">
+                <g:if test="${(session.userId && topicCreatedBy.id != session.userId) || (session.userIsAdmin=='TRUE')}">
                     <br/>
                     <g:if test="${subIdObj=='0'}">
                         <a href="javascript:subscribe('${session.userId}', '${topicObj.id}')">Subscribe</a>
@@ -52,12 +52,12 @@
         </g:if>
     </div>
     <div class="col-xs-3">
-        <g:if test="${session.userId == topicCreatedBy.id}">
+        <g:if test="${(session.userId == topicCreatedBy.id) || (session.userIsAdmin=='TRUE')}">
             <g:select name="visibility" from="${['PUBLIC','PRIVATE']}" value="${topicObj.visibility}" onchange="javascript:updateVisibility(${topicObj.id}, this.value);"/>
         </g:if>
     </div>
     <div class="col-xs-3">
-        <g:if test="${session.userId == topicCreatedBy.id}">
+        <g:if test="${(session.userId == topicCreatedBy.id) || (session.userIsAdmin=='TRUE')}">
             <a class="fa fa-envelope-o" aria-hidden="true" title="Send Invitation" data-toggle="modal" data-target="#sendInviModal"></a>
             <a class="fa fa-pencil-square-o" aria-hidden="true" title="Edit Topic" data-toggle="modal" data-target="#topicEdit" onclick="editTopicGet('${topicObj.id}','${topicObj.name}');"></a>
             <a href="javascript:deleteTopic('${topicObj.id}')"><i class="fa fa-trash-o" aria-hidden="true"></i></a>

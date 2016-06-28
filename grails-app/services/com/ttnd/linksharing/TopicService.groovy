@@ -6,6 +6,57 @@ class TopicService {
 
     MailService mailService;
 
+    // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
+    List<Topic> findTrendingTopics(User user, int resultCount){
+        List<Topic> topics;
+        if(user == null){
+            topics = Topic.createCriteria().listDistinct {
+                or{
+                    eq("visibility", Topic.Visibility.PUBLIC)
+                    if(resultCount != 0){
+                        maxResults 5
+                    }
+                }
+            };
+        } else if(user.admin){
+            topics = Topic.createCriteria().listDistinct {
+                if(resultCount != 0){
+                    maxResults 5
+                }
+            };
+        }else{
+            topics = Topic.createCriteria().listDistinct {
+                or{
+                    eq("visibility", Topic.Visibility.PUBLIC)
+                    eq("createdBy",user)
+                    "subscriptions"{
+                        eq("user", user)
+                    }
+                    if(resultCount != 0){
+                        maxResults 5
+                    }
+                }
+            };
+        }
+        topics.sort { -it.resources.size() }
+        return topics;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     List<Topic> findSubscribedTopicsByUser(User user){
         List<Topic> topics = Topic.createCriteria().listDistinct {
             "subscriptions"{
@@ -42,22 +93,6 @@ class TopicService {
             html(view:'/mail/_invitation', model:[email:email,firstName:User.get(loggedInUserId).firstName, topicId : topic.id, topicName : topic.name])
         }
     }
-
-    // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
-    List<Topic> findTrendingTopics(User user){
-        List<Topic> topics = Topic.createCriteria().listDistinct {
-            or{
-                eq("visibility", Topic.Visibility.PUBLIC)
-                eq("createdBy",user)
-                "subscriptions"{
-                    eq("user", user)
-                }
-            }
-        };
-        topics.sort { -it.resources.size() }
-        return topics;
-    }
-
 
     // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
     List<Topic> findTopicsByUser(User viewUser, User loggedInUser){

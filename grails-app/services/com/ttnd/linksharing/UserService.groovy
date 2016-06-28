@@ -21,6 +21,13 @@ class UserService {
         user.merge(flush: true, failOnError: true);
     }
 
+    void changePassword(Map params){
+        User user = User.get(params.get("userId"));
+        user.setPassword(params.get("password"));
+        user.merge(flush: true, failOnError: true);
+    }
+
+
     void uploadUserPic(User user, Map params){
         String folderUrl = Constants.USER_PHOTO_URL;
         File file = new File(folderUrl);

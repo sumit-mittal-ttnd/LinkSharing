@@ -55,7 +55,11 @@
                 </div>
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Trending topics</div>
+                    <div class="panel-heading">Trending topics
+                        <g:if test="${trendingTopics.size()>0}">
+                            <g:link action="findTrendingTopicsByUser" controller="login" params="[userId:session.userId]" class="pull-right">View All</g:link>
+                        </g:if>
+                    </div>
                     <div class="panel-body">
                         <g:each var="topicObj" in="${trendingTopics}">
                             <g:render template="/shared/topicGrid" model="[topicObj: topicObj]"/>

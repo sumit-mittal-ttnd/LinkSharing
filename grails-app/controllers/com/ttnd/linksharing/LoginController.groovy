@@ -9,7 +9,7 @@ class LoginController {
     def index() {
         User user = User.get(session.getAttribute("userId"));
         if(user == null)
-            render(view:"login", model: [recentResources:resourceService.findRecentResources(), topResources:resourceService.findTopResources(), unreadResources:null]);
+            render(view:"login", model: [recentResources:resourceService.findRecentResources(), topResources:resourceService.findTopResources(5), unreadResources:null]);
         else
             redirect(controller: 'user', action: 'index')
     }
@@ -51,15 +51,15 @@ class LoginController {
         redirect (controller: 'login', action: 'index')
     }
 
-    def activate(String activateCode, String id){
-        User user = User.get(id);
-        if(user != null && user.getActivateCode().equals(activateCode)){
+    def activate(){
+        User user = User.get(params.get("userId"));
+        if(user != null && user.getActivateCode().equals(params.get("activateCode"))){
             loginService.activateUser(user);
             flash.message = message(code: 'User.activate.success.message');
         }else{
             flash.error= message(code: 'invalid.request.message');
         }
-        render(view:"login");
+        redirect (controller: 'login', action: 'index')
     }
 
     def forgotPassword(){
@@ -73,28 +73,13 @@ class LoginController {
         redirect (controller: 'login', action: 'index')
     }
 
-    def changePassword(){
-        String pwd = params.get("password");
-        String cPwd = params.get("confirmPassword");
-        if(pwd != cPwd){
-            flash.error = "Password Mismatch";
-            redirect (controller: 'user', action: 'edit')
-        }else{
-            User user = User.get(session.getAttribute("userId"));
-            user.setPassword(pwd);
-            if(!user.validate()){
-                flash.error = "Invalid Password";
-                redirect (controller: 'user', action: 'edit')
-            }else{
-                user.save(flush: true, failOnError: true);
-                flash.message = "Password Successfully Changed";
-                redirect (controller: 'user', action: 'index')
-            }
-        }
+    def showTopic(){
+        Topic topic = Topic.read(params.get("id"));
+        render(view:"/topic/show", model:[topic:topic, unreadResources:resourceService.findUnreadResourcesByUser(User.get(session.getAttribute("userId")), 0), resourcesByTopic: resourceService.findResourcesByTopic(topic.getId(), 5)])
     }
 
-    def showTopic(){
-        render(view:"/topic/show", model:[topic:Topic.read(params.get("id")), unreadResources:resourceService.findUnreadResourcesByUser(User.get(session.getAttribute("userId")))])
+    def findResourcesByTopic(){
+        render(view:"/resource/list", model:[resources: resourceService.findResourcesByTopic(Long.parseLong(params.get("topicId")), 0)]);
     }
 
     def topicsCreated(){
@@ -103,7 +88,7 @@ class LoginController {
 
     def showUser(){
         User user = User.get(Integer.parseInt(params.get("userId")));
-        render(view:"/user/show", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user), topicsByUser:topicService.findTopicsByUser(user, User.get(session.getAttribute("userId")))]);
+        render(view:"/user/show", model:[user:user, unreadResources:resourceService.findUnreadResourcesByUser(user, 0), topicsByUser:topicService.findTopicsByUser(user, User.get(session.getAttribute("userId")))]);
     }
 
     def showResource(){
@@ -111,12 +96,20 @@ class LoginController {
         Resource resource = Resource.get(Integer.parseInt(params.get("resourceId")));
         if(loggedInUser != null)
             resourceService.markAsRead(resource, loggedInUser);
-        render(view:"/resource/show", model:[resource: resource, trendingTopics:topicService.findTrendingTopics(loggedInUser), unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser)]);
+        render(view:"/resource/show", model:[resource: resource, trendingTopics:topicService.findTrendingTopics(loggedInUser, 5), unreadResources:resourceService.findUnreadResourcesByUser(loggedInUser, 0)]);
+    }
+
+    def findTopResources(){
+        render(view:"/resource/list", model:[resources: resourceService.findTopResources(0)]);
     }
 
     def findSubscriptionsByUser(){
         User user = User.get(params.get("userId"));
         render(view:"/subscription/list", model:[subscriptions:user.subscriptions])
+    }
+
+    def findTrendingTopicsByUser(){
+        render(view:"/topic/list", model:[topicsByUser:topicService.findTrendingTopics(User.get(session.getAttribute("userId")), 0)])
     }
 
     def showUserImage(final Long id) {
@@ -141,17 +134,15 @@ class LoginController {
     }
 
     def search(){
-        try{
-            User user = User.get(session.getAttribute("userId"));
-            String searchValue = params.get("searchValue");
-            def trendingTopics = topicService.findTrendingTopics(user);
-            def topResources = resourceService.findTopResources();
-            def searchedResources = resourceService.findSearchedResources(searchValue, user);
-            def unreadResources = resourceService.findUnreadResourcesByUser(user);
-            render(view:"/login/search", model:[searchValue:searchValue, trendingTopics:trendingTopics, topResources:topResources, searchedResources:searchedResources, unreadResources:unreadResources]);
-        } catch (Exception e){
-            e.printStackTrace()
-        }
+        User user = User.get(session.getAttribute("userId"));
+        String searchValue = params.get("searchValue");
+        render(view:"/login/search", model:[searchValue:searchValue, trendingTopics:topicService.findTrendingTopics(user, 5), topResources:resourceService.findTopResources(5), searchedResources:resourceService.findSearchedResources(searchValue, user, 5), unreadResources:resourceService.findUnreadResourcesByUser(user, 0)]);
+    }
+
+    def findAllSearchedResource(){
+        User user = User.get(session.getAttribute("userId"));
+        String searchValue = params.get("searchValue");
+        render(view:"/resource/list", model:[searchValue:searchValue, resources:resourceService.findSearchedResources(searchValue, user, 0)]);
     }
 
 

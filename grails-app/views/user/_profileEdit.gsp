@@ -7,7 +7,7 @@
                 <div class="col-xs-4 ">
                     <label class=" control-label" for="fName">First Name *</label>
                 </div>
-
+                <g:hiddenField id="userId" name="userId" class="form-control" value="${user.id}"/>
                 <div class="col-xs-8">
                     <g:textField id="fName" name="firstName" class="form-control" value="${user.firstName}"/>
                 </div>

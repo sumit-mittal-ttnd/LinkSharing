@@ -8,14 +8,27 @@ class UserController {
 
     def index() {
         User user = User.get(session.getAttribute("userId"));
-        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user), unreadResources:resourceService.findUnreadResourcesByUser(user)])
+        render(view:"dashboard", model:[user:user, trendingTopics:topicService.findTrendingTopics(user, 5), unreadResources:resourceService.findUnreadResourcesByUser(user, 5)])
     }
 
     def update(){
-        User user = User.get(session.getAttribute("userId"));
+        User user = User.get(params.get("userId"));
         userService.update(user, params);
         flash.message = message(code: 'User.updated.success.message');
         redirect (controller: 'user', action: 'index')
+    }
+
+    def changePassword(){
+        String pwd = params.get("password");
+        String cPwd = params.get("confirmPassword");
+        if(pwd != cPwd){
+            flash.error = "Password Mismatch";
+            redirect (controller: 'user', action: 'edit')
+        }else{
+            userService.changePassword(params);
+            flash.message = "Password Successfully Changed";
+            redirect (controller: 'user', action: 'index')
+        }
     }
 
     def list(){

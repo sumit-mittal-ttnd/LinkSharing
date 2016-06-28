@@ -8,7 +8,7 @@
 
     <h4>Hello ${email}!</h4>
     <p>You are invited for the topic - ${topicName} by <b>${firstName}.</b></p>
-    <p>Please click this <a href="http://localhost:8080/login/showTopic?id=${topicId}">link</a> to see the Topic!!</p>
+    <p>Please click this <g:link controller="login" action="showTopic" params="[id:topicId]" absolute="true">link</g:link> to see the Topic!!</p>
     <p>If you think it was sent incorrectly, please contact administrator at admin@linksharing.com.</p>
     <br/>
     <br/>

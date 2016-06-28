@@ -52,11 +52,9 @@
 
             <div class="col-xs-7 pull-left" >
 
-                <g:if test="${session.userId == user.id}">
+                <g:if test="${session.userIsAdmin=='TRUE'}">
                     <g:render template="/user/profileEdit"/>
                     <g:render template="/user/changePassword"/>
-                </g:if>
-                <g:else>
                     <div class="panel panel-default">
                         <div class="panel-heading">Posts</div>
                         <div class="panel-body">
@@ -67,6 +65,24 @@
                             </div>
                         </div>
                     </div>
+                </g:if>
+                <g:else>
+                    <g:if test="${session.userId == user.id}">
+                        <g:render template="/user/profileEdit"/>
+                        <g:render template="/user/changePassword"/>
+                    </g:if>
+                    <g:else>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Posts</div>
+                            <div class="panel-body">
+                                <div class="panel-body">
+                                    <g:each var="resourceObj" in="${user.resources}" status="i">
+                                        <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
+                                    </g:each>
+                                </div>
+                            </div>
+                        </div>
+                    </g:else>
                 </g:else>
             </div>
         </div>

@@ -18,10 +18,16 @@
         <g:render template="/shared/header"/>
 
         <div class="row">
+            <div class="col-xs-12" style="font-size: 24px;">
+                <center>  <strong>Subscriptions List</strong> </center>
+            </div>
+        </div><br/>
+
+        <div class="row">
             <table id="subsListTable" class="display">
                 <thead>
                 <tr>
-                    <th>Id</th>
+                    <th>Subscription Id</th>
                     <th>Topic Name</th>
                     <th>User Name</th>
                     <th>Seriousness</th>
@@ -47,7 +53,9 @@
 
     <script>
         $(document).ready( function () {
-            $('#subsListTable').DataTable();
+            $('#subsListTable').DataTable({
+                "order": [[ 1, "asc" ]]
+            });
         } );
     </script>
 </body>

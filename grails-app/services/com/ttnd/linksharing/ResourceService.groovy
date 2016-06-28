@@ -6,35 +6,8 @@ import org.springframework.web.multipart.MultipartFile
 
 class ResourceService {
 
-    // order by lastUpdated desc
-    List<Resource> findRecentResources(){
-        List<Resource> resources = Resource.createCriteria().listDistinct {
-            and{
-                order("lastUpdated", "desc")
-                maxResults 5
-                "topic"{
-                    eq("visibility", Topic.Visibility.PUBLIC)
-                }
-            }
-        };
-        return resources;
-    }
-
-    // order by avgRating desc
-    List<Resource> findTopResources(){
-        List<Resource> resources = Resource.createCriteria().listDistinct {
-            and{
-                order("avgRating", "desc")
-                "topic"{
-                    eq("visibility", Topic.Visibility.PUBLIC)
-                }
-            }
-        };
-        return resources;
-    }
-
     // unread resources
-    List<Resource> findUnreadResourcesByUser(User loggedInUser){
+    List<Resource> findUnreadResourcesByUser(User loggedInUser, int resultCount){
         List<Resource> resources = Resource.createCriteria().listDistinct {
             and{
                 "topic"{
@@ -43,19 +16,96 @@ class ResourceService {
                     }
                 }
                 isEmpty("readingItems")
+                order("avgRating", "desc")
+                if(resultCount != 0){
+                    maxResults 5
+                }
             }
         };
         return resources;
     }
 
-    List<Resource> findSearchedResources(String searchValue, User user){
-        List<Resource> resources = new ArrayList<Resource>();
+    List<Resource> findResourcesByTopic(Long topicId, int resultCount){
+        List<Resource> resources = Resource.createCriteria().listDistinct {
+            and{
+                "topic"{
+                    eq("id", topicId)
+                }
+                order("avgRating", "desc")
+                if(resultCount != 0){
+                    maxResults resultCount
+                }
+            }
+        };
+        return resources;
+    }
+
+    // order by lastUpdated desc
+    List<Resource> findRecentResources(){
+        List<Resource> resources = Resource.createCriteria().listDistinct {
+            and{
+                maxResults 5
+                "topic"{
+                    eq("visibility", Topic.Visibility.PUBLIC)
+                }
+                order("lastUpdated", "desc")
+            }
+        };
+        return resources;
+    }
+
+    // order by avgRating desc
+    List<Resource> findTopResources(int resultCount){
+        List<Resource> resources = Resource.createCriteria().listDistinct {
+            and{
+                "topic"{
+                    eq("visibility", Topic.Visibility.PUBLIC)
+                }
+                order("avgRating", "desc")
+                if(resultCount != 0){
+                    maxResults 5
+                }
+            }
+        };
+        return resources;
+    }
+
+    List<Resource> findSearchedResources(String searchValue, User user, int resultCount){
+        List<Resource> resources;
+        if(searchValue != null && searchValue.trim().equals("")) searchValue = null;
+        else searchValue = searchValue.trim();
+
         if(user == null){
-            resources = findTopResources();
+            if(searchValue == null){
+                resources = new ArrayList<Resource>();
+            }else{
+                resources = Resource.createCriteria().listDistinct {
+                    and{
+                        or{
+                            "topic"{
+                                ilike("name", "%"+searchValue+"%")
+                            }
+                            ilike("description", "%"+searchValue+"%")
+                        }
+                        "topic" {
+                            eq("visibility", Topic.Visibility.PUBLIC)
+                        }
+                        if(resultCount != 0){
+                            maxResults 5
+                        }
+                        order("avgRating", "desc")
+                    }
+                };
+            }
         }else{
             if(user.admin){
-                if(StringUtils.isBlank(searchValue)){
-                    return Resource.findAll();
+                if(searchValue == null){
+                    resources = Resource.createCriteria().listDistinct {
+                        if(resultCount != 0){
+                            maxResults 5
+                        }
+                        order("avgRating", "desc")
+                    };
                 } else{
                     resources = Resource.createCriteria().listDistinct {
                         or{
@@ -64,10 +114,16 @@ class ResourceService {
                             }
                             ilike("description", "%"+searchValue+"%")
                         }
+                        if(resultCount != 0){
+                            maxResults 5
+                        }
+                        order("avgRating", "desc")
                     };
                 }
-            } else {
-                if(!StringUtils.isBlank(searchValue)) {
+            }else{
+                if(searchValue == null){
+                    resources = new ArrayList<Resource>();
+                }else{
                     resources = Resource.createCriteria().listDistinct {
                         and{
                             or {
@@ -84,13 +140,31 @@ class ResourceService {
                                     eq("createdBy",user)
                                 }
                             }
+                            if(resultCount != 0){
+                                maxResults 5
+                            }
+                            order("avgRating", "desc")
                         }
                     };
                 }
-
             }
         }
         return resources;
+    }
+
+    void save(Map params, Long userId){
+        Resource resource;
+        if(params.get("resourceType") == "linkResource")
+            resource = new LinkResource(params);
+        else{
+            resource = new DocumentResource(params);
+            if(params.document.size>0){
+                uploadDocumentResource(resource, params);
+            }
+        }
+        resource.setAddedBy(User.get(userId));
+        resource.setTopic(Topic.get(params.get("topicId")));
+        resource.save(flush: true, failOnError: true);
     }
 
     void update(Map params){
@@ -110,7 +184,6 @@ class ResourceService {
             if(it.resource.id == resource.id)
                 alreadyRead = Boolean.TRUE;
         }
-
         if(!alreadyRead){
             ReadingItem readingItem = new ReadingItem(resource: resource, user: loggedInUser, isRead: Boolean.TRUE);
             readingItem.save(flush: true, failOnError: true);

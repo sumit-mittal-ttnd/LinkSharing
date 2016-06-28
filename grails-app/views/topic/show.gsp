@@ -33,16 +33,19 @@
                     <g:each var="subscriptionObj" in="${topic.subscriptions}" status="i">
                         <g:render template="/shared/userGrid" model="[userObj:subscriptionObj.user]"/>
                     </g:each>
-
                 </div>
             </div>
         </div>
 
         <div class="col-xs-7 pull-right" >
             <div class="panel panel-default">
-                <div class="panel-heading">Post : "${topic.name}"</div>
+                <div class="panel-heading">Post : "${topic.name}"
+                    <g:if test="${resourcesByTopic.size()>0}">
+                        <g:link action="findResourcesByTopic" controller="login" class="pull-right" params="[topicId : topic.id]">View All</g:link>
+                    </g:if>
+                </div>
                 <div class="panel-body">
-                    <g:each var="resourceObj" in="${topic.resources}" status="i">
+                    <g:each var="resourceObj" in="${resourcesByTopic}">
                         <g:render template="/shared/resourceGrid" model="[resourceObj: resourceObj, unreadResources:unreadResources]"/>
                     </g:each>
                 </div>

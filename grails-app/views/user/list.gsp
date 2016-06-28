@@ -18,6 +18,12 @@
     <g:render template="/shared/header"/>
 
     <div class="row">
+        <div class="col-xs-12" style="font-size: 24px;">
+            <center>  <strong>Users List</strong> </center>
+        </div>
+    </div><br/>
+
+    <div class="row">
         <table id="userListTable" class="display">
             <thead>
             <tr>
@@ -48,7 +54,9 @@
 </div>
 <script>
     $(document).ready( function () {
-        $('#userListTable').DataTable();
+        $('#userListTable').DataTable({
+            "order": [[ 1, "asc" ]]
+        });
     } );
 </script>
 </body>
