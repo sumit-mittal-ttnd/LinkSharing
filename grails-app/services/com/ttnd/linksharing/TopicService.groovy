@@ -97,13 +97,10 @@ class TopicService {
     // Topic Visibility = PUBLIC   OR   Created By Me   OR   Subscribed By Me   +   Ordered by No Of Resources
     List<Topic> findTopicsByUser(User viewUser, User loggedInUser){
         List<Topic> topics = Topic.createCriteria().listDistinct {
-            if(viewUser == loggedInUser){
+            and{
                 eq("createdBy",viewUser)
-            }else{
-                and{
-                    eq("createdBy",viewUser)
+                if((loggedInUser == null) || (viewUser != loggedInUser && !loggedInUser.admin))
                     eq("visibility", Topic.Visibility.PUBLIC)
-                }
             }
         };
         topics.sort { -it.resources.size() }

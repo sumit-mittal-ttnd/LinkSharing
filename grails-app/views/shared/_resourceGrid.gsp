@@ -29,7 +29,7 @@
                     <g:link action="downloadResource" controller="login" params="['resourceId':resourceObj.id]" class="small">Download</g:link>
                 </g:else>
 
-                <g:if test="${(session.userId && unreadResources.contains(resourceObj)) || (session.userIsAdmin=='TRUE')}">
+                <g:if test="${session.userId && unreadResources.contains(resourceObj)}">
                     <a href="javascript:markAsRead(${resourceObj.id})" class="small">Mark as read</a>
                 </g:if>
 

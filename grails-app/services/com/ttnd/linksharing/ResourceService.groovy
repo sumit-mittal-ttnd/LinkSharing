@@ -75,84 +75,46 @@ class ResourceService {
         if(searchValue != null && searchValue.trim().equals("")) searchValue = null;
         else searchValue = searchValue.trim();
 
-        if(user == null){
-            if(searchValue == null){
-                resources = new ArrayList<Resource>();
-            }else{
-                resources = Resource.createCriteria().listDistinct {
-                    and{
-                        or{
-                            "topic"{
-                                ilike("name", "%"+searchValue+"%")
-                            }
-                            ilike("description", "%"+searchValue+"%")
-                        }
-                        "topic" {
-                            eq("visibility", Topic.Visibility.PUBLIC)
-                        }
-                        if(resultCount != 0){
-                            maxResults 5
-                        }
-                        order("avgRating", "desc")
-                    }
-                };
-            }
+        if(user == null && searchValue == null){
+            resources = new ArrayList<Resource>(); //
         }else{
-            if(user.admin){
-                if(searchValue == null){
-                    resources = Resource.createCriteria().listDistinct {
-                        if(resultCount != 0){
-                            maxResults 5
-                        }
-                        order("avgRating", "desc")
-                    };
-                } else{
-                    resources = Resource.createCriteria().listDistinct {
-                        or{
-                            "topic"{
-                                ilike("name", "%"+searchValue+"%")
+            resources = Resource.createCriteria().listDistinct {
+                and{
+                    if(searchValue != null){
+                        or {
+                            "topic" {
+                                ilike("name", "%" + searchValue + "%")
                             }
-                            ilike("description", "%"+searchValue+"%")
+                            ilike("description", "%" + searchValue + "%")
                         }
-                        if(resultCount != 0){
-                            maxResults 5
+                    }
+
+                    or{
+                        if(user == null || !user.admin){
+                            "topic" {
+                                eq("visibility", Topic.Visibility.PUBLIC)
+                            }
                         }
-                        order("avgRating", "desc")
-                    };
+
+                        if(user != null && !user.admin){
+                            "topic" {
+                                eq("createdBy",user)
+                            }
+                        }
+                    }
+
+                    if(resultCount != 0){
+                        maxResults 5
+                    }
+                    order("avgRating", "desc")
                 }
-            }else{
-                if(searchValue == null){
-                    resources = new ArrayList<Resource>();
-                }else{
-                    resources = Resource.createCriteria().listDistinct {
-                        and{
-                            or {
-                                "topic" {
-                                    ilike("name", "%" + searchValue + "%")
-                                }
-                                ilike("description", "%" + searchValue + "%")
-                            }
-                            or{
-                                "topic" {
-                                    eq("visibility", Topic.Visibility.PUBLIC)
-                                }
-                                "topic" {
-                                    eq("createdBy",user)
-                                }
-                            }
-                            if(resultCount != 0){
-                                maxResults 5
-                            }
-                            order("avgRating", "desc")
-                        }
-                    };
-                }
-            }
+            };
         }
         return resources;
     }
 
-    void save(Map params, Long userId){
+
+    Resource preSave(Map params, Long userId){
         Resource resource;
         if(params.get("resourceType") == "linkResource")
             resource = new LinkResource(params);
@@ -164,6 +126,10 @@ class ResourceService {
         }
         resource.setAddedBy(User.get(userId));
         resource.setTopic(Topic.get(params.get("topicId")));
+        return resource;
+    }
+
+    void save(Resource resource){
         resource.save(flush: true, failOnError: true);
     }
 

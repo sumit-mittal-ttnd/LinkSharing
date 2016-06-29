@@ -109,7 +109,7 @@ log4j.main = {
     }
     root {
         error 'file'
-        info 'file'
+        info 'file','stdout'
     }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers

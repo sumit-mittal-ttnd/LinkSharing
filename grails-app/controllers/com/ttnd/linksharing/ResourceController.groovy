@@ -20,9 +20,14 @@ class ResourceController {
         }
     }
 
-    def save(){
-        resourceService.save(params, session.getAttribute("userId"));
-        flash.message = message(code: 'Resource.added.successfully.message');
+    def save(Long topicId){
+        Resource resource = resourceService.preSave(params, session.getAttribute("userId"));
+        if(!resource.validate()){
+            flash.error = message(code: 'Resource.invalid.message');
+        }else{
+            flash.message = message(code: 'Resource.added.successfully.message');
+            resourceService.save(resource);
+        }
         redirect(controller: 'user', action: 'index')
     }
 
