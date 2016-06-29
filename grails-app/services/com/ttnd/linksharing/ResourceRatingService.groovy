@@ -21,7 +21,7 @@ class ResourceRatingService {
         for(ResourceRating resRat : list){
             totalRating += resRat.score;
         }
-        int avgRating = totalRating/count;
+        float avgRating = totalRating/count;
         resource.avgRating = avgRating;
         resourceRating.setResource(resource);
         resourceRating.merge(flush:true);

@@ -25,6 +25,12 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
 
+                        <g:set var="yourRating" value="0"></g:set>
+                        <g:each var="resRateObj" in="${resource.resourceRatings}">
+                            <g:if test="${resRateObj.user.id == session.userId}">
+                                <g:set var="yourRating" value="${resRateObj.score}"></g:set>
+                            </g:if>
+                        </g:each>
                         <g:set var="topicCreatedBy" value="${resource.topic.createdBy}"/>
                         <g:set var="resourceAddedBy" value="${resource.addedBy}"/>
 
@@ -44,7 +50,12 @@
                             <div class="col-xs-6">
                                 <g:link action="showTopic" controller="login" params="[id:resource.topic.id]" class="pull-right">${resource.topic.name}</g:link><br/>
                                 <div class="small pull-right"><g:formatDate format="dd-MMM-yyyy" date="${resource.lastUpdated}"/></div><br/>
-                                <div class="small pull-right" id="rateYo"></div>
+                                <div class="small pull-right" id="rateYo"></div><br/>
+                                <g:if test="${yourRating != "0"}">
+                                    <div class="col-xs-12">
+                                        <div class="small pull-right">You rated as ${yourRating} </div>
+                                    </div>
+                                </g:if>
                             </div>
                         </div>
 

@@ -25,7 +25,7 @@ class ResourceRating {
             for(ResourceRating resRat : list){
                 totalRating += resRat.score;
             }
-            int avgRating = totalRating/count;
+            float avgRating = totalRating/count;
             this.resource.avgRating = avgRating;
             this.resource.merge();
         }

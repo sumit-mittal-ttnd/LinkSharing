@@ -7,7 +7,7 @@ abstract class Resource {
     String description;
     Date dateCreated;
     Date lastUpdated;
-    Integer avgRating=0;
+    Float avgRating=0;
 
     Set<ResourceRating> resourceRatings;
     Set<ReadingItem> readingItems;
