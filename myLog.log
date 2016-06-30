@@ -1,0 +1,8 @@
+WARN  2016-06-30 [WARNING] Property [admin] of domain class com.ttnd.linksharing.User has type [java.lang.Boolean] and doesn't support constraint [blank]. This constraint will not be checked during validation.
+WARN  2016-06-30 [WARNING] Property [active] of domain class com.ttnd.linksharing.User has type [java.lang.Boolean] and doesn't support constraint [blank]. This constraint will not be checked during validation.
+WARN  2016-06-30 [WARNING] Property [topics] of domain class com.ttnd.linksharing.User has type [java.util.Set] and doesn't support constraint [blank]. This constraint will not be checked during validation.
+INFO  2016-06-30 File [/home/ttnd/sumit/GrailsProject/LinkSharing/grails-app/conf/Config.groovy] changed. Applying changes to application.
+INFO  2016-06-30 File [/home/ttnd/sumit/GrailsProject/LinkSharing/grails-app/conf/Config.groovy] changed. Applying changes to application.
+WARN  2016-06-30 [WARNING] Property [admin] of domain class com.ttnd.linksharing.User has type [java.lang.Boolean] and doesn't support constraint [blank]. This constraint will not be checked during validation.
+WARN  2016-06-30 [WARNING] Property [active] of domain class com.ttnd.linksharing.User has type [java.lang.Boolean] and doesn't support constraint [blank]. This constraint will not be checked during validation.
+WARN  2016-06-30 [WARNING] Property [topics] of domain class com.ttnd.linksharing.User has type [java.util.Set] and doesn't support constraint [blank]. This constraint will not be checked during validation.

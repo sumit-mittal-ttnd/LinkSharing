@@ -32,7 +32,7 @@ environments {
     qa {
         dataSource {
             driverClassName = "com.mysql.jdbc.Driver"
-            username = "root"
+            username = "Sumit-Mittal"
             password = "igdefault"
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:mysql://localhost:3306/Sumit-Mittal_qa"

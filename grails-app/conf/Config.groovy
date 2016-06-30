@@ -105,11 +105,11 @@ log4j.main = {
     }*/
 
     appenders {
-        file name:'file', file:'/home/ttnd/sumit/GrailsProject/myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
+        file name:'file', file:'myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
     }
     root {
         error 'file'
-        info 'file','stdout'
+        info 'file'
     }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
