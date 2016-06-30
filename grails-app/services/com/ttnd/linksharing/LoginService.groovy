@@ -17,15 +17,17 @@ class LoginService {
     }
 
     void register(User user, Map params) {
+        if (params.photo.size > 0) {
+            userService.uploadUserPic(user, params);
+        }else{
+            userService.uploadDefaultUserPic(user);
+        }
         user.save(flush: true, failOnError: true);
         mailService.sendMail {
             async true
             to user.getEmail()
             subject "Welcome to LinkSharing App"
             html(view: '/mail/_registration', model: [firstName: user.firstName, activateCode: user.activateCode, userId: user.id])
-        }
-        if (params.photo.size > 0) {
-            userService.uploadUserPic(user, params);
         }
     }
 

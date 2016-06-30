@@ -96,6 +96,13 @@ environments {
     }
 }
 
+files {
+    paths {
+        profilePicDir = "${System.getProperty('user.home')}${File.separator}uploadedUserPics"
+        fileDocDir = "${System.getProperty('user.home')}${File.separator}uploadedTopicDocs"
+    }
+}
+
 // log4j configuration
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
@@ -105,7 +112,7 @@ log4j.main = {
     }*/
 
     appenders {
-        file name:'file', file:'myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
+        file name:'file', file:'${catalina.home}/logs/myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
     }
     root {
         error 'file'

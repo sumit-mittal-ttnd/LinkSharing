@@ -8,7 +8,7 @@ class User {
     String confirmPassword;
     String firstName;
     String lastName;
-    String photoUrl="/home/ttnd/sumit/GrailsProject/LinkSharing/grails-app/assets/images/userIcon.png";
+    String photoUrl="temp";
     Boolean admin;
     String activateCode;
     Boolean active;

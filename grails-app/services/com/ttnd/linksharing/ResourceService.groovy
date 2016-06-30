@@ -1,5 +1,6 @@
 package com.ttnd.linksharing
 
+import grails.util.Holders
 import org.apache.commons.lang.RandomStringUtils
 import org.apache.commons.lang.StringUtils
 import org.springframework.web.multipart.MultipartFile
@@ -157,7 +158,7 @@ class ResourceService {
     }
 
     void uploadDocumentResource(DocumentResource documentResource, Map params){
-        String folderUrl = Constants.DOCUMENT_URL;
+        String folderUrl = Holders.config.files.paths.fileDocDir as String;
         File file = new File(folderUrl);
         if(!file.exists()){
             file.mkdir();
@@ -167,7 +168,7 @@ class ResourceService {
         String originalFN = document.getOriginalFilename();
         String extension = originalFN.substring(originalFN.lastIndexOf(".")+1,originalFN.length());
 
-        String docUrl = folderUrl + RandomStringUtils.randomAlphanumeric(10) + "." + extension;
+        String docUrl = folderUrl + File.separator + RandomStringUtils.randomAlphanumeric(10) + "." + extension;
         documentResource.setFilePath(docUrl);
         document.transferTo(new File(docUrl));
     }
