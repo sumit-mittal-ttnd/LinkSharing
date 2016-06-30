@@ -14,7 +14,7 @@ class BootStrap {
     UserService userService;
 
     def init = { servletContext ->
-        initCall();
+        //initCall();
     }
 
 
@@ -24,7 +24,7 @@ class BootStrap {
    void initCall(){
 
        // create admin user
-       User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminuser", email : "sumit.ttnd+999@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.TRUE);
+       /*User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminuser", email : "sumit.ttnd+999@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.TRUE);
        userService.uploadDefaultUserPic(adminUser);
        createUser(adminUser);
 
@@ -39,7 +39,7 @@ class BootStrap {
        createUser(user2);
 
        userService.uploadDefaultUserPic(user3);
-       createUser(user3);
+       createUser(user3);*/
 
         /*// createTopic
         //User user = User.findById(2L);
