@@ -7,8 +7,11 @@ import com.ttnd.linksharing.Subscription
 import com.ttnd.linksharing.Subscription.Seriousness
 import com.ttnd.linksharing.Topic
 import com.ttnd.linksharing.User
+import com.ttnd.linksharing.UserService
 
 class BootStrap {
+
+    UserService userService;
 
     def init = { servletContext ->
         initCall();
@@ -22,14 +25,20 @@ class BootStrap {
 
        // create admin user
        User adminUser = new User(firstName: "admin", lastName: "user", userName: "adminuser", email : "sumit.ttnd+999@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.TRUE);
+       userService.uploadDefaultUserPic(adminUser);
        createUser(adminUser);
 
        // create User
        User user1 = new User(firstName: "sumit1", lastName: "mittal1", userName: "sumitmittal1", email : "sumit.ttnd+1@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
        User user2 = new User(firstName: "sumit2", lastName: "mittal2", userName: "sumitmittal2", email : "sumit.ttnd+2@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
        User user3 = new User(firstName: "sumit3", lastName: "mittal3", userName: "sumitmittal3", email : "sumit.ttnd+3@gmail.com", password: "123456", confirmPassword: "123456", active: Boolean.TRUE, admin: Boolean.FALSE);
+       userService.uploadDefaultUserPic(user1);
        createUser(user1);
+
+       userService.uploadDefaultUserPic(user2);
        createUser(user2);
+
+       userService.uploadDefaultUserPic(user3);
        createUser(user3);
 
         /*// createTopic
