@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="col-xs-8">
-                        <input type="file" class="col-xs-8" id="photo" name="photo">
+                        <input type="file" class="col-xs-8" id="photo" name="photo" accept="image/*">
                     </div>
                 </div>
 

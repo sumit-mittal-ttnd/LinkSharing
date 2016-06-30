@@ -1,3 +1,5 @@
+import grails.util.Holders
+
 // locations to search for config files that get merged into the main config;
 // config files can be ConfigSlurper scripts, Java properties files, or classes
 // in the classpath in ConfigSlurper format
@@ -100,6 +102,7 @@ files {
     paths {
         profilePicDir = "${System.getProperty('user.home')}${File.separator}uploadedUserPics"
         fileDocDir = "${System.getProperty('user.home')}${File.separator}uploadedTopicDocs"
+        logs = "${System.getProperty('user.home')}${File.separator}logs"
     }
 }
 
@@ -112,7 +115,7 @@ log4j.main = {
     }*/
 
     appenders {
-        file name:'file', file:'${catalina.home}/logs/myLog.log', layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
+        file name:'file', file:"${Holders.config.files.paths.logs}/myLog.log", layout:pattern(conversionPattern: '%-5p %d{yyyy-MM-dd} %m%n')
     }
     root {
         error 'file'
