@@ -3,6 +3,9 @@ package com.ttnd.linksharing
 import grails.plugin.mail.MailService
 import org.apache.commons.lang.RandomStringUtils
 
+import javax.servlet.http.HttpServlet
+import javax.servlet.http.HttpServletRequest
+
 class LoginService {
 
     MailService mailService;
@@ -16,11 +19,11 @@ class LoginService {
         return user;
     }
 
-    void register(User user, Map params) {
+    void register(User user, Map params, HttpServletRequest request) {
         if (params.photo.size > 0) {
             userService.uploadUserPic(user, params);
         }else{
-            userService.uploadDefaultUserPic(user);
+            userService.uploadDefaultUserPic(user, request);
         }
         user.save(flush: true, failOnError: true);
         mailService.sendMail {

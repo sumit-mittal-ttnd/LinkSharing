@@ -45,7 +45,7 @@ class LoginController {
         if(!user.validate()){
             flash.error = message(code: 'User.invalid.message');
         }else{
-            loginService.register(user, params);
+            loginService.register(user, params, request);
             flash.message = message(code: 'User.register.success.message');
         }
         redirect (controller: 'login', action: 'index')
